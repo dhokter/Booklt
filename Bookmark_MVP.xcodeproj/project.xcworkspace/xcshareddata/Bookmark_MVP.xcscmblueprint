@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "E601762295606B94CF7DF49E8BB7459E7FD47406",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "E601762295606B94CF7DF49E8BB7459E7FD47406" : 9223372036854775807,
+    "024B107746D27F8EE37EE3656C16E5D5D322858B" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "869B9948-3D6B-49BB-ABE0-D5F3CBD6C13C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "E601762295606B94CF7DF49E8BB7459E7FD47406" : "Bookmark_MVP\/",
+    "024B107746D27F8EE37EE3656C16E5D5D322858B" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Bookmark_MVP",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Bookmark_MVP.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kellimandel\/Bookmark_MVP.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "024B107746D27F8EE37EE3656C16E5D5D322858B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/dletk\/Bookmark_MVP.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E601762295606B94CF7DF49E8BB7459E7FD47406"
+    }
+  ]
+}
