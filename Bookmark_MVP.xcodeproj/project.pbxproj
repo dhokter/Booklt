@@ -54,14 +54,22 @@
 		4CB2209A1E54E84C00AF0647 /* Bookmark_MVP */ = {
 			isa = PBXGroup;
 			children = (
-				4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */,
+				4CB220AD1E54E85D00AF0647 /* Supporting Files */,
 				4CB2209D1E54E84C00AF0647 /* ViewController.swift */,
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
+			);
+			path = Bookmark_MVP;
+			sourceTree = "<group>";
+		};
+		4CB220AD1E54E85D00AF0647 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */,
 				4CB220A21E54E84C00AF0647 /* Assets.xcassets */,
 				4CB220A41E54E84C00AF0647 /* LaunchScreen.storyboard */,
 				4CB220A71E54E84C00AF0647 /* Info.plist */,
 			);
-			path = Bookmark_MVP;
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
