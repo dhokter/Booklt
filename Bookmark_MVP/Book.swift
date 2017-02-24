@@ -15,9 +15,10 @@ class Book {
     var pageNumber: Int
     var currentPage: Int
     var bookCover: UIImage?
+    var author: String
     
     //Failable initializer
-    init?(titleBook: String, pageNumber: Int, bookCover: UIImage?, currentPage: Int = 0) {
+    init?(titleBook: String, pageNumber: Int, bookCover: UIImage?, currentPage: Int = 0, author: String = "") {
         if titleBook.isEmpty || pageNumber < 0 || currentPage < 0 {
             return nil
         }
@@ -25,5 +26,6 @@ class Book {
         self.pageNumber = pageNumber
         self.bookCover = bookCover
         self.currentPage = currentPage
+        self.author = ""
     }
 }

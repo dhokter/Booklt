@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gWn-SF-rew" id="Hli-2H-Qd2">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="cAK-8C-DmV">
@@ -141,16 +141,16 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-SG-DgB">
                                 <rect key="frame" x="225" y="258" width="154" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Bs-ed-3nx">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="noPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="2Bs-ed-3nx">
                                 <rect key="frame" x="50" y="330" width="315" height="315"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
@@ -161,6 +161,13 @@
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="k4n-Ni-emD"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="1FZ-me-JtR"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="authorTextField" destination="hkN-s2-RtH" id="baN-SL-Xz5"/>
+                        <outlet property="bookTitleTextField" destination="798-IC-2m8" id="INg-uJ-o5O"/>
+                        <outlet property="currentPageTextField" destination="uDw-SG-DgB" id="M8E-pp-20z"/>
+                        <outlet property="photoPickerView" destination="2Bs-ed-3nx" id="2aX-fS-3ZR"/>
+                        <outlet property="totalPageTextField" destination="fup-IM-Jh1" id="sfx-we-zjh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -205,5 +212,6 @@
     </scenes>
     <resources>
         <image name="default" width="181" height="166"/>
+        <image name="noPhoto" width="313" height="313"/>
     </resources>
 </document>
