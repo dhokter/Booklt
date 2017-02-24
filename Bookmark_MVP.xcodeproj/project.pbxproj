@@ -310,6 +310,7 @@
 				4CB220AC1E54E84C00AF0647 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
