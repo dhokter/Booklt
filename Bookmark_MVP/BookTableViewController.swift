@@ -77,7 +77,6 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
         cell.coverImageView.image = aBook.bookCover
         cell.currentPageView.text = String(aBook.currentPage)
         cell.currentPageView.delegate = self
-        cell.currentPageView.keyboardType = UIKeyboardType.numberPad
         cell.progressBarView.progress = Float(aBook.currentPage) / Float(aBook.pageNumber)
         cell.progressLabelView.text = String(Int(Float(aBook.currentPage)*100 / Float(aBook.pageNumber)))+"%"
 
@@ -86,7 +85,44 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
         return cell
     }
     
+    // After entering the new currentPage number, user can touch on the book to get it updated.
+    // TODO: Ask Paul how to get a cell given only knowing its subview textfield.
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as? BookTableViewCell
+        let aBook = listBook[indexPath.row]
+        cell!.progressBarView.progress = Float(aBook.currentPage) / Float(aBook.pageNumber)
+        cell!.progressLabelView.text = String(Int(Float(aBook.currentPage)*100 / Float(aBook.pageNumber)))+"%"
+        for book in listBook {
+            if book.titleBook == cell!.titleBookView.text! {
+                book.titleBook = cell!.titleBookView.text!
+                book.currentPage = Int(cell!.currentPageView.text!)!
+            }
+        }
+        print("You select a cell")
+        self.tableView.reloadData()
+    }
     
+    // Function for currentPage textfield resign from first reponder if the user hit enter.
+    // This function is not working with numberpad.
+    // This function now working for user entered new data. Now as long as user hit return, the new data will be display.
+    // TODO: Ask Paul for number pad
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        let cell = textField.superview?.superview as? BookTableViewCell
+        var aBook: Book
+        for book in listBook {
+            if book.titleBook == cell!.titleBookView.text! {
+                aBook = book
+                book.titleBook = cell!.titleBookView.text!
+                book.currentPage = Int(cell!.currentPageView.text!)!
+                cell!.progressBarView.progress = Float(aBook.currentPage) / Float(aBook.pageNumber)
+                cell!.progressLabelView.text = String(Int(Float(aBook.currentPage)*100 / Float(aBook.pageNumber)))+"%"
+            }
+        }
+        self.tableView.reloadData()
+
+        return true
+    }
 
     /*
     // Override to support conditional editing of the table view.
