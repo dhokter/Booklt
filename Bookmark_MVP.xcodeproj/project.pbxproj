@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; };
+		092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */; };
 		4CB2209E1E54E84C00AF0647 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* ViewController.swift */; };
 		4CB220A11E54E84C00AF0647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2209F1E54E84C00AF0647 /* Main.storyboard */; };
@@ -17,7 +19,21 @@
 		4CE19B391E5FF2480085B508 /* BookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE19B381E5FF2480085B508 /* BookTableViewController.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		092D62981E624BB2001269D1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		092D62941E624B73001269D1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		4CB220981E54E84C00AF0647 /* Bookmark_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookmark_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB2209D1E54E84C00AF0647 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -35,17 +51,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		092D62911E624B71001269D1 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				092D62941E624B73001269D1 /* SwiftyJSON.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4CB2208F1E54E84C00AF0647 = {
 			isa = PBXGroup;
 			children = (
 				4CB2209A1E54E84C00AF0647 /* Bookmark_MVP */,
 				4CB220991E54E84C00AF0647 /* Products */,
+				092D62911E624B71001269D1 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -91,6 +117,7 @@
 				4CB220941E54E84C00AF0647 /* Sources */,
 				4CB220951E54E84C00AF0647 /* Frameworks */,
 				4CB220961E54E84C00AF0647 /* Resources */,
+				092D62981E624BB2001269D1 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -282,6 +309,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 45DBHK3PL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP";
@@ -295,6 +326,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 45DBHK3PL2;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP";
