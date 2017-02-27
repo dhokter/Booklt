@@ -104,9 +104,23 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
     
     // Function for currentPage textfield resign from first reponder if the user hit enter.
     // This function is not working with numberpad.
+    // This function now working for user entered new data. Now as long as user hit return, the new data will be display.
     // TODO: Ask Paul for number pad
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        let cell = textField.superview?.superview as? BookTableViewCell
+        var aBook: Book
+        for book in listBook {
+            if book.titleBook == cell!.titleBookView.text! {
+                aBook = book
+                book.titleBook = cell!.titleBookView.text!
+                book.currentPage = Int(cell!.currentPageView.text!)!
+                cell!.progressBarView.progress = Float(aBook.currentPage) / Float(aBook.pageNumber)
+                cell!.progressLabelView.text = String(Int(Float(aBook.currentPage)*100 / Float(aBook.pageNumber)))+"%"
+            }
+        }
+        self.tableView.reloadData()
+
         return true
     }
 
