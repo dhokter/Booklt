@@ -28,4 +28,6 @@ class Book {
         self.currentPage = currentPage
         self.author = ""
     }
+    
+    
 }
