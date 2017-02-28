@@ -15,6 +15,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authorTextField: UITextField!
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
-
+    
+    // Method to get back the list book screen and dismiss all changes made in Add book page.
+    @IBAction func tochedCancel(_ sender: UIBarButtonItem) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    // Make sure the user can hit return and finished editing
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
 }
-

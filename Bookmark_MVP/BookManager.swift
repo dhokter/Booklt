@@ -48,4 +48,8 @@ class BookManager {
         // return all books for now as testing purpose
         return allBooks
     }
+    
+    public func addNewBook(newBook: Book) {
+        allBooks.append(newBook)
+    }
 }

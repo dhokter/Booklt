@@ -169,6 +169,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="peL-Wu-gJq"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter author's name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkN-s2-RtH">
                                 <rect key="frame" x="179" y="160" width="200" height="30"/>
@@ -179,6 +182,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="gOh-Uh-KfB"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fup-IM-Jh1">
                                 <rect key="frame" x="279" y="220.66666666666666" width="100" height="30"/>
@@ -189,6 +195,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="iFV-Dt-pWb"/>
+                                </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-SG-DgB">
                                 <rect key="frame" x="279" y="281.33333333333331" width="100" height="30"/>
@@ -199,6 +208,9 @@
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="QxE-56-mgT"/>
+                                </connections>
                             </textField>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="2Bs-ed-3nx">
                                 <rect key="frame" x="51" y="375" width="313" height="313"/>
@@ -225,7 +237,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New" id="mvk-Wx-JYo">
-                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="k4n-Ni-emD"/>
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="k4n-Ni-emD">
+                            <connections>
+                                <action selector="tochedCancel:" destination="BYZ-38-t0r" id="bBS-Xj-E39"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="1FZ-me-JtR"/>
                     </navigationItem>
                     <connections>

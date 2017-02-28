@@ -63,7 +63,7 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       
+    
     }
     
     // Function for currentPage textfield resign from first reponder if the user hit enter.
