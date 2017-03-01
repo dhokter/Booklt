@@ -23,27 +23,27 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gWn-SF-rew" id="Hli-2H-Qd2">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="cAK-8C-DmV">
-                                            <rect key="frame" x="5" y="0.0" width="83" height="100"/>
+                                            <rect key="frame" x="5" y="0.0" width="83" height="99"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="83" id="fQc-8D-Hix"/>
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-2M-Fvd">
-                                            <rect key="frame" x="123" y="57" width="100" height="22"/>
+                                            <rect key="frame" x="123" y="57" width="100" height="23"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L3l-9w-5ot">
-                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="20.333333333333329"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="100" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="9rK-OS-eRm">
-                                                    <rect key="frame" x="0.0" y="20.333333333333329" width="100" height="2"/>
+                                                    <rect key="frame" x="0.0" y="21" width="100" height="2"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="100" id="DM2-RW-pDG"/>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="IcJ-OH-e19"/>
@@ -173,7 +173,7 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="peL-Wu-gJq"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter author's name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkN-s2-RtH">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="(Optional)" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkN-s2-RtH">
                                 <rect key="frame" x="179" y="160" width="200" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="Ect-LD-wz0"/>
@@ -212,9 +212,6 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="QxE-56-mgT"/>
                                 </connections>
                             </textField>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noPhoto" translatesAutoresizingMaskIntoConstraints="NO" id="2Bs-ed-3nx">
-                                <rect key="frame" x="51" y="375" width="313" height="313"/>
-                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -226,14 +223,12 @@
                             <constraint firstItem="fup-IM-Jh1" firstAttribute="centerY" secondItem="HpF-bg-2dw" secondAttribute="centerY" id="MOC-E9-GIo"/>
                             <constraint firstItem="uDw-SG-DgB" firstAttribute="leading" secondItem="5Zj-a7-Tuu" secondAttribute="trailing" constant="83.329999999999998" id="NTd-vb-02F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fup-IM-Jh1" secondAttribute="trailing" constant="15" id="Tae-eL-khy"/>
-                            <constraint firstItem="2Bs-ed-3nx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ULc-uY-3vV"/>
                             <constraint firstItem="Lif-e3-KGJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="UXA-RR-xdD"/>
                             <constraint firstItem="hkN-s2-RtH" firstAttribute="centerY" secondItem="x2P-W6-G7o" secondAttribute="centerY" id="V1d-SU-dGP"/>
                             <constraint firstItem="hkN-s2-RtH" firstAttribute="leading" secondItem="x2P-W6-G7o" secondAttribute="trailing" constant="44.670000000000002" id="b1y-ge-O7f"/>
                             <constraint firstItem="798-IC-2m8" firstAttribute="centerY" secondItem="d0z-SO-fHF" secondAttribute="centerY" id="czm-af-4BY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="798-IC-2m8" secondAttribute="trailing" constant="15" id="orb-f2-XwB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uDw-SG-DgB" secondAttribute="trailing" constant="15" id="w3b-qV-20x"/>
-                            <constraint firstItem="2Bs-ed-3nx" firstAttribute="top" secondItem="5Zj-a7-Tuu" secondAttribute="bottom" constant="59" id="whE-Du-apx"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="New" id="mvk-Wx-JYo">
@@ -252,7 +247,6 @@
                         <outlet property="authorTextField" destination="hkN-s2-RtH" id="baN-SL-Xz5"/>
                         <outlet property="bookTitleTextField" destination="798-IC-2m8" id="INg-uJ-o5O"/>
                         <outlet property="currentPageTextField" destination="uDw-SG-DgB" id="M8E-pp-20z"/>
-                        <outlet property="photoPickerView" destination="2Bs-ed-3nx" id="2aX-fS-3ZR"/>
                         <outlet property="totalPageTextField" destination="fup-IM-Jh1" id="sfx-we-zjh"/>
                     </connections>
                 </viewController>
@@ -300,6 +294,5 @@
     </scenes>
     <resources>
         <image name="default" width="181" height="166"/>
-        <image name="noPhoto" width="313" height="313"/>
     </resources>
 </document>
