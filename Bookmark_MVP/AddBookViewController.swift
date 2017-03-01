@@ -18,6 +18,10 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     var newBook: Book?
     
+    override func viewDidLoad() {
+        addDoneButtonOnKeyboard()
+    }
+    
     // Method to get back the list book screen and dismiss all changes made in Add book page.
     @IBAction func tochedCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
@@ -39,5 +43,28 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     // 2. Add the newly created book to the list allBooks in the BookManager, since this is newly created, put it in the displayed list as well.
     // 3. insertRow in the tableView for the new book
     // Return to the listbook view with the new book displayed
-      
+    
+    
+    // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    private func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.currentPageTextField.inputAccessoryView = doneToolbar
+        self.totalPageTextField.inputAccessoryView = doneToolbar
+    }
+    
+    func doneButtonAction() {
+        self.currentPageTextField.resignFirstResponder()
+        self.totalPageTextField.resignFirstResponder()
+    }
 }
