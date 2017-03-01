@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookTableViewController: UITableViewController, UITextFieldDelegate {
+class BookTableViewController: UITableViewController {
     
     // Create a book manager model
     let bookManager = BookManager()
@@ -56,7 +56,6 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
         
         // Loading the information in the book to the cell to display
         cell.bookDisplay = book
-        cell.currentPageView.delegate = self
         // Configure the cell...
 
         return cell
@@ -64,37 +63,6 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     
-    }
-    
-    // Function for currentPage textfield resign from first reponder if the user hit enter.
-    // This function is not working with numberpad.
-    // This function now working for user entered new data. Now as long as user hit return, the new data will be display.
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        guard let cell = textField.superview?.superview as? BookTableViewCell else {
-            fatalError("Error with configure the BookTableViewCell")
-        }
-        updateTheCell(updatedCell: cell)
-        return true
-    }
-    
-    // When user switch directly from textfield to textfield and not hit Return, the currentpage will still be updated
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        guard let cell = textField.superview?.superview as? BookTableViewCell else {
-            fatalError("Error with configure the BookTableViewCell")
-        }
-        updateTheCell(updatedCell: cell)
-    }
-    
-    // Function to update the cell from the text field
-    private func updateTheCell(updatedCell: BookTableViewCell) {
-        if let bookBeingUpdated = updatedCell.bookDisplay {
-            // Update the book of the cell
-            bookBeingUpdated.currentPage = Int(updatedCell.currentPageView.text!)!
-            updatedCell.progressBarView.progress = Float(bookBeingUpdated.currentPage) / Float(bookBeingUpdated.totalPages)
-            updatedCell.progressLabelView.text = String(Int(Float(bookBeingUpdated.currentPage)*100 / Float(bookBeingUpdated.totalPages)))+"%"
-        }
-        self.tableView.reloadData()
     }
     
     

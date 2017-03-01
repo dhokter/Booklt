@@ -21,6 +21,7 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         // As this book is set, then the following display will set up
         didSet {
             if let book = bookDisplay {
+                addDoneButtonOnKeyboard()
                 titleBookView.text = book.title
                 coverImageView.image = book.cover
                 currentPageView.text = String(book.currentPage)
@@ -30,6 +31,23 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
             }
         }
     }
+    
+    // When user switch directly from textfield to textfield and not hit Return, the currentpage will still be updated
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateTheCell()
+    }
+    
+    // Function to update the cell from the text field
+    @objc private func updateTheCell() {
+        // Update the book of the cell
+        currentPageView.resignFirstResponder()
+        bookDisplay?.currentPage = Int(self.currentPageView.text!)!
+        progressBarView.progress = Float((bookDisplay?.currentPage)!) / Float((bookDisplay?.totalPages)!)
+        let progress = Float((bookDisplay?.currentPage)!)*100 / Float((bookDisplay?.totalPages)!)
+        progressLabelView.text = String(Int(progress))+"%"
+    }
+    
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -41,4 +59,27 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         // Configure the view for the selected state
     }
+    
+    // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    private func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(updateTheCell))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.currentPageView.inputAccessoryView = doneToolbar
+    }
+    
+//    func doneButtonAction() {
+//        self.currentPageTextField.resignFirstResponder()
+//        self.totalPageTextField.resignFirstResponder()
+//    }
+
 }
