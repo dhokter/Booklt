@@ -41,7 +41,7 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return bookManager.getNumBook()
+        return bookManager.getNumDisplayedBook()
     }
 
     
@@ -74,20 +74,45 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
         guard let cell = textField.superview?.superview as? BookTableViewCell else {
             fatalError("Error with configure the BookTableViewCell")
         }
-        // Update the book of the cell
-        
-        if let bookBeingUpdated = cell.bookDisplay {
-            bookBeingUpdated.currentPage = Int(cell.currentPageView.text!)!
-            cell.progressBarView.progress = Float(bookBeingUpdated.currentPage) / Float(bookBeingUpdated.pageNumber)
-            cell.progressLabelView.text = String(Int(Float(bookBeingUpdated.currentPage)*100 / Float(bookBeingUpdated.pageNumber)))+"%"
-        }
-
-        self.tableView.reloadData()
-
+        updateTheCell(updatedCell: cell)
         return true
     }
+    
+    // When user switch directly from textfield to textfield and not hit Return, the currentpage will still be updated
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let cell = textField.superview?.superview as? BookTableViewCell else {
+            fatalError("Error with configure the BookTableViewCell")
+        }
+        updateTheCell(updatedCell: cell)
+    }
+    
+    // Function to update the cell from the text field
+    private func updateTheCell(updatedCell: BookTableViewCell) {
+        if let bookBeingUpdated = updatedCell.bookDisplay {
+            // Update the book of the cell
+            bookBeingUpdated.currentPage = Int(updatedCell.currentPageView.text!)!
+            updatedCell.progressBarView.progress = Float(bookBeingUpdated.currentPage) / Float(bookBeingUpdated.pageNumber)
+            updatedCell.progressLabelView.text = String(Int(Float(bookBeingUpdated.currentPage)*100 / Float(bookBeingUpdated.pageNumber)))+"%"
+        }
+        self.tableView.reloadData()
+    }
+    
+    
+    // The function the for unwind segue from the AddBookView.
+    @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? AddBookViewController {
+            // Add the new book passed by the AddBookView to the storage, and generate the new list of displayed books.
+            bookManager.addNewBook(newBook: sourceViewController.newBook!)
+            listBook = bookManager.getDislayedBooks()
+            // Creating new cell for the book
+            let newIndexPath = IndexPath(row: bookManager.getNumDisplayedBook()-1, section: 0)
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
+            self.tableView.endUpdates()
+        }
+    }
 
-    /*
+        /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.

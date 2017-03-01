@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; };
 		092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */; };
 		4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */; };
-		4CB2209E1E54E84C00AF0647 /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */; };
 		4CB220A11E54E84C00AF0647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2209F1E54E84C00AF0647 /* Main.storyboard */; };
 		4CB220A31E54E84C00AF0647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB220A21E54E84C00AF0647 /* Assets.xcassets */; };
 		4CB220A61E54E84C00AF0647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB220A41E54E84C00AF0647 /* LaunchScreen.storyboard */; };
@@ -185,9 +185,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				4CC111921E651F1D00A9B8E4 /* BookManager.swift in Sources */,
+				4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */,
 				4CE19B391E5FF2480085B508 /* BookTableViewController.swift in Sources */,
 				4CE19B371E5FF0860085B508 /* BookTableViewCell.swift in Sources */,
-				4CB2209E1E54E84C00AF0647 /* AddBookViewController.swift in Sources */,
 				4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */,
 				4CE19B351E5FEEB20085B508 /* Book.swift in Sources */,
 			);

@@ -119,7 +119,7 @@
         <!--New-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="AddBookViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -242,7 +242,11 @@
                                 <action selector="tochedCancel:" destination="BYZ-38-t0r" id="bBS-Xj-E39"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="1FZ-me-JtR"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1FZ-me-JtR">
+                            <connections>
+                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookAndUnwindWithSender:" id="Lcs-CZ-2eL"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="authorTextField" destination="hkN-s2-RtH" id="baN-SL-Xz5"/>
@@ -253,6 +257,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <exit id="bLJ-Fo-g44" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1876.8115942028987" y="19.565217391304348"/>
         </scene>

@@ -18,7 +18,7 @@ class Book {
     var author: String
     
     //Failable initializer
-    init?(titleBook: String, pageNumber: Int, bookCover: UIImage?, currentPage: Int = 0, author: String = "") {
+    init?(titleBook: String, pageNumber: Int, bookCover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "") {
         if titleBook.isEmpty || pageNumber < 0 || currentPage < 0 {
             return nil
         }
