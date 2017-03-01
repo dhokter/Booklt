@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; };
 		092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		092D62A91E66A31C001269D1 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 092D62A81E66A31C001269D1 /* DataStorage.swift */; };
 		4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */; };
 		4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */; };
 		4CB220A11E54E84C00AF0647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2209F1E54E84C00AF0647 /* Main.storyboard */; };
@@ -35,6 +36,7 @@
 
 /* Begin PBXFileReference section */
 		092D62941E624B73001269D1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		092D62A81E66A31C001269D1 /* DataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		4CB220981E54E84C00AF0647 /* Bookmark_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookmark_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,7 @@
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
 				4CE19B341E5FEEB20085B508 /* Book.swift */,
 				4CC111911E651F1D00A9B8E4 /* BookManager.swift */,
+				092D62A81E66A31C001269D1 /* DataStorage.swift */,
 			);
 			path = Bookmark_MVP;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				4CE19B391E5FF2480085B508 /* BookTableViewController.swift in Sources */,
 				4CE19B371E5FF0860085B508 /* BookTableViewCell.swift in Sources */,
 				4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */,
+				092D62A91E66A31C001269D1 /* DataStorage.swift in Sources */,
 				4CE19B351E5FEEB20085B508 /* Book.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
