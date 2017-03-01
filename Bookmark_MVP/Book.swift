@@ -11,20 +11,20 @@ import UIKit
 
 class Book {
     // Properties of book
-    var titleBook: String
-    var pageNumber: Int
+    var title: String
+    var totalPages: Int
     var currentPage: Int
-    var bookCover: UIImage?
+    var cover: UIImage?
     var author: String
     
     //Failable initializer
-    init?(titleBook: String, pageNumber: Int, bookCover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "") {
-        if titleBook.isEmpty || pageNumber < 0 || currentPage < 0 {
+    init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "") {
+        if title.isEmpty || totalPages < 0 || currentPage < 0 {
             return nil
         }
-        self.titleBook = titleBook
-        self.pageNumber = pageNumber
-        self.bookCover = bookCover
+        self.title = title
+        self.totalPages = totalPages
+        self.cover = cover
         self.currentPage = currentPage
         self.author = ""
     }

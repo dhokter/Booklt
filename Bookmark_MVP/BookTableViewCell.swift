@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookTableViewCell: UITableViewCell {
+class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var titleBookView: UILabel!
@@ -21,11 +21,12 @@ class BookTableViewCell: UITableViewCell {
         // As this book is set, then the following display will set up
         didSet {
             if let book = bookDisplay {
-                titleBookView.text = book.titleBook
-                coverImageView.image = book.bookCover
+                titleBookView.text = book.title
+                coverImageView.image = book.cover
                 currentPageView.text = String(book.currentPage)
-                progressBarView.progress = Float(book.currentPage) / Float(book.pageNumber)
-                progressLabelView.text = String(Int(Float(book.currentPage)*100 / Float(book.pageNumber)))+"%"
+                currentPageView.delegate = self
+                progressBarView.progress = Float(book.currentPage) / Float(book.totalPages)
+                progressLabelView.text = String(Int(Float(book.currentPage)*100 / Float(book.totalPages)))+"%"
             }
         }
     }

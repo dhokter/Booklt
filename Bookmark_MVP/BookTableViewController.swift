@@ -14,11 +14,11 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
     let bookManager = BookManager()
     
     // List of books to be displayed on screen, with value passed by the bookManager
-    var listBook = [Book]()
+    var books = [Book]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        listBook = bookManager.getDislayedBooks()
+        books = bookManager.getDislayedBooks()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -52,10 +52,10 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
             fatalError("The dequeued cell is not an instance of BookTableViewCell")
         }
         
-        let aBook = listBook[indexPath.row]
+        let book = books[indexPath.row]
         
         // Loading the information in the book to the cell to display
-        cell.bookDisplay = aBook
+        cell.bookDisplay = book
         cell.currentPageView.delegate = self
         // Configure the cell...
 
@@ -91,8 +91,8 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
         if let bookBeingUpdated = updatedCell.bookDisplay {
             // Update the book of the cell
             bookBeingUpdated.currentPage = Int(updatedCell.currentPageView.text!)!
-            updatedCell.progressBarView.progress = Float(bookBeingUpdated.currentPage) / Float(bookBeingUpdated.pageNumber)
-            updatedCell.progressLabelView.text = String(Int(Float(bookBeingUpdated.currentPage)*100 / Float(bookBeingUpdated.pageNumber)))+"%"
+            updatedCell.progressBarView.progress = Float(bookBeingUpdated.currentPage) / Float(bookBeingUpdated.totalPages)
+            updatedCell.progressLabelView.text = String(Int(Float(bookBeingUpdated.currentPage)*100 / Float(bookBeingUpdated.totalPages)))+"%"
         }
         self.tableView.reloadData()
     }
@@ -102,8 +102,8 @@ class BookTableViewController: UITableViewController, UITextFieldDelegate {
     @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddBookViewController {
             // Add the new book passed by the AddBookView to the storage, and generate the new list of displayed books.
-            bookManager.addNewBook(newBook: sourceViewController.newBook!)
-            listBook = bookManager.getDislayedBooks()
+            bookManager.addNewBook(book: sourceViewController.newBook!)
+            books = bookManager.getDislayedBooks()
             // Creating new cell for the book
             let newIndexPath = IndexPath(row: bookManager.getNumDisplayedBook()-1, section: 0)
             self.tableView.beginUpdates()

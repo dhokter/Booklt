@@ -29,15 +29,15 @@ class BookManager {
         let harryPotterImage = UIImage(named: "harryPotter")
         let theLostSymbolImage = UIImage(named: "theLostSymbol")
         
-        guard let book1 = Book(titleBook: "The Martian", pageNumber: 400, bookCover: theMartianImage, currentPage: 380) else {
+        guard let book1 = Book(title: "The Martian", totalPages: 400, cover: theMartianImage, currentPage: 380) else {
             fatalError("Cannot instantiate book1")
         }
         
-        guard let book2 = Book(titleBook: "Harry Potter and the Deathly hallows", pageNumber: 1200, bookCover: harryPotterImage, currentPage: 265) else {
+        guard let book2 = Book(title: "Harry Potter and the Deathly hallows", totalPages: 1200, cover: harryPotterImage, currentPage: 265) else {
             fatalError("Cannot instantiate book2")
         }
         
-        guard let book3 = Book(titleBook: "The Lost Symbol", pageNumber: 1300, bookCover: theLostSymbolImage, currentPage: 780) else {
+        guard let book3 = Book(title: "The Lost Symbol", totalPages: 1300, cover: theLostSymbolImage, currentPage: 780) else {
             fatalError("Cannot instantiate book3")
         }
         displayedBooks += [book1, book2, book3]
@@ -51,9 +51,9 @@ class BookManager {
     }
     
     // Adding a newly created book to the inventory, and also add it to displayedBook list as well
-    public func addNewBook(newBook: Book) {
-        allBooks.append(newBook)
-        displayedBooks.append(newBook)
+    public func addNewBook(book: Book) {
+        allBooks.append(book)
+        displayedBooks.append(book)
     }
     
     public func getNumDisplayedBook() -> Int {
