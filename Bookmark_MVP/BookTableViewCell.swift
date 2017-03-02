@@ -32,7 +32,7 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    // When user switch directly from textfield to textfield and not hit Return, the currentpage will still be updated
+    // When user choose another textfield while editing one, the current one will still be updated (endEditing)
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateTheCell()
     }
@@ -76,10 +76,4 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         
         self.currentPageView.inputAccessoryView = doneToolbar
     }
-    
-//    func doneButtonAction() {
-//        self.currentPageTextField.resignFirstResponder()
-//        self.totalPageTextField.resignFirstResponder()
-//    }
-
 }

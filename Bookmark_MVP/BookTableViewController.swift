@@ -56,13 +56,12 @@ class BookTableViewController: UITableViewController {
         
         // Loading the information in the book to the cell to display
         cell.bookDisplay = book
-        // Configure the cell...
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
+        self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
     }
     
     
