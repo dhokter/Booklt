@@ -15,6 +15,7 @@
 		4CB220A11E54E84C00AF0647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2209F1E54E84C00AF0647 /* Main.storyboard */; };
 		4CB220A31E54E84C00AF0647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB220A21E54E84C00AF0647 /* Assets.xcassets */; };
 		4CB220A61E54E84C00AF0647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB220A41E54E84C00AF0647 /* LaunchScreen.storyboard */; };
+		4CBF6F341E67EF5B003EE5B5 /* BookDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */; };
 		4CC111921E651F1D00A9B8E4 /* BookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC111911E651F1D00A9B8E4 /* BookManager.swift */; };
 		4CE19B351E5FEEB20085B508 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE19B341E5FEEB20085B508 /* Book.swift */; };
 		4CE19B371E5FF0860085B508 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE19B361E5FF0860085B508 /* BookTableViewCell.swift */; };
@@ -46,6 +47,7 @@
 		4CB220A21E54E84C00AF0647 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4CB220A51E54E84C00AF0647 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4CB220A71E54E84C00AF0647 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsViewController.swift; sourceTree = "<group>"; };
 		4CC111911E651F1D00A9B8E4 /* BookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookManager.swift; sourceTree = "<group>"; };
 		4CE19B341E5FEEB20085B508 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		4CE19B361E5FF0860085B508 /* BookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				4CB220AD1E54E85D00AF0647 /* Supporting Files */,
 				4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */,
 				4CE19B361E5FF0860085B508 /* BookTableViewCell.swift */,
+				4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */,
 				4CE19B381E5FF2480085B508 /* BookTableViewController.swift */,
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
 				4CE19B341E5FEEB20085B508 /* Book.swift */,
@@ -216,6 +219,7 @@
 			files = (
 				4CC111921E651F1D00A9B8E4 /* BookManager.swift in Sources */,
 				4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */,
+				4CBF6F341E67EF5B003EE5B5 /* BookDetailsViewController.swift in Sources */,
 				4CE19B391E5FF2480085B508 /* BookTableViewController.swift in Sources */,
 				4CE19B371E5FF0860085B508 /* BookTableViewCell.swift in Sources */,
 				4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */,

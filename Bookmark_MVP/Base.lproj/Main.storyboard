@@ -23,7 +23,7 @@
                                 <rect key="frame" x="0.0" y="28" width="414" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gWn-SF-rew" id="Hli-2H-Qd2">
-                                    <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="cAK-8C-DmV">
@@ -297,8 +297,7 @@
         <!--Book Title-->
         <scene sceneID="8T4-9Z-xS6">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="o3k-oC-Wmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="QCX-LA-fGm" sceneMemberID="viewController">
+                <viewController id="QCX-LA-fGm" customClass="BookDetailsViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M6M-5g-un5"/>
                         <viewControllerLayoutGuide type="bottom" id="yDb-nt-INI"/>
@@ -309,10 +308,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="Book Title" id="qE2-YT-7D2">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="SJ4-dx-suY"/>
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="SJ4-dx-suY">
+                            <connections>
+                                <action selector="backButtonTouched:" destination="QCX-LA-fGm" id="jsg-cl-vtX"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hck-kQ-0Wc"/>
                     </navigationItem>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="o3k-oC-Wmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1876.8115942028987" y="788.31521739130437"/>
         </scene>
