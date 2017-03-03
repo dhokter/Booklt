@@ -75,8 +75,8 @@ class BookTableViewController: UITableViewController {
                 return
             }
             destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
-        default:
-            return
+        default: break
+            
         }
     }
     
