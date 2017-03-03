@@ -22,15 +22,34 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="oQO-mF-t1O">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.90000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchImage" translatesAutoresizingMaskIntoConstraints="NO" id="oQO-mF-t1O">
                                 <rect key="frame" x="-9" y="0.0" width="393" height="667"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.80000000000000004" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle" translatesAutoresizingMaskIntoConstraints="NO" id="bHn-1B-Ddy">
+                                <rect key="frame" x="37" y="82" width="300" height="296"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="296" id="5xI-X0-ozG"/>
+                                    <constraint firstAttribute="width" constant="300" id="u5y-9e-vfK"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="App Title" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TGu-hm-yPF">
+                                <rect key="frame" x="37" y="82.5" width="300" height="296"/>
+                                <fontDescription key="fontDescription" name="Georgia" family="Georgia" pointSize="56"/>
+                                <color key="textColor" red="0.11887647534857729" green="0.11738084915768925" blue="0.12514022437179484" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="oQO-mF-t1O" secondAttribute="bottom" id="18R-M3-Bjx"/>
+                            <constraint firstItem="bHn-1B-Ddy" firstAttribute="centerX" secondItem="oQO-mF-t1O" secondAttribute="centerX" id="1th-U0-JOu"/>
+                            <constraint firstItem="TGu-hm-yPF" firstAttribute="centerX" secondItem="bHn-1B-Ddy" secondAttribute="centerX" id="4IG-Cf-NmA"/>
                             <constraint firstItem="oQO-mF-t1O" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="topMargin" id="6jx-u4-mVV"/>
                             <constraint firstItem="oQO-mF-t1O" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leadingMargin" constant="-25" id="CCG-fC-W6l"/>
+                            <constraint firstItem="TGu-hm-yPF" firstAttribute="width" secondItem="bHn-1B-Ddy" secondAttribute="width" id="DR4-EH-fma"/>
+                            <constraint firstItem="oQO-mF-t1O" firstAttribute="top" secondItem="bHn-1B-Ddy" secondAttribute="bottom" constant="-378" id="Kak-bx-gSq"/>
+                            <constraint firstItem="TGu-hm-yPF" firstAttribute="centerY" secondItem="bHn-1B-Ddy" secondAttribute="centerY" id="YM1-ua-dyb"/>
+                            <constraint firstItem="TGu-hm-yPF" firstAttribute="height" secondItem="bHn-1B-Ddy" secondAttribute="height" id="fav-cS-olB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oQO-mF-t1O" secondAttribute="trailing" constant="-25" id="t9C-RN-wQF"/>
                         </constraints>
                     </view>
@@ -41,6 +60,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LaunchImage" width="1024" height="682"/>
+        <image name="LaunchImage" width="849" height="565"/>
+        <image name="circle" width="435" height="435"/>
     </resources>
 </document>
