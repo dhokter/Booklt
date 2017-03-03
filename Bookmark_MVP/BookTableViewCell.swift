@@ -17,10 +17,10 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var progressBarView: UIProgressView!
     
     // The instance of the book the cell is displaying
-    var bookDisplay: Book? {
+    var book: Book? {
         // As this book is set, then the following display will set up
         didSet {
-            if let book = bookDisplay {
+            if let book = self.book {
                 addDoneButtonOnKeyboard()
                 titleBookView.text = book.title
                 coverImageView.image = book.cover
@@ -41,10 +41,12 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
     @objc private func updateTheCell() {
         // Update the book of the cell
         currentPageView.resignFirstResponder()
-        bookDisplay?.currentPage = Int(self.currentPageView.text!)!
-        progressBarView.progress = Float((bookDisplay?.currentPage)!) / Float((bookDisplay?.totalPages)!)
-        let progress = Float((bookDisplay?.currentPage)!)*100 / Float((bookDisplay?.totalPages)!)
-        progressLabelView.text = String(Int(progress))+"%"
+        if let book = self.book {
+            book.currentPage = Int(self.currentPageView.text!)!
+            progressBarView.progress = Float((book.currentPage)) / Float((book.totalPages))
+            let progress = Float((book.currentPage))*100 / Float((book.totalPages))
+            progressLabelView.text = String(Int(progress))+"%"
+        }
     }
     
     

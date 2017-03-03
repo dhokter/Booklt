@@ -8,14 +8,28 @@
 
 import UIKit
 
-class BookDetailsViewController: UIViewController {
+class BookDetailsViewController: UIViewController, UITextFieldDelegate {
 
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var authorTextField: UITextField!
+    @IBOutlet weak var totalPagesTextField: UITextField!
+    @IBOutlet weak var currentPageTextField: UITextField!
+    
+    var book: Book?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        if let book = self.book {
+            navigationItem.title = book.title
+            titleTextField.text = book.title
+            authorTextField.text = book.author
+            totalPagesTextField.text = String(book.totalPages)
+            currentPageTextField.text = String(book.currentPage)
+        }
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

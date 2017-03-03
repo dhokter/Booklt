@@ -55,13 +55,29 @@ class BookTableViewController: UITableViewController {
         let book = books[indexPath.row]
         
         // Loading the information in the book to the cell to display
-        cell.bookDisplay = book
+        cell.book = book
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier! {
+        case "MoveToBookDetailsSegue":
+            // Pass the book instance of the cell to the ViewController for displaying
+            print("--------------------------------------> PREPARED!!!")
+            guard let destination = segue.destination.childViewControllers[0] as? BookDetailsViewController else {
+                print("--------------------------------------> PREPARED FAILED!!!")
+                print(segue.destination)
+                return
+            }
+            destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
+        default:
+            return
+        }
     }
     
     
