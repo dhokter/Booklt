@@ -19,6 +19,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addDoneButtonOnKeyboard()
 
         // Do any additional setup after loading the view.
         if let book = self.book {
@@ -38,6 +39,26 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    private func addDoneButtonOnKeyboard() {
+        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
+        doneToolbar.barStyle       = UIBarStyle.default
+        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(resignFirstResponder))
+        
+        var items = [UIBarButtonItem]()
+        items.append(flexSpace)
+        items.append(done)
+        
+        doneToolbar.items = items
+        doneToolbar.sizeToFit()
+        
+        self.currentPageTextField.inputAccessoryView = doneToolbar
+        self.totalPagesTextField.inputAccessoryView = doneToolbar
+    }
+
+
 
     /*
     // MARK: - Navigation

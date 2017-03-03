@@ -65,4 +65,10 @@ class BookManager {
         // Return the total number of books in the inventory
         return allBooks.count
     }
+    
+    public func markAsFinished(book: Book) {
+        // Remove by filter the list of displayed books
+        // Using !== because of comparing object
+        displayedBooks = displayedBooks.filter({$0 !== book})
+    }
 }
