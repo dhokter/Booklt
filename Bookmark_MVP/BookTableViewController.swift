@@ -18,6 +18,7 @@ class BookTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         books = bookManager.getDislayedBooks()
         
         // Uncomment the following line to preserve selection between presentations
@@ -64,12 +65,12 @@ class BookTableViewController: UITableViewController {
         self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
     }
     
+    // Prepare the data before a segue. Divided by cases, each cases using Segue Identifier to perform appropriate action
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier! {
         case "MoveToBookDetailsSegue":
             // Pass the book instance of the cell to the ViewController for displaying
             guard let destination = segue.destination.childViewControllers[0] as? BookDetailsViewController else {
-                print(segue.destination)
                 return
             }
             destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
@@ -78,6 +79,10 @@ class BookTableViewController: UITableViewController {
         }
     }
     
+    // The function to reload the data if the view appear again by the BACK button of some other ViewController
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
     
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {

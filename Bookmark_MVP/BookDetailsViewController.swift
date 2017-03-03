@@ -16,6 +16,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var currentPageTextField: UITextField!
     
     var book: Book?
+    var userIsEditingTheBook = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,16 +37,36 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    // If the back button touched, back to the screen (not saving anything if in edit mode)
     @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
     
+    // Touch edit button function
+    @IBAction func editButtonTouched(_ sender: UIBarButtonItem) {
+        if !userIsEditingTheBook {
+            sender.title = "Save"
+        } else {
+            sender.title = "Edit"
+            book?.title = titleTextField.text!
+            book?.author = authorTextField.text!
+            book?.totalPages = Int(totalPagesTextField.text!) ?? 0
+            book?.currentPage = Int(currentPageTextField.text!) ?? 0
+        }
+        userIsEditingTheBook = !userIsEditingTheBook
+
+        titleTextField.isEnabled = userIsEditingTheBook
+        authorTextField.isEnabled = userIsEditingTheBook
+        totalPagesTextField.isEnabled = userIsEditingTheBook
+        currentPageTextField.isEnabled = userIsEditingTheBook
+        
+    }
     // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     private func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle       = UIBarStyle.default
         let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(resignFirstResponder))
+        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
         
         var items = [UIBarButtonItem]()
         items.append(flexSpace)
@@ -58,7 +79,10 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         self.totalPagesTextField.inputAccessoryView = doneToolbar
     }
 
-
+    public func doneButtonAction() {
+        currentPageTextField.resignFirstResponder()
+        totalPagesTextField.resignFirstResponder()
+    }
 
     /*
     // MARK: - Navigation

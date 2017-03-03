@@ -26,7 +26,7 @@ class Book {
         self.totalPages = totalPages
         self.cover = cover
         self.currentPage = currentPage
-        self.author = ""
+        self.author = author
     }
     
     
