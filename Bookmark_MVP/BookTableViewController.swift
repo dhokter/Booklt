@@ -87,6 +87,9 @@ class BookTableViewController: UITableViewController {
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
     override func viewWillAppear(_ animated: Bool) {
+        if isAlphabetical{
+            sortBooksAlphabetically()
+        }
         tableView.reloadData()
     }
     
@@ -125,7 +128,8 @@ class BookTableViewController: UITableViewController {
    
     
     private func sortBooksAlphabetically(){
-        books = books.sorted(by: {$0.title < $1.title})
+        books = books.sorted(by: {$0.title < $1.title })
+        //books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
     
@@ -136,7 +140,7 @@ class BookTableViewController: UITableViewController {
 //        let ignoreCase = alphebetizable.lowercased()
 //        let index = ignoreCase.index(ignoreCase.startIndex, offsetBy: 3)
 //        let firstThreeLetters = ignoreCase.substring(to: index)
-//        if firstThreeLetters == "the"{
+//        if firstThreeLetters == "the "{
 //            alphebetizable = ignoreCase.substring(from: index)
 //        }
 //        return alphebetizable
