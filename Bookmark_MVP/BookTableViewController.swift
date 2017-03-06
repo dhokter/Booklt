@@ -128,23 +128,22 @@ class BookTableViewController: UITableViewController {
    
     
     private func sortBooksAlphabetically(){
-        books = books.sorted(by: {$0.title < $1.title })
-        //books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+        //books = books.sorted(by: {$0.title < $1.title })
+        books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
     
 //(Kelli) WIP function for ignoring "the" substring when alphabetizing
     
-//    private func makeAlphabetizableTitle(book : Book) -> String{
-//        var alphebetizable = book.title
-//        let ignoreCase = alphebetizable.lowercased()
-//        let index = ignoreCase.index(ignoreCase.startIndex, offsetBy: 3)
-//        let firstThreeLetters = ignoreCase.substring(to: index)
-//        if firstThreeLetters == "the "{
-//            alphebetizable = ignoreCase.substring(from: index)
-//        }
-//        return alphebetizable
-//    }
+    private func makeAlphabetizableTitle(book : Book) -> String{
+        var alphebetizable = book.title.lowercased()
+        let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
+        let firstThreeLetters = alphebetizable.substring(to: index)
+        if firstThreeLetters == "the "{
+            alphebetizable = alphebetizable.substring(from: index)
+        }
+        return alphebetizable
+    }
     
     
     /*
