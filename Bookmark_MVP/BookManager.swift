@@ -14,9 +14,6 @@ class BookManager {
     private var allBooks = [Book]()
     // List of all books being displayed.
     private var displayedBooks = [Book]()
-    // Data storage manager
-    private var dataStorage = DataStorage()
-    
     
     init() {
         loadInitialList()
