@@ -73,10 +73,10 @@ class BookTableViewController: UITableViewController {
     
     // Prepare the data before a segue. Divided by cases, each cases using Segue Identifier to perform appropriate action
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier! {
-        case "MoveToBookDetailsSegue":
+        switch segue.identifier {
+        case "MoveToBookDetailsSegue"?:
             // Pass the book instance of the cell to the ViewController for displaying
-            guard let destination = segue.destination.childViewControllers[0] as? BookDetailsViewController else {
+            guard let destination = segue.destination as? BookDetailsViewController else {
                 return
             }
             destination.book = books[(tableView.indexPathForSelectedRow?.row)!]

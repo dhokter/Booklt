@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6Gj-2R-9wV">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6Gj-2R-9wV">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -118,18 +118,18 @@
                     <navigationItem key="navigationItem" title="Your Books" id="Om9-fX-aLO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GbP-lC-u8F">
                             <connections>
-                                <segue destination="w53-De-wAO" kind="presentation" identifier="moveToAddBook" id="v4L-Xa-B0F"/>
+                                <segue destination="BYZ-38-t0r" kind="presentation" id="R1H-Eq-GW8"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="sortType" destination="wGL-vz-DBp" id="REG-hI-vbf"/>
-                        <segue destination="scL-r3-Gt8" kind="presentation" identifier="MoveToBookDetailsSegue" id="1fy-8g-yXx"/>
+                        <segue destination="QCX-LA-fGm" kind="show" identifier="MoveToBookDetailsSegue" id="Tfq-AS-43h"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4i-Hy-rOK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="214.49275362318843" y="20.380434782608699"/>
+            <point key="canvasLocation" x="196" y="204"/>
         </scene>
         <!--New-->
         <scene sceneID="tne-QT-ifu">
@@ -143,8 +143,81 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter book title" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="798-IC-2m8">
+                                <rect key="frame" x="183.5" y="136" width="159.5" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="PNE-zt-r66"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="t49-2s-PRG"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="peL-Wu-gJq"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="(Optional)" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkN-s2-RtH">
+                                <rect key="frame" x="143" y="196.5" width="200" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="Ect-LD-wz0"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Jdg-eA-5XX"/>
+                                    <constraint firstAttribute="width" constant="200" id="ukC-f5-uAl"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="gOh-Uh-KfB"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fup-IM-Jh1">
+                                <rect key="frame" x="284" y="257" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="Lfg-e3-6hk"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="muN-Re-DpC"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="iFV-Dt-pWb"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-SG-DgB">
+                                <rect key="frame" x="284" y="317.5" width="60" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="8We-fA-G4r"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="UCb-V6-kJ4"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="QxE-56-mgT"/>
+                                </connections>
+                            </textField>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qPI-dF-YBt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="65"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="iId-Qt-YUX"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem title="New book" id="6mr-K5-2f7">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="6cY-bI-rbY">
+                                            <connections>
+                                                <action selector="tochedCancel:" destination="BYZ-38-t0r" id="KyV-rV-1Fr"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="Save" id="f6M-jV-PVt">
+                                            <connections>
+                                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookAndUnwindWithSender:" id="iZc-YO-BPH"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="40" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lif-e3-KGJ">
-                                <rect key="frame" x="32" y="94" width="129" height="221.5"/>
+                                <rect key="frame" x="71.5" y="131" width="129" height="221.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0z-SO-fHF">
                                         <rect key="frame" x="0.0" y="0.0" width="92" height="40"/>
@@ -185,74 +258,22 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter book title" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="798-IC-2m8">
-                                <rect key="frame" x="144" y="98.5" width="200" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="PNE-zt-r66"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="t49-2s-PRG"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="peL-Wu-gJq"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="(Optional)" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hkN-s2-RtH">
-                                <rect key="frame" x="144" y="160" width="200" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="200" id="Ect-LD-wz0"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="Jdg-eA-5XX"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="gOh-Uh-KfB"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fup-IM-Jh1">
-                                <rect key="frame" x="244" y="220.5" width="100" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="Lfg-e3-6hk"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="muN-Re-DpC"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="iFV-Dt-pWb"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-SG-DgB">
-                                <rect key="frame" x="244" y="281" width="100" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="8We-fA-G4r"/>
-                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="100" id="UCb-V6-kJ4"/>
-                                </constraints>
-                                <nil key="textColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="QxE-56-mgT"/>
-                                </connections>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="hkN-s2-RtH" secondAttribute="trailing" constant="15" id="2va-2d-Rad"/>
-                            <constraint firstItem="Lif-e3-KGJ" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="Bst-H5-bE1"/>
+                            <constraint firstItem="hkN-s2-RtH" firstAttribute="trailing" secondItem="798-IC-2m8" secondAttribute="trailing" id="4KQ-hg-Udt"/>
                             <constraint firstItem="798-IC-2m8" firstAttribute="leading" secondItem="d0z-SO-fHF" secondAttribute="trailing" constant="19.670000000000002" id="F0r-HR-gTp"/>
-                            <constraint firstItem="fup-IM-Jh1" firstAttribute="leading" secondItem="HpF-bg-2dw" secondAttribute="trailing" constant="95.670000000000002" id="HbK-sr-Uc1"/>
                             <constraint firstItem="uDw-SG-DgB" firstAttribute="centerY" secondItem="5Zj-a7-Tuu" secondAttribute="centerY" id="Ixf-Ac-e1x"/>
                             <constraint firstItem="fup-IM-Jh1" firstAttribute="centerY" secondItem="HpF-bg-2dw" secondAttribute="centerY" id="MOC-E9-GIo"/>
                             <constraint firstItem="uDw-SG-DgB" firstAttribute="leading" secondItem="5Zj-a7-Tuu" secondAttribute="trailing" constant="83.329999999999998" id="NTd-vb-02F"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fup-IM-Jh1" secondAttribute="trailing" constant="15" id="Tae-eL-khy"/>
-                            <constraint firstItem="Lif-e3-KGJ" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="16" id="UXA-RR-xdD"/>
                             <constraint firstItem="hkN-s2-RtH" firstAttribute="centerY" secondItem="x2P-W6-G7o" secondAttribute="centerY" id="V1d-SU-dGP"/>
-                            <constraint firstItem="hkN-s2-RtH" firstAttribute="leading" secondItem="x2P-W6-G7o" secondAttribute="trailing" constant="44.670000000000002" id="b1y-ge-O7f"/>
+                            <constraint firstItem="qPI-dF-YBt" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="XtZ-rw-gY8"/>
+                            <constraint firstAttribute="trailing" secondItem="qPI-dF-YBt" secondAttribute="trailing" id="bXX-kN-dlt"/>
                             <constraint firstItem="798-IC-2m8" firstAttribute="centerY" secondItem="d0z-SO-fHF" secondAttribute="centerY" id="czm-af-4BY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="798-IC-2m8" secondAttribute="trailing" constant="15" id="orb-f2-XwB"/>
+                            <constraint firstItem="Lif-e3-KGJ" firstAttribute="top" secondItem="qPI-dF-YBt" secondAttribute="bottom" constant="66" id="kV7-uX-7bS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="798-IC-2m8" secondAttribute="trailing" constant="16" id="orb-f2-XwB"/>
+                            <constraint firstItem="qPI-dF-YBt" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="s6e-dO-RYE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uDw-SG-DgB" secondAttribute="trailing" constant="15" id="w3b-qV-20x"/>
                         </constraints>
                     </view>
@@ -278,7 +299,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <exit id="bLJ-Fo-g44" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1876.8115942028987" y="19.565217391304348"/>
+            <point key="canvasLocation" x="1236" y="-502"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="TMH-iX-cT6">
@@ -296,25 +317,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4GR-lU-pUt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692.75362318840587" y="20.380434782608699"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="ayL-Nt-fHU">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="w53-De-wAO" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ogX-6k-SFC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="5ah-hG-hra"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="sxZ-lP-Pcb" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="969.56521739130437" y="19.565217391304348"/>
+            <point key="canvasLocation" x="-614" y="204"/>
         </scene>
         <!--Book Title-->
         <scene sceneID="8T4-9Z-xS6">
@@ -426,11 +429,6 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Book Title" id="qE2-YT-7D2">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="SJ4-dx-suY">
-                            <connections>
-                                <action selector="backButtonTouched:" destination="QCX-LA-fGm" id="jsg-cl-vtX"/>
-                            </connections>
-                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hck-kQ-0Wc">
                             <connections>
                                 <action selector="editButtonTouched:" destination="QCX-LA-fGm" id="yNd-Ti-LRF"/>
@@ -446,25 +444,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o3k-oC-Wmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1876" y="787.55622188905556"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="AK3-U7-Y3x">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="scL-r3-Gt8" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kwT-e5-tUd">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="QCX-LA-fGm" kind="relationship" relationship="rootViewController" id="cy6-SM-qio"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="f5W-SD-lsW" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="969.56521739130437" y="788.31521739130437"/>
+            <point key="canvasLocation" x="1236" y="204"/>
         </scene>
     </scenes>
     <resources>

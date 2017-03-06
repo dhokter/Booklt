@@ -36,12 +36,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    // If the back button touched, back to the screen (not saving anything if in edit mode)
-    @IBAction func backButtonTouched(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
+
     // Touch edit button function
     @IBAction func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
