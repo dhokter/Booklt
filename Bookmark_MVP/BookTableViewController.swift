@@ -16,6 +16,12 @@ class BookTableViewController: UITableViewController {
     // List of books to be displayed on screen, with value passed by the bookManager
     var books = [Book]()
     
+    //Checks sort method — true if alphabetical, false if by date
+    var isAlphabetical = false
+    
+    //(Kelli) Sort method buttons
+    @IBOutlet weak var sortType: UISegmentedControl!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -95,8 +101,47 @@ class BookTableViewController: UITableViewController {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
             self.tableView.endUpdates()
+            if isAlphabetical{
+                sortBooksAlphabetically()
+            }
+            tableView.reloadData()
         }
     }
+    
+    //(Kelli) Activated when user switches between "A-Z" and "Date" sort methods
+    @IBAction func sortTypeChanged(_ sender: Any) {
+        switch sortType.selectedSegmentIndex
+        {
+        case 0:
+            isAlphabetical = true
+            sortBooksAlphabetically()
+        case 1:
+            isAlphabetical = false
+        default:
+            break
+        }
+        tableView.reloadData()
+    }
+   
+    
+    private func sortBooksAlphabetically(){
+        books = books.sorted(by: {$0.title < $1.title})
+    }
+    
+    
+//(Kelli) WIP function for ignoring "the" substring when alphabetizing
+    
+//    private func makeAlphabetizableTitle(book : Book) -> String{
+//        var alphebetizable = book.title
+//        let ignoreCase = alphebetizable.lowercased()
+//        let index = ignoreCase.index(ignoreCase.startIndex, offsetBy: 3)
+//        let firstThreeLetters = ignoreCase.substring(to: index)
+//        if firstThreeLetters == "the"{
+//            alphebetizable = ignoreCase.substring(from: index)
+//        }
+//        return alphebetizable
+//    }
+    
     
     /*
     // Override to support conditional editing of the table view.

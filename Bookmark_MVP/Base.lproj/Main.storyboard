@@ -18,12 +18,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <segmentedControl key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" id="wGL-vz-DBp">
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="A-Z"/>
+                                <segment title="Date"/>
+                            </segments>
+                            <connections>
+                                <action selector="sortTypeChanged:" destination="TkE-vq-6g0" eventType="valueChanged" id="csb-Ku-qJv"/>
+                            </connections>
+                        </segmentedControl>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BookTableViewCell" rowHeight="100" id="gWn-SF-rew" customClass="BookTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="58" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gWn-SF-rew" id="Hli-2H-Qd2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="cAK-8C-DmV">
@@ -112,6 +123,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="sortType" destination="wGL-vz-DBp" id="REG-hI-vbf"/>
                         <segue destination="scL-r3-Gt8" kind="presentation" identifier="MoveToBookDetailsSegue" id="1fy-8g-yXx"/>
                     </connections>
                 </tableViewController>
