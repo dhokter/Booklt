@@ -133,14 +133,18 @@ class BookTableViewController: UITableViewController {
     }
     
     
-//(Kelli) WIP function for ignoring "the" substring when alphabetizing
+//(Kelli) function for ignoring "the" substring and case when alphabetizing
     
     private func makeAlphabetizableTitle(book : Book) -> String{
+        
         var alphebetizable = book.title.lowercased()
-        let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
-        let firstThreeLetters = alphebetizable.substring(to: index)
-        if firstThreeLetters == "the "{
-            alphebetizable = alphebetizable.substring(from: index)
+        
+        if alphebetizable.characters.count > 4{
+            let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
+            let firstThreeLetters = alphebetizable.substring(to: index)
+            if firstThreeLetters == "the "{
+                alphebetizable = alphebetizable.substring(from: index)
+            }
         }
         return alphebetizable
     }
