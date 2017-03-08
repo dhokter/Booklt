@@ -10,7 +10,7 @@ import UIKit
 
 class AllBooksTableViewController: UITableViewController {
     
-    var bookManager = BookManager()
+//    var bookManager = BookManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +51,9 @@ class AllBooksTableViewController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        print("-------------> ALL BOOKS APPEAR!!!")
         self.tableView.reloadData()
+        print(bookManager.allBooks[0].title)
     }
 
     /*

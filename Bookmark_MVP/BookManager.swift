@@ -9,6 +9,8 @@
 import Foundation
 import UIKit
 
+let bookManager = BookManager()
+
 class BookManager {
     // List of all books in the inventory.
     var allBooks = [Book]()

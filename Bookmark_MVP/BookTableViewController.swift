@@ -11,7 +11,7 @@ import UIKit
 class BookTableViewController: UITableViewController {
     
     // Create a book manager model
-    let bookManager = BookManager()
+//    let bookManager = BookManager()
     
     // List of books to be displayed on screen, with value passed by the bookManager
     var books = [Book]()
