@@ -50,10 +50,27 @@ class AllBooksTableViewController: UITableViewController {
         return cell
     }
     
+    // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
-        print("-------------> ALL BOOKS APPEAR!!!")
         self.tableView.reloadData()
-        print(bookManager.allBooks[0].title)
+    }
+    
+    // Select a book to move to its details page.
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "AllBookToBookDetailsSegue", sender: self)
+    }
+    
+    // Prepare for the BookDetailView before perform the segue to it.
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "AllBookToBookDetailsSegue"?:
+            guard let destination = segue.destination as? BookDetailsViewController else {
+                return
+            }
+            destination.book = bookManager.allBooks[(tableView.indexPathForSelectedRow?.row)!]
+        default:
+            return
+        }
     }
 
     /*
