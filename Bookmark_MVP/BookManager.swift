@@ -15,7 +15,7 @@ class BookManager {
     // List of all books in the inventory.
     var allBooks = [Book]()
     // List of all books being displayed.
-    private var displayedBooks = [Book]()
+    var displayedBooks = [Book]()
     
     init() {
         loadInitialList()

@@ -14,7 +14,7 @@ class BookTableViewController: UITableViewController {
 //    let bookManager = BookManager()
     
     // List of books to be displayed on screen, with value passed by the bookManager
-    var books = [Book]()
+//    var books = [Book]()
     
     //Checks sort method — true if alphabetical, false if by date
     var isAlphabetical = false
@@ -25,7 +25,7 @@ class BookTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        books = bookManager.getDislayedBooks()
+//        books = bookManager.getDislayedBooks()
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -59,7 +59,7 @@ class BookTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of BookTableViewCell")
         }
         
-        let book = books[indexPath.row]
+        let book = bookManager.displayedBooks[indexPath.row]
         
         // Loading the information in the book to the cell to display
         cell.book = book
@@ -79,7 +79,7 @@ class BookTableViewController: UITableViewController {
             guard let destination = segue.destination as? BookDetailsViewController else {
                 return
             }
-            destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
+            destination.book = bookManager.displayedBooks[(tableView.indexPathForSelectedRow?.row)!]
         default: break
             
         }
@@ -98,7 +98,7 @@ class BookTableViewController: UITableViewController {
         if let sourceViewController = sender.source as? AddBookViewController {
             // Add the new book passed by the AddBookView to the storage, and generate the new list of displayed books.
             bookManager.addNewBook(book: sourceViewController.newBook!)
-            books = bookManager.getDislayedBooks()
+//            books = bookManager.getDislayedBooks()
             // Creating new cell for the book
             let newIndexPath = IndexPath(row: bookManager.getNumDisplayedBook()-1, section: 0)
             self.tableView.beginUpdates()
@@ -129,7 +129,7 @@ class BookTableViewController: UITableViewController {
     
     private func sortBooksAlphabetically(){
         //books = books.sorted(by: {$0.title < $1.title })
-        books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+        bookManager.displayedBooks = bookManager.displayedBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
     
@@ -163,8 +163,8 @@ class BookTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the tableview, but the book will still be in inventory
-            bookManager.markAsFinished(book: books[indexPath.row])
-            books.remove(at: indexPath.row)
+            bookManager.markAsFinished(book: bookManager.displayedBooks[indexPath.row])
+//            bookManager.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
