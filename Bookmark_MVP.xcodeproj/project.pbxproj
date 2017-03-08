@@ -10,6 +10,8 @@
 		092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; };
 		092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */; };
+		4C99EFD11E6F9E20001D5EB1 /* AllBooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C99EFD01E6F9E20001D5EB1 /* AllBooksTableViewController.swift */; };
+		4C99EFD31E6F9E8F001D5EB1 /* AllBooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C99EFD21E6F9E8F001D5EB1 /* AllBooksTableViewCell.swift */; };
 		4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */; };
 		4CB220A11E54E84C00AF0647 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB2209F1E54E84C00AF0647 /* Main.storyboard */; };
 		4CB220A31E54E84C00AF0647 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4CB220A21E54E84C00AF0647 /* Assets.xcassets */; };
@@ -38,6 +40,8 @@
 
 /* Begin PBXFileReference section */
 		092D62941E624B73001269D1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		4C99EFD01E6F9E20001D5EB1 /* AllBooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllBooksTableViewController.swift; sourceTree = "<group>"; };
+		4C99EFD21E6F9E8F001D5EB1 /* AllBooksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AllBooksTableViewCell.swift; sourceTree = "<group>"; };
 		4CB220981E54E84C00AF0647 /* Bookmark_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookmark_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				4CE19B361E5FF0860085B508 /* BookTableViewCell.swift */,
 				4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */,
 				4CE19B381E5FF2480085B508 /* BookTableViewController.swift */,
+				4C99EFD21E6F9E8F001D5EB1 /* AllBooksTableViewCell.swift */,
+				4C99EFD01E6F9E20001D5EB1 /* AllBooksTableViewController.swift */,
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
 				4CE19B341E5FEEB20085B508 /* Book.swift */,
 				4CC111911E651F1D00A9B8E4 /* BookManager.swift */,
@@ -218,8 +224,10 @@
 				4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */,
 				4CBF6F341E67EF5B003EE5B5 /* BookDetailsViewController.swift in Sources */,
 				4CE19B391E5FF2480085B508 /* BookTableViewController.swift in Sources */,
+				4C99EFD31E6F9E8F001D5EB1 /* AllBooksTableViewCell.swift in Sources */,
 				4CE19B371E5FF0860085B508 /* BookTableViewCell.swift in Sources */,
 				4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */,
+				4C99EFD11E6F9E20001D5EB1 /* AllBooksTableViewController.swift in Sources */,
 				4CE19B351E5FEEB20085B508 /* Book.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

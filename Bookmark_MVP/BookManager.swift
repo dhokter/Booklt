@@ -11,7 +11,7 @@ import UIKit
 
 class BookManager {
     // List of all books in the inventory.
-    private var allBooks = [Book]()
+    var allBooks = [Book]()
     // List of all books being displayed.
     private var displayedBooks = [Book]()
     
@@ -46,7 +46,7 @@ class BookManager {
         // return all books for now as testing purpose
         return displayedBooks
     }
-    
+
     // Adding a newly created book to the inventory, and also add it to displayedBook list as well
     public func addNewBook(book: Book) {
         allBooks.append(book)

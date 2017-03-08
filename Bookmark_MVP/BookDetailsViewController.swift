@@ -9,7 +9,7 @@
 import UIKit
 
 class BookDetailsViewController: UIViewController, UITextFieldDelegate {
-
+    
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
     @IBOutlet weak var totalPagesTextField: UITextField!
@@ -21,7 +21,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addDoneButtonOnKeyboard()
-
+        
         // Do any additional setup after loading the view.
         if let book = self.book {
             navigationItem.title = book.title
@@ -36,7 +36,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // Touch edit button function
     @IBAction func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
@@ -49,7 +49,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
             book?.currentPage = Int(currentPageTextField.text!) ?? 0
         }
         userIsEditingTheBook = !userIsEditingTheBook
-
+        
         titleTextField.isEnabled = userIsEditingTheBook
         authorTextField.isEnabled = userIsEditingTheBook
         totalPagesTextField.isEnabled = userIsEditingTheBook
@@ -73,20 +73,20 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         self.currentPageTextField.inputAccessoryView = doneToolbar
         self.totalPagesTextField.inputAccessoryView = doneToolbar
     }
-
+    
     public func doneButtonAction() {
         currentPageTextField.resignFirstResponder()
         totalPagesTextField.resignFirstResponder()
     }
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
