@@ -11,6 +11,14 @@ import UIKit
 class AllBooksTableViewController: UITableViewController {
     
 //    var bookManager = BookManager()
+    
+    //Checks sort method — true if alphabetical, false if by date
+    private var isAlphabetical = false
+    
+    
+    @IBOutlet weak var allSortType: UISegmentedControl!
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +80,37 @@ class AllBooksTableViewController: UITableViewController {
             return
         }
     }
+    
+    @IBAction func sortTypeChanged(_ sender: UISegmentedControl) {
+        switch allSortType.selectedSegmentIndex
+        {
+        case 0:
+            isAlphabetical = true
+            bookManager.allBooks = bookManager.allBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+        case 1:
+            isAlphabetical = false
+        default:
+            break
+        }
+        tableView.reloadData()
+    }
+    
+    //(Kelli) function for ignoring "the" substring and case when alphabetizing
+    
+    private func makeAlphabetizableTitle(book : Book) -> String{
+        
+        var alphebetizable = book.title.lowercased()
+        
+        if alphebetizable.characters.count > 4{
+            let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
+            let firstThreeLetters = alphebetizable.substring(to: index)
+            if firstThreeLetters == "the "{
+                alphebetizable = alphebetizable.substring(from: index)
+            }
+        }
+        return alphebetizable
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.

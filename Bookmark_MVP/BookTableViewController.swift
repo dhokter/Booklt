@@ -17,7 +17,7 @@ class BookTableViewController: UITableViewController {
 //    var books = [Book]()
     
     //Checks sort method — true if alphabetical, false if by date
-    var isAlphabetical = false
+    private var isAlphabetical = false
     
     //(Kelli) Sort method buttons
     @IBOutlet weak var sortType: UISegmentedControl!
@@ -112,7 +112,7 @@ class BookTableViewController: UITableViewController {
     }
     
     //(Kelli) Activated when user switches between "A-Z" and "Date" sort methods
-    @IBAction func sortTypeChanged(_ sender: Any) {
+    @IBAction private func sortTypeChanged(_ sender: Any) {
         switch sortType.selectedSegmentIndex
         {
         case 0:
