@@ -149,7 +149,6 @@ class BookTableViewController: UITableViewController {
         return alphebetizable
     }
     
-    
     /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -158,24 +157,31 @@ class BookTableViewController: UITableViewController {
      }
      */
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {
+            bookManager.markAsFinished(book: bookManager.displayedBooks[$1.row])
+            tableView.deleteRows(at: [indexPath], with: .fade)})
+        done.backgroundColor = UIColor.green
+        let book = bookManager.allBooks[indexPath.row]
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
+            _,_ in bookManager.allBooks = bookManager.allBooks.filter({$0 !== book})
+            bookManager.displayedBooks = bookManager.displayedBooks.filter({$0 !== book})
+            tableView.deleteRows(at: [indexPath], with: .fade)})
+        delete.backgroundColor = UIColor.red
+        return [done, delete]
+    }
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             // Delete the row from the tableview, but the book will still be in inventory
-            bookManager.markAsFinished(book: bookManager.displayedBooks[indexPath.row])
+//            bookManager.markAsFinished(book: bookManager.displayedBooks[indexPath.row])
 //            bookManager.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
-    
-    // Change the title of Delete button to Mark as Done.
-    override func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
-        return "Mark as Done"
-    }
-    
     
     /*
      // Override to support rearranging the table view.
