@@ -111,6 +111,28 @@ class AllBooksTableViewController: UITableViewController {
         return alphebetizable
     }
     
+    // TODO: The logic for this method should be as follow:
+    // If the book is marked as reading, then the tableview should swipe the row back to its position (not implemented) and the BookTableView should appear that book (done)
+    // However, find a way for preventing user add a book back multiple times (finished but not fully tested).
+    // Delete a book should be just same as BookTableView
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let book = bookManager.allBooks[indexPath.row]
+        let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {
+            // Check if the book is in the displayed book already.
+            if !bookManager.displayedBooks.contains(where: {$0 === book}) {
+                bookManager.displayedBooks.append(bookManager.allBooks[$1.row])
+            }
+        })
+        unDoneBook.backgroundColor = UIColor.green
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
+            _,_ in bookManager.allBooks = bookManager.allBooks.filter({$0 !== book})
+            bookManager.displayedBooks = bookManager.displayedBooks.filter({$0 !== book})
+            tableView.deleteRows(at: [indexPath], with: .fade)})
+        delete.backgroundColor = UIColor.red
+        
+        return [unDoneBook, delete]
+    }
+    
 
     /*
     // Override to support conditional editing of the table view.
