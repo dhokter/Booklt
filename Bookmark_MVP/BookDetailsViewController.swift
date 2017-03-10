@@ -43,10 +43,12 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
             sender.title = "Save"
         } else {
             sender.title = "Edit"
-            book?.title = titleTextField.text!
-            book?.author = authorTextField.text!
-            book?.totalPages = Int(totalPagesTextField.text!) ?? 0
-            book?.currentPage = Int(currentPageTextField.text!) ?? 0
+            try! realm.write {
+                book?.title = titleTextField.text!
+                book?.author = authorTextField.text!
+                book?.totalPages = Int(totalPagesTextField.text!) ?? 0
+                book?.currentPage = Int(currentPageTextField.text!) ?? 0
+            }
         }
         userIsEditingTheBook = !userIsEditingTheBook
         

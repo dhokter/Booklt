@@ -19,7 +19,7 @@ class AllBooksTableViewCell: UITableViewCell {
             if let book = self.book {
                 titleLabel.text = book.title
                 authorLabel.text = book.author
-                coverImageView.image = book.cover
+                //coverImageView.image = book.cover
             }
         }
     }

@@ -23,7 +23,7 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
             if let book = self.book {
                 addDoneButtonOnKeyboard()
                 titleBookView.text = book.title
-                coverImageView.image = book.cover
+//                coverImageView.image = book.cover
                 currentPageView.text = String(book.currentPage)
                 currentPageView.delegate = self
                 progressBarView.progress = Float(book.currentPage) / Float(book.totalPages)
@@ -42,7 +42,9 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         // Update the book of the cell
         currentPageView.resignFirstResponder()
         if let book = self.book {
-            book.currentPage = Int(self.currentPageView.text!)!
+            try! realm.write {
+                book.currentPage = Int(self.currentPageView.text!)!
+            }
             progressBarView.progress = Float((book.currentPage)) / Float((book.totalPages))
             let progress = Float((book.currentPage))*100 / Float((book.totalPages))
             progressLabelView.text = String(Int(progress))+"%"

@@ -48,7 +48,7 @@ class BookTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return bookManager.getNumDisplayedBook()
+        return bookManager.allBooks.count
     }
     
     
@@ -100,7 +100,7 @@ class BookTableViewController: UITableViewController {
             bookManager.addNewBook(book: sourceViewController.newBook!)
 //            books = bookManager.getDislayedBooks()
             // Creating new cell for the book
-            let newIndexPath = IndexPath(row: bookManager.getNumDisplayedBook()-1, section: 0)
+            let newIndexPath = IndexPath(row: bookManager.displayedBooks.count-1, section: 0)
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
             self.tableView.endUpdates()
