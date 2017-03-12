@@ -14,7 +14,7 @@ class BookTableViewController: UITableViewController {
 //    let bookManager = BookManager()
     
     // List of books to be displayed on screen, with value passed by the bookManager
-    var books = [Book]()
+    private var books = [Book]()
     
     //Checks sort method — true if alphabetical, false if by date
     private var isAlphabetical = false
@@ -24,13 +24,21 @@ class BookTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        books = bookManager.displayedBooks
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    // The function to reload the data if the view appear again by the BACK button of some other ViewController
+    override func viewWillAppear(_ animated: Bool) {
+        books = bookManager.displayedBooks
+        if isAlphabetical{
+            sortBooksAlphabetically()
+        }
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -84,20 +92,11 @@ class BookTableViewController: UITableViewController {
         }
     }
     
-    // The function to reload the data if the view appear again by the BACK button of some other ViewController
-    override func viewWillAppear(_ animated: Bool) {
-        if isAlphabetical{
-            sortBooksAlphabetically()
-        }
-        tableView.reloadData()
-    }
-    
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddBookViewController {
             // Add the new book passed by the AddBookView to the storage, and generate the new list of displayed books.
             bookManager.addNewBook(book: sourceViewController.newBook!)
-//            books = bookManager.getDislayedBooks()
             books = bookManager.displayedBooks
             // Creating new cell for the book
             let newIndexPath = IndexPath(row: bookManager.displayedBooks.count-1, section: 0)
@@ -128,8 +127,7 @@ class BookTableViewController: UITableViewController {
     
     
     private func sortBooksAlphabetically(){
-        //books = books.sorted(by: {$0.title < $1.title })
-//        bookManager.displayedBooks = bookManager.displayedBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+        // Query displayed books from Realm and sort by A-Z
         books = bookManager.displayedBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
@@ -159,18 +157,22 @@ class BookTableViewController: UITableViewController {
      */
     
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {
-            bookManager.markAsFinished(book: bookManager.displayedBooks[$1.row])
+        let book = books[indexPath.row]
+        
+        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in 
+            bookManager.markAsFinished(book: book)
+            self.books = bookManager.displayedBooks
             tableView.deleteRows(at: [indexPath], with: .fade)})
+
         done.backgroundColor = UIColor.green
-        let book = bookManager.allBooks[indexPath.row]
+        
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             _,_ in
-//            bookManager.allBooks = bookManager.allBooks.filter({$0 !== book})
-//            bookManager.displayedBooks = bookManager.displayedBooks.filter({$0 !== book})
             bookManager.delete(book: book)
+            self.books = bookManager.displayedBooks
             tableView.deleteRows(at: [indexPath], with: .fade)})
         delete.backgroundColor = UIColor.red
+        
         return [done, delete]
     }
     

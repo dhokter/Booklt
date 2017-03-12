@@ -10,24 +10,26 @@ import UIKit
 
 class AllBooksTableViewController: UITableViewController {
     
-//    var bookManager = BookManager()
-    
     //Checks sort method — true if alphabetical, false if by date
     private var isAlphabetical = false
-    
+    private var books = [Book]()
     
     @IBOutlet weak var allSortType: UISegmentedControl!
-    
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    // Reload the data of table to make it updated with changes in books (if any).
+    override func viewWillAppear(_ animated: Bool) {
+        books = bookManager.allBooks
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -38,29 +40,20 @@ class AllBooksTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return bookManager.allBooks.count
+        return books.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllBooksTableViewCell", for: indexPath) as? AllBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
-        cell.book = bookManager.allBooks[indexPath.row]
+        cell.book = books[indexPath.row]
         
-        // Configure the cell...
-
         return cell
-    }
-    
-    // Reload the data of table to make it updated with changes in books (if any).
-    override func viewWillAppear(_ animated: Bool) {
-        self.tableView.reloadData()
     }
     
     // Select a book to move to its details page.
@@ -75,7 +68,7 @@ class AllBooksTableViewController: UITableViewController {
             guard let destination = segue.destination as? BookDetailsViewController else {
                 return
             }
-            destination.book = bookManager.allBooks[(tableView.indexPathForSelectedRow?.row)!]
+            destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
         default:
             return
         }
@@ -86,7 +79,7 @@ class AllBooksTableViewController: UITableViewController {
         {
         case 0:
             isAlphabetical = true
-//            bookManager.allBooks = bookManager.allBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+            books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
         case 1:
             isAlphabetical = false
         default:
@@ -116,14 +109,17 @@ class AllBooksTableViewController: UITableViewController {
     // However, find a way for preventing user add a book back multiple times (finished but not fully tested).
     // Delete a book should be just same as BookTableView
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let book = bookManager.allBooks[indexPath.row]
+        let book = books[indexPath.row]
+        
         let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in 
             // Check if the book is in the displayed book already.
             bookManager.markAsReading(book: book)
         })
         unDoneBook.backgroundColor = UIColor.green
+        
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             _,_ in bookManager.delete(book: book)
+            self.books = bookManager.allBooks
             tableView.deleteRows(at: [indexPath], with: .fade)})
         delete.backgroundColor = UIColor.red
         
