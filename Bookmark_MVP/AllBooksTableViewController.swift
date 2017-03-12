@@ -18,6 +18,7 @@ class AllBooksTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        books = bookManager.finishedBooks
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -28,7 +29,7 @@ class AllBooksTableViewController: UITableViewController {
     
     // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
-        books = bookManager.allBooks
+        books = bookManager.finishedBooks
         self.tableView.reloadData()
     }
 
@@ -114,13 +115,16 @@ class AllBooksTableViewController: UITableViewController {
         let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in 
             // Check if the book is in the displayed book already.
             bookManager.markAsReading(book: book)
+            self.books = bookManager.finishedBooks
+            tableView.deleteRows(at: [indexPath], with: .fade)
         })
         unDoneBook.backgroundColor = UIColor.green
         
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
             _,_ in bookManager.delete(book: book)
-            self.books = bookManager.allBooks
-            tableView.deleteRows(at: [indexPath], with: .fade)})
+            self.books = bookManager.finishedBooks
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        })
         delete.backgroundColor = UIColor.red
         
         return [unDoneBook, delete]

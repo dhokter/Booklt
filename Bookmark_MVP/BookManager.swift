@@ -18,16 +18,22 @@ class BookManager {
     let realm = try! Realm()
     
     // List of all books in the inventory.
-    public var allBooks: [Book] {
+//    public var allBooks: [Book] {
+//        get {
+//            return Array(realm.objects(Book.self))
+//        }
+//    }
+    
+    // List of all books being displayed.
+    public var readingBooks: [Book] {
         get {
-            return Array(realm.objects(Book.self))
+            return Array(realm.objects(Book.self)).filter({$0.isReading})
         }
     }
     
-    // List of all books being displayed.
-    public var displayedBooks: [Book] {
+    public var finishedBooks: [Book] {
         get {
-            return Array(realm.objects(Book.self)).filter({$0.isReading})
+            return Array(realm.objects(Book.self).filter({!$0.isReading}))
         }
     }
 
