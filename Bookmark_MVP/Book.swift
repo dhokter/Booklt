@@ -19,9 +19,10 @@ class Book: Object {
     //dynamic var cover: UIImage?
     dynamic var author: String = ""
     //dynamic var whenCreated: Date = Date()
+    dynamic var isReading = true
     
     //Failable initializer
-    convenience init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "") {
+    convenience init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "", isReading: Bool = true) {
         if title.isEmpty || totalPages < 0 || currentPage < 0 {
             return nil
         }
@@ -33,6 +34,7 @@ class Book: Object {
         //self.cover = cover
         self.currentPage = currentPage
         self.author = author
+        self.isReading = isReading
     }
     
     

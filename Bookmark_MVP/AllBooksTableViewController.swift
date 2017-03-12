@@ -86,7 +86,7 @@ class AllBooksTableViewController: UITableViewController {
         {
         case 0:
             isAlphabetical = true
-            bookManager.allBooks = bookManager.allBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+//            bookManager.allBooks = bookManager.allBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
         case 1:
             isAlphabetical = false
         default:
@@ -117,16 +117,13 @@ class AllBooksTableViewController: UITableViewController {
     // Delete a book should be just same as BookTableView
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let book = bookManager.allBooks[indexPath.row]
-        let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {
+        let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in 
             // Check if the book is in the displayed book already.
-            if !bookManager.displayedBooks.contains(where: {$0 === book}) {
-                bookManager.displayedBooks.append(bookManager.allBooks[$1.row])
-            }
+            bookManager.markAsReading(book: book)
         })
         unDoneBook.backgroundColor = UIColor.green
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
-            _,_ in bookManager.allBooks = bookManager.allBooks.filter({$0 !== book})
-            bookManager.displayedBooks = bookManager.displayedBooks.filter({$0 !== book})
+            _,_ in bookManager.delete(book: book)
             tableView.deleteRows(at: [indexPath], with: .fade)})
         delete.backgroundColor = UIColor.red
         

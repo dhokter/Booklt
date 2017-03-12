@@ -12,39 +12,44 @@ import Realm
 import RealmSwift
 
 let bookManager = BookManager()
-let realm = try! Realm()
 
 class BookManager {
+    
+    let realm = try! Realm()
+    
     // List of all books in the inventory.
     public var allBooks: [Book] {
         get {
             return Array(realm.objects(Book.self))
-        }
-        set {
-            self.allBooks = newValue
         }
     }
     
     // List of all books being displayed.
     public var displayedBooks: [Book] {
         get {
-            return Array(realm.objects(Book.self))
-        }
-        set {
-            self.displayedBooks = newValue
+            return Array(realm.objects(Book.self)).filter({$0.isReading})
         }
     }
 
     public func addNewBook(book: Book) {
         try! realm.write {
             realm.add(book)
-            allBooks.append(book)
-            displayedBooks.append(book)
-            
         }
     }
     
     public func markAsFinished(book: Book) {
+        try! realm.write {
+            book.isReading = false
+        }
+    }
+    
+    public func markAsReading(book: Book) {
+        try! realm.write {
+            book.isReading = true
+        }
+    }
+    
+    public func delete(book: Book) {
         try! realm.write {
             realm.delete(book)
         }

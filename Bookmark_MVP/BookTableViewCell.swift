@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
+    
+    let realm = try! Realm()
     
     @IBOutlet weak var coverImageView: UIImageView!
     @IBOutlet weak var titleBookView: UILabel!

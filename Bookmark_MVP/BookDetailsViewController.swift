@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class BookDetailsViewController: UIViewController, UITextFieldDelegate {
+    
+    let realm = try! Realm()
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
