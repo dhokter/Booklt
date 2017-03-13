@@ -44,7 +44,8 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     // Return to the listbook view with the new book displayed
     
     
-    // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    // Adds the done button to the number pad
+    // Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     private func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle       = UIBarStyle.default
@@ -59,9 +60,10 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         doneToolbar.sizeToFit()
         
         self.currentPageTextField.inputAccessoryView = doneToolbar
-        self.totalPageTextField.inputAccessoryView = doneToolbar
+        self.totalPageTextField.inputAccessoryView   = doneToolbar
     }
     
+    // Gets rid of the number pad when the user hits "Done"
     func doneButtonAction() {
         self.currentPageTextField.resignFirstResponder()
         self.totalPageTextField.resignFirstResponder()

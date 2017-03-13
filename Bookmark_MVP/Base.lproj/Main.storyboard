@@ -10,7 +10,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Your Books-->
+        <!--In Progress-->
         <scene sceneID="sHL-xf-YtA">
             <objects>
                 <tableViewController id="TkE-vq-6g0" customClass="BookTableViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
@@ -74,7 +74,7 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                             <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
                                         </textField>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Book" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="QhT-VB-yzM">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Title" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="QhT-VB-yzM">
                                             <rect key="frame" x="99" y="8" width="248" height="41"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="41" id="DoL-nm-H9j"/>
@@ -115,7 +115,7 @@
                             <outlet property="delegate" destination="TkE-vq-6g0" id="107-lG-bzY"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Your Books" id="Om9-fX-aLO">
+                    <navigationItem key="navigationItem" title="In Progress" id="Om9-fX-aLO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GbP-lC-u8F">
                             <connections>
                                 <segue destination="BYZ-38-t0r" kind="presentation" id="R1H-Eq-GW8"/>
@@ -131,7 +131,7 @@
             </objects>
             <point key="canvasLocation" x="1135.2" y="203.74812593703149"/>
         </scene>
-        <!--All Books-->
+        <!--Completed Books-->
         <scene sceneID="vMu-Qt-B8n">
             <objects>
                 <tableViewController id="kfh-Rg-kya" customClass="AllBooksTableViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
@@ -164,7 +164,7 @@
                                                 <constraint firstAttribute="width" constant="83" id="JD5-tI-RUx"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title Book" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="wuC-5Q-uYJ">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Title" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="wuC-5Q-uYJ">
                                             <rect key="frame" x="99" y="8" width="248" height="41"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="41" id="DiJ-Vw-SJT"/>
@@ -208,7 +208,7 @@
                             <outlet property="delegate" destination="kfh-Rg-kya" id="5Q2-Ft-2Ev"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="All Books" id="s9f-q7-2Pd"/>
+                    <navigationItem key="navigationItem" title="Completed Books" id="s9f-q7-2Pd"/>
                     <connections>
                         <outlet property="allSortType" destination="3Ah-zM-Col" id="LXu-xL-JzH"/>
                         <segue destination="QCX-LA-fGm" kind="show" identifier="AllBookToBookDetailsSegue" id="mKs-l1-p0q"/>
@@ -587,6 +587,6 @@
         <image name="default" width="181" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="mKs-l1-p0q"/>
+        <segue reference="Tfq-AS-43h"/>
     </inferredMetricsTieBreakers>
 </document>

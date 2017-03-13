@@ -20,13 +20,12 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
     @IBOutlet weak var progressBarView: UIProgressView!
     
     // The instance of the book the cell is displaying
+    // As this book is set, then the following display will set up
     var book: Book? {
-        // As this book is set, then the following display will set up
         didSet {
             if let book = self.book {
                 addDoneButtonOnKeyboard()
                 titleBookView.text = book.title
-//                coverImageView.image = book.cover
                 currentPageView.text = String(book.currentPage)
                 currentPageView.delegate = self
                 progressBarView.progress = Float(book.currentPage) / Float(book.totalPages)
@@ -35,14 +34,13 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    // When user choose another textfield while editing one, the current one will still be updated (endEditing)
+    // If the user is editing one text field and then selects another, the current one will be updated.
     func textFieldDidEndEditing(_ textField: UITextField) {
         updateTheCell()
     }
     
-    // Function to update the cell from the text field
+    // Updates the book information and the contents of the cell when the user changes the current page number
     @objc private func updateTheCell() {
-        // Update the book of the cell
         currentPageView.resignFirstResponder()
         if let book = self.book {
             try! realm.write {
@@ -54,17 +52,14 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         }
     }
     
-    
-    
+    // Initialization code
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
     
+    // Configure the view for the selected state
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     
     // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift

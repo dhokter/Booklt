@@ -35,12 +35,12 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
-    // Touch edit button function
+    // Changes the display and function when the user hits "Edit"
     @IBAction func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
             sender.title = "Save"
@@ -61,7 +61,9 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         currentPageTextField.isEnabled = userIsEditingTheBook
         
     }
-    // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    
+    // Adds the done button to the number pad. 
+    // Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     private func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle       = UIBarStyle.default
@@ -79,6 +81,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         self.totalPagesTextField.inputAccessoryView = doneToolbar
     }
     
+    // Gets rid of the number pad when the user hits "Done"
     public func doneButtonAction() {
         currentPageTextField.resignFirstResponder()
         totalPagesTextField.resignFirstResponder()
