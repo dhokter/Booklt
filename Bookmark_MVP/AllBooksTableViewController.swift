@@ -10,8 +10,10 @@ import UIKit
 
 class AllBooksTableViewController: UITableViewController {
     
-    //Checks sort method — true if alphabetical, false if by date
-    private var isAlphabetical = false
+    //Checks sort method — true if alphabetical, false otherwise
+    private var isAlphabetical  = false
+    //Checks sort method — true if chronological, false if otherwise
+    private var isChronological = false
     private var books = [Book]()
     
     @IBOutlet weak var allSortType: UISegmentedControl!
@@ -79,10 +81,13 @@ class AllBooksTableViewController: UITableViewController {
         switch allSortType.selectedSegmentIndex
         {
         case 0:
-            isAlphabetical = true
+            isAlphabetical  = true
+            isChronological = false
             books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
         case 1:
-            isAlphabetical = false
+            isChronological = true
+            isAlphabetical  = false
+            books = books.sorted(by: {$0.whenCreated < $1.whenCreated})
         default:
             break
         }

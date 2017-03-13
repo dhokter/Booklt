@@ -125,8 +125,8 @@ class BookTableViewController: UITableViewController {
             isChronological = false
             sortBooksAlphabetically()
         case 1:                             // "Date" is selected
-            isAlphabetical = false
             isChronological = true
+            isAlphabetical = false
             sortBooksChronologically()
         default:
             break
