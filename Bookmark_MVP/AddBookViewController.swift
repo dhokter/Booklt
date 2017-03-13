@@ -34,7 +34,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date(timeIntervalSinceNow: 0))
+        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date())
     }
     
     // Process of adding a new book:
