@@ -16,8 +16,10 @@ class BookTableViewController: UITableViewController {
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
     
-    //Checks sort method — true if alphabetical, false if by date
+    //Checks sort method — true if alphabetical, false if otherwise
     private var isAlphabetical = false
+    //Checks sort method — true if chronological, false if otherwise
+    private var isChronological = false
     
     //(Kelli) Sort method buttons
     @IBOutlet weak var sortType: UISegmentedControl!
@@ -37,6 +39,8 @@ class BookTableViewController: UITableViewController {
         books = bookManager.readingBooks
         if isAlphabetical{
             sortBooksAlphabetically()
+        } else if isChronological {
+            sortBooksChronologically()
         }
         tableView.reloadData()
     }
@@ -105,6 +109,8 @@ class BookTableViewController: UITableViewController {
             self.tableView.endUpdates()
             if isAlphabetical{
                 sortBooksAlphabetically()
+            } else if isChronological {
+                sortBooksChronologically()
             }
             tableView.reloadData()
         }
@@ -114,26 +120,23 @@ class BookTableViewController: UITableViewController {
     @IBAction private func sortTypeChanged(_ sender: Any) {
         switch sortType.selectedSegmentIndex
         {
-        case 0:
+        case 0:                             // "A-Z" is selected
             isAlphabetical = true
+            isChronological = false
             sortBooksAlphabetically()
-        case 1:
+        case 1:                             // "Date" is selected
             isAlphabetical = false
+            isChronological = true
+            sortBooksChronologically()
         default:
             break
         }
         tableView.reloadData()
     }
+
     
     
-    private func sortBooksAlphabetically(){
-        // Query displayed books from Realm and sort by A-Z
-        books = bookManager.readingBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
-    }
-    
-    
-    //(Kelli) function for ignoring "the" substring and case when alphabetizing
-    
+    //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
     private func makeAlphabetizableTitle(book : Book) -> String{
         
         var alphebetizable = book.title.lowercased()
@@ -147,6 +150,19 @@ class BookTableViewController: UITableViewController {
         }
         return alphebetizable
     }
+    
+    // Query displayed books from Realm and sort them alphabetically, A to Z
+    private func sortBooksAlphabetically(){
+        books = bookManager.readingBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+    }
+    
+    
+    // Query displayed books from Realm and sort them by date created, from earliest to most recent
+    private func sortBooksChronologically(){
+        books = bookManager.readingBooks.sorted(by: {$0.whenCreated < $1.whenCreated})
+    }
+    
+    
     
     /*
      // Override to support conditional editing of the table view.

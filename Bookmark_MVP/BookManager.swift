@@ -16,45 +16,39 @@ let bookManager = BookManager()
 class BookManager {
     
     let realm = try! Realm()
-    
-    // List of all books in the inventory.
-//    public var allBooks: [Book] {
-//        get {
-//            return Array(realm.objects(Book.self))
-//        }
-//    }
-    
-    // List of all books being displayed.
+
+    // List of all the books that the user is currently reading.
     public var readingBooks: [Book] {
-        get {
-            return Array(realm.objects(Book.self)).filter({$0.isReading})
-        }
+        return Array(realm.objects(Book.self)).filter({$0.isReading})
     }
     
+    // List of all the books that the user has finished reading.
     public var finishedBooks: [Book] {
-        get {
-            return Array(realm.objects(Book.self).filter({!$0.isReading}))
-        }
+        return Array(realm.objects(Book.self).filter({!$0.isReading}))
     }
 
+    // Adds a new book to the list of books that the user is currently reading.
     public func addNewBook(book: Book) {
         try! realm.write {
             realm.add(book)
         }
     }
     
+    // Indicates that the user is no longer reading the selected book.
     public func markAsFinished(book: Book) {
         try! realm.write {
             book.isReading = false
         }
     }
     
+    // Indicates that the user is currently reading the selected book.
     public func markAsReading(book: Book) {
         try! realm.write {
             book.isReading = true
         }
     }
     
+    // Indicates that the user would like to delete the selected book from the app's storage.
     public func delete(book: Book) {
         try! realm.write {
             realm.delete(book)
