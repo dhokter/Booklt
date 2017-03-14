@@ -45,6 +45,7 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
         if let book = self.book {
             try! realm.write {
                 book.currentPage = Int(self.currentPageView.text!)!
+                book.whenCreated = Date()
             }
             progressBarView.progress = bookManager.getProgress(book: book)
             progressLabelView.text = String(Int(bookManager.getProgress(book: book)*100))+"%"

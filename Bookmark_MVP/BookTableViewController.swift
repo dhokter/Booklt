@@ -181,7 +181,7 @@ class BookTableViewController: UITableViewController {
     
     // Query displayed books from Realm and sort them by date created, from earliest to most recent
     private func sortBooksChronologically(){
-        books = books.sorted(by: {$0.whenCreated < $1.whenCreated})
+        books = books.sorted(by: {$0.whenCreated > $1.whenCreated})
     }
     
     private func sortBooksByIncreasingProgress(){
