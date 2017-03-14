@@ -87,6 +87,11 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         totalPagesTextField.resignFirstResponder()
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
     /*
      // MARK: - Navigation
      
