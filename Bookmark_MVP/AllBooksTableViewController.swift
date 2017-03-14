@@ -83,32 +83,17 @@ class AllBooksTableViewController: UITableViewController {
         case 0:
             isAlphabetical  = true
             isChronological = false
-            books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+            books = bookManager.sortBooksAlphabetically(books: books)
         case 1:
             isChronological = true
             isAlphabetical  = false
-            books = books.sorted(by: {$0.whenCreated < $1.whenCreated})
+            books = bookManager.sortBooksChronologically(books: books)
         default:
             break
         }
         tableView.reloadData()
     }
     
-    //(Kelli) function for ignoring "the" substring and case when alphabetizing
-    
-    private func makeAlphabetizableTitle(book : Book) -> String{
-        
-        var alphebetizable = book.title.lowercased()
-        
-        if alphebetizable.characters.count > 4{
-            let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
-            let firstThreeLetters = alphebetizable.substring(to: index)
-            if firstThreeLetters == "the "{
-                alphebetizable = alphebetizable.substring(from: index)
-            }
-        }
-        return alphebetizable
-    }
     
     // TODO: The logic for this method should be as follow:
     // If the book is marked as reading, then the tableview should swipe the row back to its position (not implemented) and the BookTableView should appear that book (done)
