@@ -40,6 +40,7 @@ class BookTableViewController: UITableViewController {
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
     override func viewWillAppear(_ animated: Bool) {
+        books = bookManager.readingBooks
         if isAlphabetical{
             books = bookManager.sortBooksAlphabetically(books: books)
         } else if isChronological {
