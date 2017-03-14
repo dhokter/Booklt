@@ -20,6 +20,8 @@ class BookTableViewController: UITableViewController {
     private var isAlphabetical = false
     //Checks sort method — true if chronological, false if otherwise
     private var isChronological = false
+    //Checks sort method — true if chronological, false if otherwise
+    private var isByProgress = false
     
     //(Kelli) Sort method buttons
     @IBOutlet weak var sortType: UISegmentedControl!
@@ -41,6 +43,8 @@ class BookTableViewController: UITableViewController {
             sortBooksAlphabetically()
         } else if isChronological {
             sortBooksChronologically()
+        } else if isByProgress{
+            sortBooksByProgress()
         }
         tableView.reloadData()
     }
@@ -128,13 +132,22 @@ class BookTableViewController: UITableViewController {
             isChronological = true
             isAlphabetical = false
             sortBooksChronologically()
+        case 2:
+            isChronological = false
+            isAlphabetical = false
+            isByProgress = true
+            sortBooksByProgress()
         default:
             break
         }
         tableView.reloadData()
     }
-
     
+    private func getProgess(book : Book) -> Double{
+        let totalPages = Double(book.totalPages)
+        let currentPage = Double(book.currentPage)
+        return currentPage/totalPages
+    }
     
     //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
     private func makeAlphabetizableTitle(book : Book) -> String{
@@ -162,6 +175,9 @@ class BookTableViewController: UITableViewController {
         books = bookManager.readingBooks.sorted(by: {$0.whenCreated < $1.whenCreated})
     }
     
+    private func sortBooksByProgress(){
+        books = books.sorted(by: {getProgess(book: $0) < getProgess(book: $1)})
+    }
     
     
     /*
