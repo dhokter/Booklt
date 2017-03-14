@@ -40,15 +40,14 @@ class BookTableViewController: UITableViewController {
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
     override func viewWillAppear(_ animated: Bool) {
-        books = bookManager.readingBooks
         if isAlphabetical{
-            sortBooksAlphabetically()
+            books = bookManager.sortBooksAlphabetically(books: books)
         } else if isChronological {
-            sortBooksChronologically()
+            books = bookManager.sortBooksChronologically(books: books)
         } else if isByIncreasingProgress{
-            sortBooksByIncreasingProgress()
+            books = bookManager.sortBooksByIncreasingProgress(books: books)
         } else if isByDecreasingProgress{
-            sortBooksByDecreasingProgress()
+            books = bookManager.sortBooksByDecreasingProgress(books: books)
         }
         tableView.reloadData()
     }
@@ -116,9 +115,9 @@ class BookTableViewController: UITableViewController {
             self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
             self.tableView.endUpdates()
             if isAlphabetical{
-                sortBooksAlphabetically()
+                books = bookManager.sortBooksAlphabetically(books: books)
             } else if isChronological {
-                sortBooksChronologically()
+                books = bookManager.sortBooksAlphabetically(books: books)
             }
             tableView.reloadData()
         }
@@ -126,6 +125,7 @@ class BookTableViewController: UITableViewController {
     
     //(Kelli) Activated when user switches between "A-Z" and "Date" sort methods
     @IBAction private func sortTypeChanged(_ sender: Any) {
+        books = bookManager.readingBooks
         switch sortType.selectedSegmentIndex
         {
         case 0:                             // "A-Z" is selected
@@ -133,66 +133,33 @@ class BookTableViewController: UITableViewController {
             isChronological = false
             isByIncreasingProgress = false
             isByDecreasingProgress = false
-            sortBooksAlphabetically()
+            books = bookManager.sortBooksAlphabetically(books: books)
         case 1:                             // "Date" is selected
             isChronological = true
             isAlphabetical = false
             isByIncreasingProgress = false
             isByDecreasingProgress = false
-            sortBooksChronologically()
+            books = bookManager.sortBooksChronologically(books: books)
         case 2:                             // "Progress ↑" is selected
             isByIncreasingProgress = true
             isChronological = false
             isAlphabetical = false
             isByDecreasingProgress = false
-            sortBooksByIncreasingProgress()
+            books = bookManager.sortBooksByIncreasingProgress(books: books)
         case 3:                             // "Progress ↓" is selected
             isByDecreasingProgress = true
             isChronological = false
             isAlphabetical = false
             isByIncreasingProgress = false
-            sortBooksByDecreasingProgress()
+            books = bookManager.sortBooksByDecreasingProgress(books: books)
         default:
             break
         }
         tableView.reloadData()
     }
+
     
-    //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
-    private func makeAlphabetizableTitle(book : Book) -> String{
-        
-        var alphebetizable = book.title.lowercased()
-        
-        if alphebetizable.characters.count > 4{
-            let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
-            let firstThreeLetters = alphebetizable.substring(to: index)
-            if firstThreeLetters == "the "{
-                alphebetizable = alphebetizable.substring(from: index)
-            }
-        }
-        return alphebetizable
-    }
-    
-    // Query displayed books from Realm and sort them alphabetically, A to Z
-    private func sortBooksAlphabetically(){
-        books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
-    }
-    
-    
-    // Query displayed books from Realm and sort them by date created, from earliest to most recent
-    private func sortBooksChronologically(){
-        books = books.sorted(by: {$0.whenCreated > $1.whenCreated})
-    }
-    
-    private func sortBooksByIncreasingProgress(){
-        books = books.sorted(by: {bookManager.getProgress(book: $0) < bookManager.getProgress(book: $1)})
-    }
-    
-    private func sortBooksByDecreasingProgress(){
-        books = books.sorted(by: {bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1)})
-    }
-    
-    /*
+        /*
      // Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
      // Return false if you do not want the specified item to be editable.

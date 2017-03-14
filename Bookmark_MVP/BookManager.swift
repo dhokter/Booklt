@@ -60,4 +60,39 @@ class BookManager {
     public func getProgress(book: Book) -> Float {
         return Float(book.currentPage)/Float(book.totalPages)
     }
+    
+    //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
+    private func makeAlphabetizableTitle(book : Book) -> String{
+        
+        var alphebetizable = book.title.lowercased()
+        
+        if alphebetizable.characters.count > 4{
+            let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
+            let firstThreeLetters = alphebetizable.substring(to: index)
+            if firstThreeLetters == "the "{
+                alphebetizable = alphebetizable.substring(from: index)
+            }
+        }
+        return alphebetizable
+    }
+    
+    // Query displayed books from Realm and sort them alphabetically, A to Z
+    func sortBooksAlphabetically(books: [Book]) -> [Book]{
+        return books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+    }
+    
+    // Query displayed books from Realm and sort them by date created, from earliest to most recent
+    func sortBooksChronologically(books: [Book]) -> [Book]{
+        return books.sorted(by: {$0.whenCreated > $1.whenCreated})
+    }
+    
+    func sortBooksByIncreasingProgress(books: [Book]) -> [Book]{
+        return books.sorted(by: {bookManager.getProgress(book: $0) < bookManager.getProgress(book: $1)})
+    }
+    
+    func sortBooksByDecreasingProgress(books: [Book]) -> [Book]{
+        return books.sorted(by: {bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1)})
+    }
+    
+    
 }
