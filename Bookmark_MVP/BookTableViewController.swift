@@ -19,7 +19,7 @@ class BookTableViewController: UITableViewController {
     //Checks sort method — true if alphabetical, false if otherwise
     private var isAlphabetical = false
     //Checks sort method — true if chronological, false if otherwise
-    private var isChronological = false
+    private var isChronological = true
     //Checks sort method — true if by increasing progress, false if otherwise
     private var isByIncreasingProgress = false
     //Checks sort method — true if by decreasing progress, false if otherwise

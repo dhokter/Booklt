@@ -38,6 +38,7 @@ class BookManager {
     public func markAsFinished(book: Book) {
         try! realm.write {
             book.isReading = false
+            book.whenCreated = Date()
         }
     }
     
@@ -45,6 +46,7 @@ class BookManager {
     public func markAsReading(book: Book) {
         try! realm.write {
             book.isReading = true
+            book.whenCreated = Date()
         }
     }
     
