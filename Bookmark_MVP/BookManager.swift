@@ -54,4 +54,8 @@ class BookManager {
             realm.delete(book)
         }
     }
+    
+    public func getProgress(book: Book) -> Float {
+        return Float(book.currentPage)/Float(book.totalPages)
+    }
 }

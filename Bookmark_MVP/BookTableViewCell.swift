@@ -28,8 +28,8 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
                 titleBookView.text = book.title
                 currentPageView.text = String(book.currentPage)
                 currentPageView.delegate = self
-                progressBarView.progress = Float(book.currentPage) / Float(book.totalPages)
-                progressLabelView.text = String(Int(Float(book.currentPage)*100 / Float(book.totalPages)))+"%"
+                progressBarView.progress = bookManager.getProgress(book: book)
+                progressLabelView.text = String(Int(bookManager.getProgress(book: book)*100))+"%"
             }
         }
     }
@@ -46,9 +46,8 @@ class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
             try! realm.write {
                 book.currentPage = Int(self.currentPageView.text!)!
             }
-            progressBarView.progress = Float((book.currentPage)) / Float((book.totalPages))
-            let progress = Float((book.currentPage))*100 / Float((book.totalPages))
-            progressLabelView.text = String(Int(progress))+"%"
+            progressBarView.progress = bookManager.getProgress(book: book)
+            progressLabelView.text = String(Int(bookManager.getProgress(book: book)*100))+"%"
         }
     }
     

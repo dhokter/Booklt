@@ -158,12 +158,6 @@ class BookTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    private func getProgess(book : Book) -> Double{
-        let totalPages = Double(book.totalPages)
-        let currentPage = Double(book.currentPage)
-        return currentPage/totalPages
-    }
-    
     //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
     private func makeAlphabetizableTitle(book : Book) -> String{
         
@@ -181,21 +175,21 @@ class BookTableViewController: UITableViewController {
     
     // Query displayed books from Realm and sort them alphabetically, A to Z
     private func sortBooksAlphabetically(){
-        books = bookManager.readingBooks.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
+        books = books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
     
     // Query displayed books from Realm and sort them by date created, from earliest to most recent
     private func sortBooksChronologically(){
-        books = bookManager.readingBooks.sorted(by: {$0.whenCreated < $1.whenCreated})
+        books = books.sorted(by: {$0.whenCreated < $1.whenCreated})
     }
     
     private func sortBooksByIncreasingProgress(){
-        books = books.sorted(by: {getProgess(book: $0) < getProgess(book: $1)})
+        books = books.sorted(by: {bookManager.getProgress(book: $0) < bookManager.getProgress(book: $1)})
     }
     
     private func sortBooksByDecreasingProgress(){
-        books = books.sorted(by: {getProgess(book: $0) > getProgess(book: $1)})
+        books = books.sorted(by: {bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1)})
     }
     
     /*
