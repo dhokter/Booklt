@@ -20,8 +20,10 @@ class BookTableViewController: UITableViewController {
     private var isAlphabetical = false
     //Checks sort method — true if chronological, false if otherwise
     private var isChronological = false
-    //Checks sort method — true if chronological, false if otherwise
-    private var isByProgress = false
+    //Checks sort method — true if by increasing progress, false if otherwise
+    private var isByIncreasingProgress = false
+    //Checks sort method — true if by decreasing progress, false if otherwise
+    private var isByDecreasingProgress = false
     
     //(Kelli) Sort method buttons
     @IBOutlet weak var sortType: UISegmentedControl!
@@ -43,8 +45,10 @@ class BookTableViewController: UITableViewController {
             sortBooksAlphabetically()
         } else if isChronological {
             sortBooksChronologically()
-        } else if isByProgress{
-            sortBooksByProgress()
+        } else if isByIncreasingProgress{
+            sortBooksByIncreasingProgress()
+        } else if isByDecreasingProgress{
+            sortBooksByDecreasingProgress()
         }
         tableView.reloadData()
     }
@@ -127,16 +131,27 @@ class BookTableViewController: UITableViewController {
         case 0:                             // "A-Z" is selected
             isAlphabetical = true
             isChronological = false
+            isByIncreasingProgress = false
+            isByDecreasingProgress = false
             sortBooksAlphabetically()
         case 1:                             // "Date" is selected
             isChronological = true
             isAlphabetical = false
+            isByIncreasingProgress = false
+            isByDecreasingProgress = false
             sortBooksChronologically()
-        case 2:
+        case 2:                             // "Progress ↑" is selected
+            isByIncreasingProgress = true
             isChronological = false
             isAlphabetical = false
-            isByProgress = true
-            sortBooksByProgress()
+            isByDecreasingProgress = false
+            sortBooksByIncreasingProgress()
+        case 3:                             // "Progress ↓" is selected
+            isByDecreasingProgress = true
+            isChronological = false
+            isAlphabetical = false
+            isByIncreasingProgress = false
+            sortBooksByDecreasingProgress()
         default:
             break
         }
@@ -175,10 +190,13 @@ class BookTableViewController: UITableViewController {
         books = bookManager.readingBooks.sorted(by: {$0.whenCreated < $1.whenCreated})
     }
     
-    private func sortBooksByProgress(){
+    private func sortBooksByIncreasingProgress(){
         books = books.sorted(by: {getProgess(book: $0) < getProgess(book: $1)})
     }
     
+    private func sortBooksByDecreasingProgress(){
+        books = books.sorted(by: {getProgess(book: $0) > getProgess(book: $1)})
+    }
     
     /*
      // Override to support conditional editing of the table view.
@@ -191,7 +209,7 @@ class BookTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let book = books[indexPath.row]
         
-        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in 
+        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in
             bookManager.markAsFinished(book: book)
             self.books = bookManager.readingBooks
             tableView.deleteRows(at: [indexPath], with: .fade)})
