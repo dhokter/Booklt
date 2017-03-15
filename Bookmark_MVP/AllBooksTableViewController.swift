@@ -13,7 +13,7 @@ class AllBooksTableViewController: UITableViewController {
     //Checks sort method — true if alphabetical, false otherwise
     private var isAlphabetical  = false
     //Checks sort method — true if chronological, false if otherwise
-    private var isChronological = false
+    private var isChronological = true
     private var books = [Book]()
     
     @IBOutlet weak var allSortType: UISegmentedControl!
@@ -32,6 +32,11 @@ class AllBooksTableViewController: UITableViewController {
     // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
         books = bookManager.finishedBooks
+        if isAlphabetical{
+            books = bookManager.sortBooksAlphabetically(books: books)
+        } else if isChronological {
+            books = bookManager.sortBooksChronologically(books: books)
+        }
         self.tableView.reloadData()
     }
 
