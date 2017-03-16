@@ -10,20 +10,10 @@ import UIKit
 
 class ReadingBooksTableViewController: UITableViewController {
     
-    // Create a book manager model
-//    let bookManager = BookManager()
-    
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
     
-    //Checks sort method — true if alphabetical, false if otherwise
-    private var isAlphabetical = false
-    //Checks sort method — true if chronological, false if otherwise
-    private var isChronological = true
-    //Checks sort method — true if by increasing progress, false if otherwise
-    private var isByIncreasingProgress = false
-    //Checks sort method — true if by decreasing progress, false if otherwise
-    private var isByDecreasingProgress = false
+    private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
     
     //(Kelli) Sort method buttons
     @IBOutlet weak var sortType: UISegmentedControl!
@@ -40,16 +30,7 @@ class ReadingBooksTableViewController: UITableViewController {
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
     override func viewWillAppear(_ animated: Bool) {
-        books = bookManager.readingBooks
-        if isAlphabetical{
-            books = bookManager.sortBooksAlphabetically(books: books)
-        } else if isChronological {
-            books = bookManager.sortBooksChronologically(books: books)
-        } else if isByIncreasingProgress{
-            books = bookManager.sortBooksByIncreasingProgress(books: books)
-        } else if isByDecreasingProgress{
-            books = bookManager.sortBooksByDecreasingProgress(books: books)
-        }
+        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
         tableView.reloadData()
     }
     
@@ -87,6 +68,7 @@ class ReadingBooksTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("-------->> The seleted book is: "+books[indexPath.row].title)
         self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
     }
     
@@ -115,55 +97,34 @@ class ReadingBooksTableViewController: UITableViewController {
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
             self.tableView.endUpdates()
-            if isAlphabetical{
-                books = bookManager.sortBooksAlphabetically(books: books)
-            } else if isChronological {
-                books = bookManager.sortBooksAlphabetically(books: books)
-            }
+            
             tableView.reloadData()
         }
     }
     
     //(Kelli) Activated when user switches between "A-Z" and "Date" sort methods
     @IBAction private func sortTypeChanged(_ sender: Any) {
-        books = bookManager.readingBooks
         switch sortType.selectedSegmentIndex
         {
         case 0:                             // "A-Z" is selected
-            isAlphabetical = true
-            isChronological = false
-            isByIncreasingProgress = false
-            isByDecreasingProgress = false
-            books = bookManager.sortBooksAlphabetically(books: books)
+            filterType = .alphabetical(bookManager.sortBooksAlphabetically)
         case 1:                             // "Date" is selected
-            isChronological = true
-            isAlphabetical = false
-            isByIncreasingProgress = false
-            isByDecreasingProgress = false
-            books = bookManager.sortBooksChronologically(books: books)
+            filterType = .chronological(bookManager.sortBooksChronologically)
         case 2:                             // "Progress ↑" is selected
-            isByIncreasingProgress = true
-            isChronological = false
-            isAlphabetical = false
-            isByDecreasingProgress = false
-            books = bookManager.sortBooksByIncreasingProgress(books: books)
+            filterType = .increasingProgress(bookManager.sortBooksByIncreasingProgress)
         case 3:                             // "Progress ↓" is selected
-            isByDecreasingProgress = true
-            isChronological = false
-            isAlphabetical = false
-            isByIncreasingProgress = false
-            books = bookManager.sortBooksByDecreasingProgress(books: books)
+            filterType = .increasingProgress(bookManager.sortBooksByDecreasingProgress)
         default:
             break
         }
+        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
         tableView.reloadData()
     }
-
     
-        /*
-     // Override to support conditional editing of the table view.
+    /*
+     Override to support conditional editing of the table view.
      override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-     // Return false if you do not want the specified item to be editable.
+     Return false if you do not want the specified item to be editable.
      return true
      }
      */
@@ -173,19 +134,25 @@ class ReadingBooksTableViewController: UITableViewController {
         
         let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in
             bookManager.markAsFinished(book: book)
-            self.books = bookManager.readingBooks
-            tableView.deleteRows(at: [indexPath], with: .fade)})
-
+            self.deleteAndUpdateCells(indexPath: indexPath)
+        })
         done.backgroundColor = UIColor.green
         
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
-            _,_ in
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
             bookManager.delete(book: book)
-            self.books = bookManager.readingBooks
-            tableView.deleteRows(at: [indexPath], with: .fade)})
+            self.deleteAndUpdateCells(indexPath: indexPath)
+        })
         delete.backgroundColor = UIColor.red
         
         return [done, delete]
+    }
+
+    private func deleteAndUpdateCells(indexPath: IndexPath) {
+        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
+        self.tableView.beginUpdates()
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        self.tableView.endUpdates()
+        tableView.reloadData()
     }
     
     // Override to support editing the table view.

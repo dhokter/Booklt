@@ -10,17 +10,14 @@ import UIKit
 
 class CompletedBooksTableViewController: UITableViewController {
     
-    //Checks sort method — true if alphabetical, false otherwise
-    private var isAlphabetical  = false
-    //Checks sort method — true if chronological, false if otherwise
-    private var isChronological = true
     private var books = [Book]()
+    
+    private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
     
     @IBOutlet weak var allSortType: UISegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        books = bookManager.finishedBooks
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -31,12 +28,7 @@ class CompletedBooksTableViewController: UITableViewController {
     
     // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
-        books = bookManager.finishedBooks
-        if isAlphabetical{
-            books = bookManager.sortBooksAlphabetically(books: books)
-        } else if isChronological {
-            books = bookManager.sortBooksChronologically(books: books)
-        }
+        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         self.tableView.reloadData()
     }
 
@@ -86,16 +78,13 @@ class CompletedBooksTableViewController: UITableViewController {
         switch allSortType.selectedSegmentIndex
         {
         case 0:
-            isAlphabetical  = true
-            isChronological = false
-            books = bookManager.sortBooksAlphabetically(books: books)
+            filterType = .alphabetical(bookManager.sortBooksAlphabetically)
         case 1:
-            isChronological = true
-            isAlphabetical  = false
-            books = bookManager.sortBooksChronologically(books: books)
+            filterType = .chronological(bookManager.sortBooksChronologically)
         default:
             break
         }
+        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         tableView.reloadData()
     }
     
@@ -110,19 +99,25 @@ class CompletedBooksTableViewController: UITableViewController {
         let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in 
             // Check if the book is in the displayed book already.
             bookManager.markAsReading(book: book)
-            self.books = bookManager.finishedBooks
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            self.deleteAndUpdateCells(indexPath: indexPath)
         })
         unDoneBook.backgroundColor = UIColor.green
         
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {
-            _,_ in bookManager.delete(book: book)
-            self.books = bookManager.finishedBooks
-            tableView.deleteRows(at: [indexPath], with: .fade)
+        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
+            bookManager.delete(book: book)
+            self.deleteAndUpdateCells(indexPath: indexPath)
         })
         delete.backgroundColor = UIColor.red
         
         return [unDoneBook, delete]
+    }
+    
+    private func deleteAndUpdateCells(indexPath: IndexPath) {
+        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        self.tableView.beginUpdates()
+        self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        self.tableView.endUpdates()
+        tableView.reloadData()
     }
     
 

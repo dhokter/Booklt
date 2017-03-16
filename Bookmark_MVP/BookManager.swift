@@ -13,6 +13,13 @@ import RealmSwift
 
 let bookManager = BookManager()
 
+enum FilterType {
+    case chronological(([Book]) -> [Book])
+    case alphabetical(([Book]) -> [Book])
+    case increasingProgress(([Book]) -> [Book])
+    case decreasingProgress(([Book]) -> [Book])
+}
+
 class BookManager {
     
     let realm = try! Realm()
@@ -77,22 +84,34 @@ class BookManager {
     }
     
     // Query displayed books from Realm and sort them alphabetically, A to Z
-    func sortBooksAlphabetically(books: [Book]) -> [Book]{
+    public func sortBooksAlphabetically(books: [Book]) -> [Book]{
         return books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
     // Query displayed books from Realm and sort them by date created, from earliest to most recent
-    func sortBooksChronologically(books: [Book]) -> [Book]{
+    public func sortBooksChronologically(books: [Book]) -> [Book]{
         return books.sorted(by: {$0.whenCreated > $1.whenCreated})
     }
     
-    func sortBooksByIncreasingProgress(books: [Book]) -> [Book]{
+    public func sortBooksByIncreasingProgress(books: [Book]) -> [Book]{
         return books.sorted(by: {bookManager.getProgress(book: $0) < bookManager.getProgress(book: $1)})
     }
     
-    func sortBooksByDecreasingProgress(books: [Book]) -> [Book]{
+    public func sortBooksByDecreasingProgress(books: [Book]) -> [Book]{
         return books.sorted(by: {bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1)})
     }
     
+    public func sortBooks(books: [Book], filter: FilterType) -> [Book] {
+        switch filter {
+        case .alphabetical(let sortFunction):
+            return sortFunction(books)
+        case .chronological(let sortFunction):
+            return sortFunction(books)
+        case .decreasingProgress(let sortFunction):
+            return sortFunction(books)
+        case .increasingProgress(let sortFunction):
+            return sortFunction(books)
+        }
+    }
     
 }
