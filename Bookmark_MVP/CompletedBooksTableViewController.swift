@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllBooksTableViewController: UITableViewController {
+class CompletedBooksTableViewController: UITableViewController {
     
     //Checks sort method — true if alphabetical, false otherwise
     private var isAlphabetical  = false
@@ -56,7 +56,7 @@ class AllBooksTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "AllBooksTableViewCell", for: indexPath) as? AllBooksTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
         cell.book = books[indexPath.row]
@@ -66,13 +66,13 @@ class AllBooksTableViewController: UITableViewController {
     
     // Select a book to move to its details page.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "AllBookToBookDetailsSegue", sender: self)
+        self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
     }
     
     // Prepare for the BookDetailView before perform the segue to it.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-        case "AllBookToBookDetailsSegue"?:
+        case "CompletedToBookDetailsSegue"?:
             guard let destination = segue.destination as? BookDetailsViewController else {
                 return
             }

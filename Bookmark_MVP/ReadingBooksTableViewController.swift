@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BookTableViewController: UITableViewController {
+class ReadingBooksTableViewController: UITableViewController {
     
     // Create a book manager model
 //    let bookManager = BookManager()
@@ -40,6 +40,7 @@ class BookTableViewController: UITableViewController {
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
     override func viewWillAppear(_ animated: Bool) {
+        books = bookManager.readingBooks
         if isAlphabetical{
             books = bookManager.sortBooksAlphabetically(books: books)
         } else if isChronological {
@@ -71,9 +72,9 @@ class BookTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "BookTableViewCell"
+        let cellIdentifier = "ReadingBooksTableViewCell"
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? BookTableViewCell else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReadingBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of BookTableViewCell")
         }
         

@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class BookTableViewCell: UITableViewCell, UITextFieldDelegate {
+class ReadingBooksTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     let realm = try! Realm()
     

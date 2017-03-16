@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AllBooksTableViewCell: UITableViewCell {
+class CompletedBooksTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
