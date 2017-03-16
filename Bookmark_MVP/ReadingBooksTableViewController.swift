@@ -68,7 +68,6 @@ class ReadingBooksTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("-------->> The seleted book is: "+books[indexPath.row].title)
         self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
     }
     
@@ -139,8 +138,7 @@ class ReadingBooksTableViewController: UITableViewController {
         done.backgroundColor = UIColor.green
         
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
-            bookManager.delete(book: book)
-            self.deleteAndUpdateCells(indexPath: indexPath)
+            self.confirmDeleteBook(indexPath: indexPath, book: book)
         })
         delete.backgroundColor = UIColor.red
         
@@ -161,6 +159,20 @@ class ReadingBooksTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
+    }
+    
+    private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
+        let alert = UIAlertController(title: "Delete Confirmation", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes, delete it", style: .destructive, handler: {(action: UIAlertAction) in
+            bookManager.delete(book: book)
+            self.deleteAndUpdateCells(indexPath: indexPath)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
+            self.tableView.setEditing(false, animated: true)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     /*
