@@ -117,7 +117,6 @@ class CompletedBooksTableViewController: UITableViewController {
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
         self.tableView.endUpdates()
-        tableView.reloadData()
     }
     
 
