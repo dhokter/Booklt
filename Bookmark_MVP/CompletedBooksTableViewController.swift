@@ -104,8 +104,7 @@ class CompletedBooksTableViewController: UITableViewController {
         unDoneBook.backgroundColor = UIColor.green
         
         let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
-            bookManager.delete(book: book)
-            self.deleteAndUpdateCells(indexPath: indexPath)
+            self.confirmDeleteBook(indexPath: indexPath, book: book)
         })
         delete.backgroundColor = UIColor.red
         
@@ -119,6 +118,20 @@ class CompletedBooksTableViewController: UITableViewController {
         self.tableView.endUpdates()
     }
     
+    private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
+        let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes, delete it", style: .destructive, handler: {(action: UIAlertAction) in
+            bookManager.delete(book: book)
+            self.deleteAndUpdateCells(indexPath: indexPath)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
+            self.tableView.setEditing(false, animated: true)
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+
 
     /*
     // Override to support conditional editing of the table view.

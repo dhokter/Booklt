@@ -162,7 +162,7 @@ class ReadingBooksTableViewController: UITableViewController {
     }
     
     private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
-        let alert = UIAlertController(title: "Delete Confirmation", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Yes, delete it", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
