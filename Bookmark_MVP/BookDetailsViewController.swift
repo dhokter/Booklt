@@ -52,6 +52,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
                 book?.totalPages = Int(totalPagesTextField.text!) ?? 0
                 book?.currentPage = Int(currentPageTextField.text!) ?? 0
             }
+            navigationItem.title = book?.title
         }
         userIsEditingTheBook = !userIsEditingTheBook
         

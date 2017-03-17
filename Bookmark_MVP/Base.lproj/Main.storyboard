@@ -530,7 +530,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Book Title" id="qE2-YT-7D2">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="hck-kQ-0Wc">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="hck-kQ-0Wc">
                             <connections>
                                 <action selector="editButtonTouched:" destination="QCX-LA-fGm" id="yNd-Ti-LRF"/>
                             </connections>
