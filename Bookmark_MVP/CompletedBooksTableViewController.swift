@@ -11,7 +11,6 @@ import UIKit
 class CompletedBooksTableViewController: UITableViewController {
     
     private var books = [Book]()
-    
     private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
     
     @IBOutlet weak var allSortType: UISegmentedControl!
@@ -31,10 +30,10 @@ class CompletedBooksTableViewController: UITableViewController {
         books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         self.tableView.reloadData()
     }
-
+    
+    // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
@@ -52,7 +51,6 @@ class CompletedBooksTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
         cell.book = books[indexPath.row]
-        
         return cell
     }
     
@@ -96,8 +94,7 @@ class CompletedBooksTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let book = books[indexPath.row]
         
-        let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in 
-            // Check if the book is in the displayed book already.
+        let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in
             bookManager.markAsReading(book: book)
             self.deleteAndUpdateCells(indexPath: indexPath)
         })

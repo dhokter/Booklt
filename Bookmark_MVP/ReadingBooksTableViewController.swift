@@ -12,7 +12,6 @@ class ReadingBooksTableViewController: UITableViewController {
     
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
-    
     private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
     
     //(Kelli) Sort method buttons
@@ -34,9 +33,9 @@ class ReadingBooksTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     // MARK: - Table view data source
@@ -54,16 +53,11 @@ class ReadingBooksTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ReadingBooksTableViewCell"
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReadingBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of BookTableViewCell")
         }
-        
         let book = books[indexPath.row]
-        
-        // Loading the information in the book to the cell to display
-        cell.book = book
-        
+        cell.book = book    // Loads the information in the book to the cell to display
         return cell
     }
     
@@ -75,8 +69,7 @@ class ReadingBooksTableViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "MoveToBookDetailsSegue"?:
-            // Pass the book instance of the cell to the ViewController for displaying
-            guard let destination = segue.destination as? BookDetailsViewController else {
+            guard let destination = segue.destination as? BookDetailsViewController else {     // Pass the book instance of the cell to the ViewController to display
                 return
             }
             destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
@@ -88,11 +81,9 @@ class ReadingBooksTableViewController: UITableViewController {
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddBookViewController {
-            // Add the new book passed by the AddBookView to the storage, and generate the new list of displayed books.
             bookManager.addNewBook(book: sourceViewController.newBook!)
             books = bookManager.readingBooks
-            // Creating new cell for the book
-            let newIndexPath = IndexPath(row: books.count-1, section: 0)
+            let newIndexPath = IndexPath(row: books.count-1, section: 0)        // Creates a new cell for the book
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
             self.tableView.endUpdates()

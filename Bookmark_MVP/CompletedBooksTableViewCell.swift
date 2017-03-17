@@ -17,20 +17,19 @@ class CompletedBooksTableViewCell: UITableViewCell {
     var book: Book? {
         didSet {
             if let book = self.book {
-                titleLabel.text = book.title
+                titleLabel.text  = book.title
                 authorLabel.text = book.author
-                //coverImageView.image = book.cover
             }
         }
     }
-
+    
+    // Initialization code
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+    
+    // Configure the view for the selected state
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
     }
 }

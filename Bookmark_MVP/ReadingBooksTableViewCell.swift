@@ -13,11 +13,11 @@ class ReadingBooksTableViewCell: UITableViewCell, UITextFieldDelegate {
     
     let realm = try! Realm()
     
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet weak var titleBookView: UILabel!
-    @IBOutlet weak var progressLabelView: UILabel!
-    @IBOutlet weak var currentPageView: UITextField!
-    @IBOutlet weak var progressBarView: UIProgressView!
+    @IBOutlet weak var coverImageView:      UIImageView!
+    @IBOutlet weak var titleBookView:       UILabel!
+    @IBOutlet weak var progressLabelView:   UILabel!
+    @IBOutlet weak var currentPageView:     UITextField!
+    @IBOutlet weak var progressBarView:     UIProgressView!
     
     // The instance of the book the cell is displaying
     // As this book is set, then the following display will set up
@@ -25,11 +25,11 @@ class ReadingBooksTableViewCell: UITableViewCell, UITextFieldDelegate {
         didSet {
             if let book = self.book {
                 addDoneButtonOnKeyboard()
-                titleBookView.text = book.title
-                currentPageView.text = String(book.currentPage)
+                titleBookView.text       = book.title
+                currentPageView.text     = String(book.currentPage)
                 currentPageView.delegate = self
                 progressBarView.progress = bookManager.getProgress(book: book)
-                progressLabelView.text = String(Int(bookManager.getProgress(book: book)*100))+"%"
+                progressLabelView.text   = String(Int(bookManager.getProgress(book: book)*100))+"%"
             }
         }
     }
@@ -48,7 +48,7 @@ class ReadingBooksTableViewCell: UITableViewCell, UITextFieldDelegate {
                 book.whenCreated = Date()
             }
             progressBarView.progress = bookManager.getProgress(book: book)
-            progressLabelView.text = String(Int(bookManager.getProgress(book: book)*100))+"%"
+            progressLabelView.text   = String(Int(bookManager.getProgress(book: book)*100))+"%"
         }
     }
     
