@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import MGSwipeTableCell
 
-class ReadingBooksTableViewCell: UITableViewCell, UITextFieldDelegate {
+class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
     
     let realm = try! Realm()
     

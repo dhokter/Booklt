@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MGSwipeTableCell
 
-class ReadingBooksTableViewController: UITableViewController {
+class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
     
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
@@ -53,11 +54,25 @@ class ReadingBooksTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellIdentifier = "ReadingBooksTableViewCell"
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReadingBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of BookTableViewCell")
         }
+        cell.delegate = self
         let book = books[indexPath.row]
         cell.book = book    // Loads the information in the book to the cell to display
+        
+//        cell.leftButtons = [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell)->Bool in
+//            self.confirmDeleteBook(indexPath: indexPath, book: book)
+//            return true
+//        })]
+//        
+//        cell.rightButtons = [MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
+//            bookManager.markAsFinished(book: book)
+//            self.deleteAndUpdateCells(indexPath: indexPath)
+//            return true
+//        })]
+        
         return cell
     }
     
@@ -77,6 +92,29 @@ class ReadingBooksTableViewController: UITableViewController {
             
         }
     }
+    
+    func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
+        return true
+    }
+    
+    func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
+        let indexPath = self.tableView.indexPath(for: cell)
+        let book = books[(indexPath?.row)!]
+        
+        if direction == MGSwipeDirection.leftToRight {
+            return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell)->Bool in
+                self.confirmDeleteBook(indexPath: indexPath!, book: book)
+                return false
+            })]
+        } else {
+            return [MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
+                bookManager.markAsFinished(book: book)
+                self.deleteAndUpdateCells(indexPath: indexPath!)
+                return false
+            })]
+        }
+    }
+    
     
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
@@ -119,22 +157,23 @@ class ReadingBooksTableViewController: UITableViewController {
     }
     
     
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let book = books[indexPath.row]
-        
-        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in
-            bookManager.markAsFinished(book: book)
-            self.deleteAndUpdateCells(indexPath: indexPath)
-        })
-        done.backgroundColor = UIColor.green
-        
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
-            self.confirmDeleteBook(indexPath: indexPath, book: book)
-        })
-        delete.backgroundColor = UIColor.red
-        
-        return [done, delete]
-    }
+    
+//    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//        let book = books[indexPath.row]
+//        
+//        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in
+//            bookManager.markAsFinished(book: book)
+//            self.deleteAndUpdateCells(indexPath: indexPath)
+//        })
+//        done.backgroundColor = UIColor.green
+//        
+//        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
+//            self.confirmDeleteBook(indexPath: indexPath, book: book)
+//        })
+//        delete.backgroundColor = UIColor.red
+//        
+//        return [done, delete]
+//    }
 
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
@@ -144,13 +183,13 @@ class ReadingBooksTableViewController: UITableViewController {
     }
     
     // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the tableview, but the book will still be in inventory
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }
-    }
+//    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        if editingStyle == .delete {
+//            // Delete the row from the tableview, but the book will still be in inventory
+//        } else if editingStyle == .insert {
+//            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+//        }
+//    }
     
     private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)

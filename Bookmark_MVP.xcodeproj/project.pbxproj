@@ -18,6 +18,7 @@
 		4CB220A61E54E84C00AF0647 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4CB220A41E54E84C00AF0647 /* LaunchScreen.storyboard */; };
 		4CBF6F341E67EF5B003EE5B5 /* BookDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */; };
 		4CC111921E651F1D00A9B8E4 /* BookManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC111911E651F1D00A9B8E4 /* BookManager.swift */; };
+		4CC40A471E7C9EAA00B8AED8 /* MGSwipeTableCell.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CC40A461E7C9EAA00B8AED8 /* MGSwipeTableCell.framework */; };
 		4CE19B351E5FEEB20085B508 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE19B341E5FEEB20085B508 /* Book.swift */; };
 		4CE19B371E5FF0860085B508 /* ReadingBooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE19B361E5FF0860085B508 /* ReadingBooksTableViewCell.swift */; };
 		4CE19B391E5FF2480085B508 /* ReadingBooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CE19B381E5FF2480085B508 /* ReadingBooksTableViewController.swift */; };
@@ -51,6 +52,8 @@
 		4CB220A71E54E84C00AF0647 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookDetailsViewController.swift; sourceTree = "<group>"; };
 		4CC111911E651F1D00A9B8E4 /* BookManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookManager.swift; sourceTree = "<group>"; };
+		4CC40A441E7C9E8600B8AED8 /* MGSwipeTableCell.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; name = MGSwipeTableCell.framework.dSYM; path = Carthage/Build/iOS/MGSwipeTableCell.framework.dSYM; sourceTree = "<group>"; };
+		4CC40A461E7C9EAA00B8AED8 /* MGSwipeTableCell.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MGSwipeTableCell.framework; path = Carthage/Build/iOS/MGSwipeTableCell.framework; sourceTree = "<group>"; };
 		4CE19B341E5FEEB20085B508 /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		4CE19B361E5FF0860085B508 /* ReadingBooksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingBooksTableViewCell.swift; sourceTree = "<group>"; };
 		4CE19B381E5FF2480085B508 /* ReadingBooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadingBooksTableViewController.swift; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 				092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */,
 				A2DAC8751E675ADB009D3D8F /* Realm.framework in Frameworks */,
 				A2DAC8761E675ADB009D3D8F /* RealmSwift.framework in Frameworks */,
+				4CC40A471E7C9EAA00B8AED8 /* MGSwipeTableCell.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +79,8 @@
 		092D62911E624B71001269D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CC40A461E7C9EAA00B8AED8 /* MGSwipeTableCell.framework */,
+				4CC40A441E7C9E8600B8AED8 /* MGSwipeTableCell.framework.dSYM */,
 				A2DAC8731E675ADB009D3D8F /* Realm.framework */,
 				A2DAC8741E675ADB009D3D8F /* RealmSwift.framework */,
 				092D62941E624B73001269D1 /* SwiftyJSON.framework */,
@@ -206,6 +212,7 @@
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/Realm.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/MGSwipeTableCell.framework",
 			);
 			outputPaths = (
 			);
