@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MGSwipeTableCell
 
-class CompletedBooksTableViewCell: UITableViewCell {
+class CompletedBooksTableViewCell: MGSwipeTableCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!

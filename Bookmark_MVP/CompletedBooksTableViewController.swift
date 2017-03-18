@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MGSwipeTableCell
 
-class CompletedBooksTableViewController: UITableViewController {
+class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
     
     private var books = [Book]()
     private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
@@ -51,6 +52,8 @@ class CompletedBooksTableViewController: UITableViewController {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
         cell.book = books[indexPath.row]
+        cell.delegate = self
+        
         return cell
     }
     
@@ -86,26 +89,26 @@ class CompletedBooksTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
+    func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
+        return true
+    }
     
-    // TODO: The logic for this method should be as follow:
-    // If the book is marked as reading, then the tableview should swipe the row back to its position (not implemented) and the BookTableView should appear that book (done)
-    // However, find a way for preventing user add a book back multiple times (finished but not fully tested).
-    // Delete a book should be just same as BookTableView
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let book = books[indexPath.row]
+    func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
+        let indexPath = self.tableView.indexPath(for: cell)
+        let book = books[(indexPath?.row)!]
         
-        let unDoneBook = UITableViewRowAction(style: .normal, title: "Mark as Reading", handler: {_,_ in
-            bookManager.markAsReading(book: book)
-            self.deleteAndUpdateCells(indexPath: indexPath)
-        })
-        unDoneBook.backgroundColor = UIColor.green
-        
-        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
-            self.confirmDeleteBook(indexPath: indexPath, book: book)
-        })
-        delete.backgroundColor = UIColor.red
-        
-        return [unDoneBook, delete]
+        if direction == MGSwipeDirection.leftToRight {
+            return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell) -> Bool in
+                self.confirmDeleteBook(indexPath: indexPath!, book: book)
+                return false
+            })]
+        } else {
+            return [MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
+                bookManager.markAsReading(book: book)
+                self.deleteAndUpdateCells(indexPath: indexPath!)
+                return false
+            })]
+        }
     }
     
     private func deleteAndUpdateCells(indexPath: IndexPath) {
@@ -126,17 +129,17 @@ class CompletedBooksTableViewController: UITableViewController {
             self.tableView.setEditing(false, animated: true)
         }))
         
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: false, completion: nil)
     }
 
 
-    /*
+    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    */
+    
 
     /*
     // Override to support editing the table view.
