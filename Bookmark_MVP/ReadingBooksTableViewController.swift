@@ -145,24 +145,6 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         return true
     }
     
-    
-    //    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-    //        let book = books[indexPath.row]
-    //
-    //        let done = UITableViewRowAction(style: .normal, title: "Mark as Done", handler: {_,_ in
-    //            bookManager.markAsFinished(book: book)
-    //            self.deleteAndUpdateCells(indexPath: indexPath)
-    //        })
-    //        done.backgroundColor = UIColor.green
-    //
-    //        let delete = UITableViewRowAction(style: .destructive, title: "Delete", handler: {_,_ in
-    //            self.confirmDeleteBook(indexPath: indexPath, book: book)
-    //        })
-    //        delete.backgroundColor = UIColor.red
-    //
-    //        return [done, delete]
-    //    }
-    
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
         self.tableView.beginUpdates()
