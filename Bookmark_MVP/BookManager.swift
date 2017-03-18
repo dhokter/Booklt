@@ -23,7 +23,7 @@ enum FilterType {
 class BookManager {
     
     let realm = try! Realm()
-
+    
     // List of all the books that the user is currently reading.
     public var readingBooks: [Book] {
         return Array(realm.objects(Book.self)).filter({$0.isReading})
@@ -33,7 +33,7 @@ class BookManager {
     public var finishedBooks: [Book] {
         return Array(realm.objects(Book.self).filter({!$0.isReading}))
     }
-
+    
     // Adds a new book to the list of books that the user is currently reading.
     public func addNewBook(book: Book) {
         try! realm.write {
@@ -65,7 +65,8 @@ class BookManager {
     }
     
     public func getProgress(book: Book) -> Float {
-        return Float(book.currentPage)/Float(book.totalPages)
+        let value = Float(book.currentPage)/Float(book.totalPages)
+        return value <= 1 ? value : 1
     }
     
     //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
