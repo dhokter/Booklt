@@ -36,7 +36,7 @@
                                 <rect key="frame" x="0.0" y="58" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gWn-SF-rew" id="Hli-2H-Qd2">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="cAK-8C-DmV">
@@ -158,7 +158,7 @@
                                 <rect key="frame" x="0.0" y="58" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jOV-Zr-DAG" id="j2Y-8f-3da">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="hMq-Hs-9ZF">
@@ -502,7 +502,7 @@
                                     <outlet property="delegate" destination="QCX-LA-fGm" id="CWd-ks-cKa"/>
                                 </connections>
                             </textField>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Notes" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Niy-Ne-dzi">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Personal Notes" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Niy-Ne-dzi">
                                 <rect key="frame" x="34" y="361" width="303" height="227"/>
                                 <color key="backgroundColor" red="0.96636618589743595" green="0.96636618589743595" blue="0.96636618589743595" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -537,8 +537,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="PersonalNotesTextView" destination="Niy-Ne-dzi" id="PwK-k7-mM8"/>
                         <outlet property="authorTextField" destination="yYM-x6-p71" id="X1p-C3-KEQ"/>
                         <outlet property="currentPageTextField" destination="Vyg-Ef-6D2" id="g9C-fm-dja"/>
+                        <outlet property="personalNotesTextView" destination="Niy-Ne-dzi" id="oSm-Mr-gWB"/>
                         <outlet property="titleTextField" destination="jNS-Yb-wLO" id="uPb-4b-zXa"/>
                         <outlet property="totalPagesTextField" destination="cs7-eU-oag" id="k4j-AA-5Wb"/>
                     </connections>
