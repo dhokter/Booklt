@@ -14,10 +14,10 @@ import RealmSwift
 let bookManager = BookManager()
 
 enum FilterType {
-    case chronological(([Book]) -> [Book])
-    case alphabetical(([Book]) -> [Book])
-    case increasingProgress(([Book]) -> [Book])
-    case decreasingProgress(([Book]) -> [Book])
+    case chronological
+    case alphabetical
+    case increasingProgress
+    case decreasingProgress
 }
 
 class BookManager {
@@ -104,14 +104,14 @@ class BookManager {
     
     public func sortBooks(books: [Book], filter: FilterType) -> [Book] {
         switch filter {
-        case .alphabetical(let sortFunction):
-            return sortFunction(books)
-        case .chronological(let sortFunction):
-            return sortFunction(books)
-        case .decreasingProgress(let sortFunction):
-            return sortFunction(books)
-        case .increasingProgress(let sortFunction):
-            return sortFunction(books)
+        case .alphabetical:
+            return sortBooksAlphabetically(books: books)
+        case .chronological:
+            return sortBooksChronologically(books: books)
+        case .decreasingProgress:
+            return sortBooksByDecreasingProgress(books: books)
+        case .increasingProgress:
+            return sortBooksByIncreasingProgress(books: books)
         }
     }
     

@@ -12,7 +12,7 @@ import MGSwipeTableCell
 class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
     
     private var books = [Book]()
-    private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
+    private var filterType: FilterType = .chronological
     
     @IBOutlet weak var allSortType: UISegmentedControl!
 
@@ -79,9 +79,9 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         switch allSortType.selectedSegmentIndex
         {
         case 0:
-            filterType = .alphabetical(bookManager.sortBooksAlphabetically)
+            filterType = .alphabetical
         case 1:
-            filterType = .chronological(bookManager.sortBooksChronologically)
+            filterType = .chronological
         default:
             break
         }
@@ -126,7 +126,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
-            self.tableView.setEditing(false, animated: true)
+            let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
+            cell.hideSwipe(animated: true)
         }))
         
         self.present(alert, animated: false, completion: nil)

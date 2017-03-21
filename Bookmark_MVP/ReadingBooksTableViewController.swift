@@ -13,7 +13,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
-    private var filterType: FilterType = .chronological(bookManager.sortBooksChronologically)
+    private var filterType: FilterType = .chronological
     
     //(Kelli) Sort method buttons
     @IBOutlet weak var sortType: UISegmentedControl!
@@ -124,13 +124,13 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         switch sortType.selectedSegmentIndex
         {
         case 0:                             // "A-Z" is selected
-            filterType = .alphabetical(bookManager.sortBooksAlphabetically)
+            filterType = .alphabetical
         case 1:                             // "Date" is selected
-            filterType = .chronological(bookManager.sortBooksChronologically)
+            filterType = .chronological
         case 2:                             // "Progress ↑" is selected
-            filterType = .increasingProgress(bookManager.sortBooksByIncreasingProgress)
+            filterType = .increasingProgress
         case 3:                             // "Progress ↓" is selected
-            filterType = .increasingProgress(bookManager.sortBooksByDecreasingProgress)
+            filterType = .decreasingProgress
         default:
             break
         }
@@ -171,7 +171,9 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
-            self.tableView.setEditing(false, animated: true)
+            let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
+            cell.hideSwipe(animated: true)
+            
         }))
         
         self.present(alert, animated: false, completion: nil)
