@@ -10,6 +10,7 @@
 		092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; };
 		092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */; };
+		4C62DB6B1E81D8FA00932024 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */; };
 		4C99EFD11E6F9E20001D5EB1 /* CompletedBooksTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C99EFD01E6F9E20001D5EB1 /* CompletedBooksTableViewController.swift */; };
 		4C99EFD31E6F9E8F001D5EB1 /* CompletedBooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C99EFD21E6F9E8F001D5EB1 /* CompletedBooksTableViewCell.swift */; };
 		4CB2209C1E54E84C00AF0647 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209B1E54E84C00AF0647 /* AppDelegate.swift */; };
@@ -41,6 +42,7 @@
 
 /* Begin PBXFileReference section */
 		092D62941E624B73001269D1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
+		4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		4C99EFD01E6F9E20001D5EB1 /* CompletedBooksTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletedBooksTableViewController.swift; sourceTree = "<group>"; };
 		4C99EFD21E6F9E8F001D5EB1 /* CompletedBooksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompletedBooksTableViewCell.swift; sourceTree = "<group>"; };
 		4CB220981E54E84C00AF0647 /* Bookmark_MVP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bookmark_MVP.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -115,6 +117,7 @@
 				4CE19B381E5FF2480085B508 /* ReadingBooksTableViewController.swift */,
 				4C99EFD21E6F9E8F001D5EB1 /* CompletedBooksTableViewCell.swift */,
 				4C99EFD01E6F9E20001D5EB1 /* CompletedBooksTableViewController.swift */,
+				4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */,
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
 				4CE19B341E5FEEB20085B508 /* Book.swift */,
 				4CC111911E651F1D00A9B8E4 /* BookManager.swift */,
@@ -227,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4C62DB6B1E81D8FA00932024 /* SearchViewController.swift in Sources */,
 				4CC111921E651F1D00A9B8E4 /* BookManager.swift in Sources */,
 				4C1B2E311E66522D00305AFD /* AddBookViewController.swift in Sources */,
 				4CBF6F341E67EF5B003EE5B5 /* BookDetailsViewController.swift in Sources */,
