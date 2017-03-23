@@ -9,7 +9,7 @@
 import UIKit
 import SwiftyJSON
 
-class SearchViewController: UIViewController {
+class SearchViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorLabel: UILabel!
@@ -25,8 +25,6 @@ class SearchViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
     
     @IBAction func searchTouched(_ sender: UIButton) {
         guard let title = titleTextField.text else {
@@ -45,8 +43,7 @@ class SearchViewController: UIViewController {
             if error != nil {
                 print("-----------------> Error occur!!!")
                 return
-            }
-            if data != nil {
+            } else {
 //                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
 //                if let rootDictionary = json as? [String:Any], let items = rootDictionary["items"]  as? [[String:Any]] {
 //                    let volumeInfo = items[0]["volumeInfo"] as? [String: Any]
@@ -72,19 +69,16 @@ class SearchViewController: UIViewController {
                 let json = JSON(data: data!)
                 print(json["items"][0]["volumeInfo"]["authors"])
                 let authors = json["items"][0]["volumeInfo"]["authors"].arrayValue.map({$0.stringValue})
-                for author in authors {
-                    print(author)
-                    // Make the code the run on the main thread
-                    DispatchQueue.global().async {
-                        DispatchQueue.main.async {
-                            self.authorLabel.text = author
-                        }
-                    }
+                let pages = json["items"][0]["volumeInfo"]["pageCount"].stringValue
+                // Make the codes to run in the main thread (thread 1)
+                DispatchQueue.main.async {
+                    self.authorLabel.text = authors.joined(separator: ", ")
+                    self.pageCountLabel.text = pages
                 }
             }
-            
         })
         task.resume()
+
     }
     
     /*
