@@ -9,11 +9,21 @@
 import UIKit
 import SwiftyJSON
 
-class SearchViewController: UIViewController, UITextFieldDelegate {
+struct BookFromAPI {
+    var title: String
+    var authors: [String]
+    var totalPages: Int
+    var cover: UIImage
+}
+
+class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var pageCountLabel: UILabel!
+    
+    var searchResults: [BookFromAPI] = [];
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,20 +76,45 @@ class SearchViewController: UIViewController, UITextFieldDelegate {
                 //                    }
                 //                }
                 print("-----> Data is not null")
-                let json = JSON(data: data!)
-                print(json["items"][0]["volumeInfo"]["authors"])
-                let authors = json["items"][0]["volumeInfo"]["authors"].arrayValue.map({$0.stringValue})
-                let pages = json["items"][0]["volumeInfo"]["pageCount"].stringValue
-                // Make the codes to run in the main thread (thread 1)
-                DispatchQueue.main.async {
-                    self.authorLabel.text = authors.joined(separator: ", ")
-                    self.pageCountLabel.text = pages
+                self.searchResults = [];
+                let json = JSON(data: data!)["items"].arrayValue
+                for book in json {
+                    let dataImage = try? Data(contentsOf: URL(string: book["volumeInfo"]["imageLinks"]["thumbnail"].stringValue)!)
+                    let cover = UIImage(data: dataImage!)
+                    self.searchResults.append(BookFromAPI(title: book["volumeInfo"]["title"].stringValue, authors: book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue}), totalPages: book["volumeInfo"]["pageCount"].intValue, cover: cover!))
                 }
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+
+                
+//                print(json["items"][0]["volumeInfo"]["authors"])
+//                let authors = json["items"][0]["volumeInfo"]["authors"].arrayValue.map({$0.stringValue})
+//                let pages = json["items"][0]["volumeInfo"]["pageCount"].stringValue
+//                // Make the codes to run in the main thread (thread 1)
+//                DispatchQueue.main.async {
+//                    self.authorLabel.text = authors.joined(separator: ", ")
+//                    self.pageCountLabel.text = pages
+//                }
             }
         })
         task.resume()
-
     }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return searchResults.count;
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "searchResultCell", for: indexPath) as? SearchBookTableViewCell else {
+            fatalError("Cannot filled the cell")
+        }
+        cell.book = searchResults[indexPath.row]
+        
+        return cell;
+    }
+    
+    
     
     /*
      // MARK: - Navigation

@@ -158,7 +158,7 @@
                                 <rect key="frame" x="0.0" y="58" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jOV-Zr-DAG" id="j2Y-8f-3da">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="hMq-Hs-9ZF">
@@ -263,16 +263,16 @@
                                     <action selector="searchTouched:" destination="JBT-ny-MJE" eventType="touchUpInside" id="TUq-Sv-YGT"/>
                                 </connections>
                             </button>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BZK-Wg-tKY">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BZK-Wg-tKY">
                                 <rect key="frame" x="0.0" y="307" width="375" height="311"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchResultCell" rowHeight="100" id="pvE-bj-Cyy">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchResultCell" rowHeight="100" id="pvE-bj-Cyy" customClass="SearchBookTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pvE-bj-Cyy" id="p9x-Wn-5YT">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vf-Gp-bne">
@@ -287,7 +287,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Author(s)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMY-VW-yqw">
-                                                    <rect key="frame" x="105" y="53" width="72" height="21"/>
+                                                    <rect key="frame" x="105" y="53" width="248" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -295,6 +295,11 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="authorLabel" destination="aMY-VW-yqw" id="6IZ-aH-MEZ"/>
+                                            <outlet property="coverImage" destination="9Vf-Gp-bne" id="M8Z-7n-SMv"/>
+                                            <outlet property="titleLabel" destination="dUa-kH-gGM" id="E1t-tr-5kU"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -309,6 +314,7 @@
                     <connections>
                         <outlet property="authorLabel" destination="hEp-sw-aUT" id="STi-Pn-BeE"/>
                         <outlet property="pageCountLabel" destination="TfU-Z8-M1M" id="bo5-Oy-R2e"/>
+                        <outlet property="tableView" destination="BZK-Wg-tKY" id="lu0-fM-moG"/>
                         <outlet property="titleTextField" destination="kOP-JQ-sut" id="rPM-l8-Vky"/>
                     </connections>
                 </viewController>
@@ -329,7 +335,7 @@
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xxN-0y-WuO" id="p28-mW-jY3">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -847,6 +853,6 @@
         <image name="default" width="181" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Tfq-AS-43h"/>
+        <segue reference="mKs-l1-p0q"/>
     </inferredMetricsTieBreakers>
 </document>
