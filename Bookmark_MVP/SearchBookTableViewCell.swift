@@ -20,7 +20,7 @@ class SearchBookTableViewCell: UITableViewCell {
             if let book = self.book {
                 coverImage.image = book.cover
                 titleLabel.text = book.title
-                authorLabel.text = book.authors.joined(separator: ",")
+                authorLabel.text = book.authors.joined(separator: ", ")
             }
         }
     }

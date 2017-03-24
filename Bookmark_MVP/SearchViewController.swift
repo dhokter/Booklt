@@ -79,6 +79,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
                 self.searchResults = [];
                 let json = JSON(data: data!)["items"].arrayValue
                 for book in json {
+                    // TODO: Some books does not have images, this will crash the app
                     let dataImage = try? Data(contentsOf: URL(string: book["volumeInfo"]["imageLinks"]["thumbnail"].stringValue)!)
                     let cover = UIImage(data: dataImage!)
                     self.searchResults.append(BookFromAPI(title: book["volumeInfo"]["title"].stringValue, authors: book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue}), totalPages: book["volumeInfo"]["pageCount"].intValue, cover: cover!))
