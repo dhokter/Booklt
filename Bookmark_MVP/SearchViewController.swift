@@ -18,11 +18,11 @@ struct BookFromAPI {
 
 class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
-    @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleTextField: UITextField!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var pageCountLabel: UILabel!
+    @IBOutlet weak var tableView:       UITableView!
+    @IBOutlet weak var titleTextField:  UITextField!
+    @IBOutlet weak var authorTextField: UITextField!
     
+    // List of books found from the API to display
     var searchResults: [BookFromAPI] = []
     
     override func viewDidLoad() {
@@ -38,15 +38,25 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     
     @IBAction func searchTouched(_ sender: UIButton) {
         if let title = titleTextField.text {
-            searchForTitle(title: title)
+            if let author = authorTextField.text {
+                searchForBook(title: title, author: author)
+            } else {
+                searchForBook(title: title)
+            }
         }
     }
     
-    private func searchForTitle(title: String) {
-        let googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))"
-        print("--------------> \(googleBookSearch)")
+    private func searchForBook(title: String, author: String = "") {
+        var googleBookSearch = ""
+        if author != "" {
+            googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))+inauthor:\(author.replacingOccurrences(of: " ", with: "%20").capitalized)"
+        } else {
+            googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))"
+        }
+        
+//        print("--------------> \(googleBookSearch)")
         let url = URL(string: googleBookSearch)!
-        print("----------> URL is: \(url)")
+//        print("----------> URL is: \(url)")
         let request = URLRequest(url: url)
         
         let config = URLSessionConfiguration.default
@@ -54,29 +64,47 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
         
         let task = session.dataTask(with: request, completionHandler: {(data, response, error) in
             if error != nil {
-                print("-----------------> Error occur!!!")
+                self.searchFailed()
                 return
             } else {
-                print("-----> Data is not null")
                 self.searchResults = []
                 let json = JSON(data: data!)["items"].arrayValue
-                for book in json {
-                    // TODO: Some books does not have images, this will crash the app ---> SOLVED, untested fully
-                    var cover: UIImage
-                    if let urlString = book["volumeInfo"]["imageLinks"]["thumbnail"].string {
-                        let dataImage = try? Data(contentsOf: URL(string: urlString)!)
-                        cover = UIImage(data: dataImage!)!
-                    } else {
-                        cover = #imageLiteral(resourceName: "default")
+                if json != [] {
+                    for book in json {
+                        // TODO: Some books does not have images, this will crash the app ---> SOLVED, untested fully
+                        var cover: UIImage
+                        if let urlString = book["volumeInfo"]["imageLinks"]["thumbnail"].string {
+                            let dataImage = try? Data(contentsOf: URL(string: urlString)!)
+                            cover = UIImage(data: dataImage!)!
+                        } else {
+                            cover = #imageLiteral(resourceName: "default")
+                        }
+                        self.searchResults.append(BookFromAPI(title: book["volumeInfo"]["title"].stringValue, authors: book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue}), totalPages: book["volumeInfo"]["pageCount"].intValue, cover: cover))
                     }
-                    self.searchResults.append(BookFromAPI(title: book["volumeInfo"]["title"].stringValue, authors: book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue}), totalPages: book["volumeInfo"]["pageCount"].intValue, cover: cover))
-                }
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
+                    }
+                } else {
+                    self.searchFailed()
                 }
             }
         })
         task.resume()
+    }
+    
+    private func searchFailed() {
+        let alertNoBook = UIAlertController(title: "Search failed", message: "There is no book in the database matched your given information, or you are not connected to internet.\nPlease make a new search.", preferredStyle: .alert)
+        
+        alertNoBook.addAction(UIAlertAction(title: "New search", style: .default, handler: {(UIAlertAction) -> Void in
+            return
+        }))
+        
+        // Call the alert in the main thread, since it is UI
+        DispatchQueue.main.async {
+            self.searchResults = []
+            self.tableView.reloadData()
+            self.present(alertNoBook, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -93,13 +121,18 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if let title = textField.text {
-            searchForTitle(title: title)
+        if let title = titleTextField.text {
+            if let author = authorTextField.text {
+                searchForBook(title: title, author: author)
+            } else {
+                searchForBook(title: title)
+            }
         }
         textField.resignFirstResponder()
         
         return true
     }
+    
     
     
     
