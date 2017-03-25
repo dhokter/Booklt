@@ -23,7 +23,7 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var pageCountLabel: UILabel!
     
-    var searchResults: [BookFromAPI] = [];
+    var searchResults: [BookFromAPI] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,9 +37,12 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     }
     
     @IBAction func searchTouched(_ sender: UIButton) {
-        guard let title = titleTextField.text else {
-            return
+        if let title = titleTextField.text {
+            searchForTitle(title: title)
         }
+    }
+    
+    private func searchForTitle(title: String) {
         let googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))"
         print("--------------> \(googleBookSearch)")
         let url = URL(string: googleBookSearch)!
@@ -54,56 +57,30 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
                 print("-----------------> Error occur!!!")
                 return
             } else {
-//                let json = try? JSONSerialization.jsonObject(with: data!, options: [])
-//                if let rootDictionary = json as? [String:Any], let items = rootDictionary["items"]  as? [[String:Any]] {
-//                    let volumeInfo = items[0]["volumeInfo"] as? [String: Any]
-//                    let authors = volumeInfo?["authors"] as? [String]
-//                    let page = volumeInfo?["pageCount"] as? Int
-//                    //                    let book = items[0]
-//                    //                    print("----> Keys: \(book.keys)")
-//                    let author = authors?[0]
-//                    print("-------> Author: \(author!)")
-//                    print("-------> Page count: \(page!)")
-//                    self.authorLabel.text = author!
-//                    self.pageCountLabel.text = String(page!)
-//                }
-                //                let json = JSON(data: data!)
-                //                let book = json["items"][0] as? [String:Any]
-                //                print(book["authors"])
-                //                let item = json["items"][0] {
-                //                    if let author = item["authors"] {
-                //                        self.authorLabel.text = author
-                //                    }
-                //                }
                 print("-----> Data is not null")
-                self.searchResults = [];
+                self.searchResults = []
                 let json = JSON(data: data!)["items"].arrayValue
                 for book in json {
-                    // TODO: Some books does not have images, this will crash the app
-                    let dataImage = try? Data(contentsOf: URL(string: book["volumeInfo"]["imageLinks"]["thumbnail"].stringValue)!)
-                    let cover = UIImage(data: dataImage!)
-                    self.searchResults.append(BookFromAPI(title: book["volumeInfo"]["title"].stringValue, authors: book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue}), totalPages: book["volumeInfo"]["pageCount"].intValue, cover: cover!))
+                    // TODO: Some books does not have images, this will crash the app ---> SOLVED, untested fully
+                    var cover: UIImage
+                    if let urlString = book["volumeInfo"]["imageLinks"]["thumbnail"].string {
+                        let dataImage = try? Data(contentsOf: URL(string: urlString)!)
+                        cover = UIImage(data: dataImage!)!
+                    } else {
+                        cover = #imageLiteral(resourceName: "default")
+                    }
+                    self.searchResults.append(BookFromAPI(title: book["volumeInfo"]["title"].stringValue, authors: book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue}), totalPages: book["volumeInfo"]["pageCount"].intValue, cover: cover))
                 }
                 DispatchQueue.main.async {
                     self.tableView.reloadData()
                 }
-
-                
-//                print(json["items"][0]["volumeInfo"]["authors"])
-//                let authors = json["items"][0]["volumeInfo"]["authors"].arrayValue.map({$0.stringValue})
-//                let pages = json["items"][0]["volumeInfo"]["pageCount"].stringValue
-//                // Make the codes to run in the main thread (thread 1)
-//                DispatchQueue.main.async {
-//                    self.authorLabel.text = authors.joined(separator: ", ")
-//                    self.pageCountLabel.text = pages
-//                }
             }
         })
         task.resume()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchResults.count;
+        return searchResults.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -112,7 +89,16 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
         }
         cell.book = searchResults[indexPath.row]
         
-        return cell;
+        return cell
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if let title = textField.text {
+            searchForTitle(title: title)
+        }
+        textField.resignFirstResponder()
+        
+        return true
     }
     
     
