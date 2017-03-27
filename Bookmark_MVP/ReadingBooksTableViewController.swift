@@ -106,7 +106,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     
     // The function the for unwind segue from the AddBookView.
-    @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
+    @IBAction func addNewBookManuallyUnwind(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddBookViewController {
             bookManager.addNewBook(book: sourceViewController.newBook!)
             books = bookManager.readingBooks
@@ -186,6 +186,9 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         selectAddMethodAlert.addAction(UIAlertAction(title: "Manually", style: .default, handler: {(UIAlertAction) -> Void in
             self.performSegue(withIdentifier: "readingToAddManuallySegue", sender: self)
         }))
+        
+        
+        selectAddMethodAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(UIAlertAction) -> Void in return}))
         
         self.present(selectAddMethodAlert, animated: true, completion: nil)
     }

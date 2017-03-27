@@ -36,7 +36,8 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"))
+        // TODO: Make the save button to be disabled until user enter enough information. Right now leaving some of them blank will crash the app.
+        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text ?? "0")!, currentPage: Int(currentPageTextField.text ?? "0")!, author: authorTextField.text ?? "", whenCreated: Date(), personalNotes: String("Personal Notes"))
     }
     
     // Process of adding a new book:

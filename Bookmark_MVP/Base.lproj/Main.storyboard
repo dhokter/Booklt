@@ -566,7 +566,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" title="Save" id="f6M-jV-PVt">
                                             <connections>
-                                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookAndUnwindWithSender:" id="iZc-YO-BPH"/>
+                                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookManuallyUnwindWithSender:" id="mRN-8i-0xi"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -588,11 +588,7 @@
                                 <action selector="tochedCancel:" destination="BYZ-38-t0r" id="bBS-Xj-E39"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1FZ-me-JtR">
-                            <connections>
-                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookAndUnwindWithSender:" id="Lcs-CZ-2eL"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1FZ-me-JtR"/>
                     </navigationItem>
                     <connections>
                         <outlet property="authorTextField" destination="hkN-s2-RtH" id="baN-SL-Xz5"/>
