@@ -179,6 +179,17 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         self.present(alert, animated: false, completion: nil)
     }
     
+    
+    @IBAction func addButton(_ sender: UIBarButtonItem) {
+        let selectAddMethodAlert = UIAlertController(title: "Select method", message: "How do you want to add your book?", preferredStyle: .actionSheet)
+        
+        selectAddMethodAlert.addAction(UIAlertAction(title: "Manually", style: .default, handler: {(UIAlertAction) -> Void in
+            self.performSegue(withIdentifier: "readingToAddManuallySegue", sender: self)
+        }))
+        
+        self.present(selectAddMethodAlert, animated: true, completion: nil)
+    }
+    
     /*
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {

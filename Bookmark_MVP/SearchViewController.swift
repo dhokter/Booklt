@@ -54,9 +54,11 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
             googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))"
         }
         
-//        print("--------------> \(googleBookSearch)")
+        print("--------------> \(googleBookSearch)")
+        // TODO: App crashes if entered special characters from other languages, such as Vietnamese
+        googleBookSearch = googleBookSearch.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!;
         let url = URL(string: googleBookSearch)!
-//        print("----------> URL is: \(url)")
+        print("----------> URL is: \(url)")
         let request = URLRequest(url: url)
         
         let config = URLSessionConfiguration.default
