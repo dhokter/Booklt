@@ -49,9 +49,9 @@ class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDe
     private func searchForBook(title: String, author: String = "") {
         var googleBookSearch = ""
         if author != "" {
-            googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))+inauthor:\(author.replacingOccurrences(of: " ", with: "%20").capitalized)"
+            googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title)+inauthor:\(author.capitalized)"
         } else {
-            googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title.replacingOccurrences(of: " ", with: "%20"))"
+            googleBookSearch = "https://www.googleapis.com/books/v1/volumes?q=\(title)"
         }
         
         print("--------------> \(googleBookSearch)")
