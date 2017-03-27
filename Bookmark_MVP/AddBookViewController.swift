@@ -15,6 +15,8 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
     
+    // we should links or the buttons of choosing colors to ViewController?
+    
     var newBook: Book?
     
     override func viewDidLoad() {
