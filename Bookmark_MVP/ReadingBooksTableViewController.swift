@@ -30,6 +30,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
         tableView.reloadData()
     }

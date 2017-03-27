@@ -28,6 +28,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
         books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         self.tableView.reloadData()
     }

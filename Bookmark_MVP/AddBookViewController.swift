@@ -20,6 +20,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     var newBook: Book?
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         addDoneButtonOnKeyboard()
     }
     
