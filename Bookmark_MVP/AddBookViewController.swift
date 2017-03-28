@@ -35,6 +35,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // TODO: 2 functions below provide the same result and it is unecessary to have both. Consider delete one of them. Suggest to delete shouldPerformSegue
     // Disable the SAVE button until there is some content in the bookTitleTextField
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField === bookTitleTextField {
