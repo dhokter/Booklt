@@ -34,10 +34,26 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // Check if the book is created correctly with all required information before transfer to the ReadingBooksViewController
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case "addBookBackToReadingSegue":
+            if bookTitleTextField.text! == "" {
+                // TODO: Create an alert notify the problem for user.
+                return false
+            }
+            return true
+        default:
+            return true
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         // TODO: Make the save button to be disabled until user enter enough information. Right now leaving some of them blank will crash the app.
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text ?? "0")!, currentPage: Int(currentPageTextField.text ?? "0")!, author: authorTextField.text ?? "", whenCreated: Date(), personalNotes: String("Personal Notes"))
+        print("-----> Book title: \(bookTitleTextField.text!)")
+        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"))
     }
     
     // Process of adding a new book:
