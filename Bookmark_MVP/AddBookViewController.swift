@@ -14,6 +14,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authorTextField: UITextField!
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // we should links or the buttons of choosing colors to ViewController?
     
@@ -34,6 +35,20 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // Disable the SAVE button until there is some content in the bookTitleTextField
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === bookTitleTextField {
+            if string != "" {
+                saveButton.isEnabled = true
+            } else {
+                saveButton.isEnabled = false
+            }
+        }
+        
+        return true
+    }
+    
+    
     // Check if the book is created correctly with all required information before transfer to the ReadingBooksViewController
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         switch identifier {
@@ -51,7 +66,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        // TODO: Make the save button to be disabled until user enter enough information. Right now leaving some of them blank will crash the app.
+        // TODO: Make the save button to be disabled until user enter enough information.
         print("-----> Book title: \(bookTitleTextField.text!)")
         newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"))
     }
