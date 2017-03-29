@@ -21,10 +21,11 @@ class Book: Object {
     dynamic var whenCreated: Date     = Date()
     dynamic var isReading             = true
     dynamic var personalNotes: String = ""
+    dynamic var rating: Int           = 0
     
     
     // Failable initializer
-    convenience init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "", isReading: Bool = true, whenCreated: Date = Date(), personalNotes: String = "Personal Notes") {
+    convenience init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "", isReading: Bool = true, whenCreated: Date = Date(), personalNotes: String = "Personal Notes", rating: Int = 0) {
         if title.isEmpty || totalPages < 0 || currentPage < 0 {
             return nil
         }
@@ -38,6 +39,7 @@ class Book: Object {
         self.isReading     = isReading
         self.whenCreated   = whenCreated
         self.personalNotes = personalNotes
+        self.rating        = rating
     }
     
     

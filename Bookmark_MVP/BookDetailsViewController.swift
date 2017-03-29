@@ -19,6 +19,13 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var currentPageTextField: UITextField!
     @IBOutlet weak var personalNotesTextView: UITextView!
     
+    //Star rating buttons
+    @IBOutlet weak var oneStar: UIButton!
+    @IBOutlet weak var twoStar: UIButton!
+    @IBOutlet weak var threeStar: UIButton!
+    @IBOutlet weak var fourStar: UIButton!
+    @IBOutlet weak var fiveStar: UIButton!
+    
     var book: Book?
     var userIsEditingTheBook = false
     
@@ -38,6 +45,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
             currentPageTextField.text = String(book.currentPage)
             personalNotesTextView.text = book.personalNotes
         }
+        updateStarRating()
     }
     
     // Dispose of any resources that can be recreated.
@@ -100,6 +108,56 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    @IBAction func ratingChange(_ sender: UIButton) {
+        switch sender{
+        case oneStar:
+            if book?.rating != 1 {
+                setRating(rate: 1)
+            }
+            else{
+                setRating(rate: 0)
+            }
+        case twoStar:
+            setRating(rate: 2)
+        case threeStar:
+            setRating(rate: 3)
+        case fourStar:
+            setRating(rate: 4)
+        case fiveStar:
+            setRating(rate: 5)
+        default:
+            return
+        }
+        updateStarRating()
+    }
+    
+    private func setRating(rate: Int){
+        try! realm.write {
+            book?.rating = rate
+        }
+    }
+    
+    private func updateStarRating(){
+        let rating = book?.rating
+        let stars = [oneStar, twoStar, threeStar, fourStar, fiveStar]
+        if rating != 0 {
+            for i in 0...rating!-1{
+                stars[i]?.setImage(#imageLiteral(resourceName: "star_closed"), for: UIControlState.normal)
+            }
+            if rating! < 5{
+                for i in rating!...4{
+                    stars[i]?.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+                }
+            }
+        }
+        else{
+            for star in stars{
+                star?.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+            }
+        }
+    }
+    
     
     /*
      // MARK: - Navigation
