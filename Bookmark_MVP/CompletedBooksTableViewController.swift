@@ -166,6 +166,9 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         
         alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
+            if self.searchController.isActive {
+                self.filteredBooks = self.books.filter({($0 === book)})
+            }
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
