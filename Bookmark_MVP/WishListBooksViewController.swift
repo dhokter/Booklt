@@ -1,22 +1,20 @@
 //
-//  BookTableViewController.swift
+//  WishListBooksViewController.swift
 //  Bookmark_MVP
 //
-//  Created by Duc Le on 2/23/17.
+//  Created by Spencer Grant on 3/28/17.
 //  Copyright © 2017 Team Grant_le_mandel. All rights reserved.
 //
 
 import UIKit
 import MGSwipeTableCell
 
-class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
+class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
     
-    // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
     private var filterType: FilterType = .chronological
     
-    //(Kelli) Sort method buttons
-    @IBOutlet weak var sortType: UISegmentedControl!
+    @IBOutlet weak var allSortType: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,11 +26,11 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    // The function to reload the data if the view appear again by the BACK button of some other ViewController
+    // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
-        tableView.reloadData()
+        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        self.tableView.reloadData()
     }
     
     // Dispose of any resources that can be recreated.
@@ -43,44 +41,53 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return books.count
     }
     
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cellIdentifier = "ReadingBooksTableViewCell"
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReadingBooksTableViewCell else {
-            fatalError("The dequeued cell is not an instance of BookTableViewCell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
+            fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
+        cell.book = books[indexPath.row]
         cell.delegate = self
-        let book = books[indexPath.row]
-        cell.book = book    // Loads the information in the book to the cell to display
         
         return cell
     }
     
+    // Select a book to move to its details page.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
+        self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
     }
     
-    // Prepare the data before a segue. Divided by cases, each cases using Segue Identifier to perform appropriate action
+    // Prepare for the BookDetailView before perform the segue to it.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
-        case "MoveToBookDetailsSegue"?:
-            guard let destination = segue.destination as? BookDetailsViewController else {     // Pass the book instance of the cell to the ViewController to display
+        case "CompletedToBookDetailsSegue"?:
+            guard let destination = segue.destination as? BookDetailsViewController else {
                 return
             }
             destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
-        default: break
-            
+        default:
+            return
         }
+    }
+    
+    @IBAction func sortTypeChanged(_ sender: UISegmentedControl) {
+        switch allSortType.selectedSegmentIndex
+        {
+        case 0:
+            filterType = .alphabetical
+        case 1:
+            filterType = .chronological
+        default:
+            break
+        }
+        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        tableView.reloadData()
     }
     
     func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
@@ -92,77 +99,25 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         let book = books[(indexPath?.row)!]
         
         if direction == MGSwipeDirection.leftToRight {
-            return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell)->Bool in
+            return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell) -> Bool in
                 self.confirmDeleteBook(indexPath: indexPath!, book: book)
                 return false
             })]
         } else {
-            return [MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
-                bookManager.markAsFinished(book: book)
+            return [MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
+                bookManager.markAsReading(book: book)
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
             })]
         }
     }
     
-    
-    // The function the for unwind segue from the AddBookView.
-    @IBAction func addNewBookAndUnwind(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? AddBookViewController {
-            bookManager.addNewBook(book: sourceViewController.newBook!, state: .reading)
-            books = bookManager.readingBooks
-            let newIndexPath = IndexPath(row: books.count-1, section: 0)        // Creates a new cell for the book
-            self.tableView.beginUpdates()
-            self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
-            self.tableView.endUpdates()
-            
-            tableView.reloadData()
-        }
-    }
-    
-    //(Kelli) Activated when user switches between "A-Z" and "Date" sort methods
-    @IBAction private func sortTypeChanged(_ sender: Any) {
-        switch sortType.selectedSegmentIndex
-        {
-        case 0:                             // "A-Z" is selected
-            filterType = .alphabetical
-        case 1:                             // "Date" is selected
-            filterType = .chronological
-        case 2:                             // "Progress ↑" is selected
-            filterType = .increasingProgress
-        case 3:                             // "Progress ↓" is selected
-            filterType = .decreasingProgress
-        default:
-            break
-        }
-        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
-        tableView.reloadData()
-    }
-    
-    
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    
     private func deleteAndUpdateCells(indexPath: IndexPath) {
-        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
         self.tableView.endUpdates()
     }
-    
-    /*
-     //     Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the tableview, but the book will still be in inventory
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
     
     private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
@@ -174,11 +129,31 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
             let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
             cell.hideSwipe(animated: true)
-            
         }))
         
         self.present(alert, animated: false, completion: nil)
     }
+    
+    
+    
+    // Override to support conditional editing of the table view.
+    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        // Return false if you do not want the specified item to be editable.
+        return true
+    }
+    
+    
+    /*
+     // Override to support editing the table view.
+     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+     if editingStyle == .delete {
+     // Delete the row from the data source
+     tableView.deleteRows(at: [indexPath], with: .fade)
+     } else if editingStyle == .insert {
+     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+     }
+     }
+     */
     
     /*
      // Override to support rearranging the table view.

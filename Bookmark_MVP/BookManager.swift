@@ -22,20 +22,36 @@ enum FilterType {
 
 class BookManager {
     
+    
     let realm = try! Realm()
     
     // List of all the books that the user is currently reading.
     public var readingBooks: [Book] {
-        return Array(realm.objects(Book.self)).filter({$0.isReading})
+        return Array(realm.objects(Book.self)).filter({$0.status == 0})
     }
     
     // List of all the books that the user has finished reading.
     public var finishedBooks: [Book] {
-        return Array(realm.objects(Book.self).filter({!$0.isReading}))
+        return Array(realm.objects(Book.self).filter({$0.status == 1}))
     }
     
+    //List of all the books that the user has on their wish list.
+    public var wishListBooks: [Book] {
+        return Array(realm.objects(Book.self).filter({$0.status == 2}))
+    }
+    
+    
+    
     // Adds a new book to the list of books that the user is currently reading.
-    public func addNewBook(book: Book) {
+    public func addNewBook(book: Book, state: State) {
+        switch state {
+        case .reading:
+            book.status = 0
+        case .completed:
+            book.status = 1
+        case .wishList:
+            book.status = 2
+        }
         try! realm.write {
             realm.add(book)
         }
@@ -44,7 +60,7 @@ class BookManager {
     // Indicates that the user is no longer reading the selected book.
     public func markAsFinished(book: Book) {
         try! realm.write {
-            book.isReading = false
+            book.status = 1
             book.whenCreated = Date()
         }
     }
@@ -52,7 +68,7 @@ class BookManager {
     // Indicates that the user is currently reading the selected book.
     public func markAsReading(book: Book) {
         try! realm.write {
-            book.isReading = true
+            book.status = 0
             book.whenCreated = Date()
         }
     }
