@@ -44,14 +44,7 @@ class BookManager {
     
     // Adds a new book to the list of books that the user is currently reading.
     public func addNewBook(book: Book, state: State) {
-        switch state {
-        case .reading:
-            book.status = 0
-        case .completed:
-            book.status = 1
-        case .wishList:
-            book.status = 2
-        }
+        book.status = state.rawValue
         try! realm.write {
             realm.add(book)
         }
