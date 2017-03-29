@@ -9,15 +9,27 @@
 import UIKit
 import MGSwipeTableCell
 
-class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
+class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating {
     
     private var books = [Book]()
     private var filterType: FilterType = .chronological
+    
+    // Search controller using the current tableView to display the result
+    private let searchController = UISearchController(searchResultsController: nil)
+    private var filteredBooks = [Book]()
     
     @IBOutlet weak var allSortType: UISegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Set up the search bar
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+//        definesPresentationContext = true
+        
+        tableView.tableHeaderView = searchController.searchBar
+        
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -45,6 +57,9 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if searchController.isActive && searchController.searchBar.text! != "" {
+            return filteredBooks.count
+        }
         return books.count
     }
 
@@ -52,7 +67,11 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
-        cell.book = books[indexPath.row]
+        if searchController.isActive && searchController.searchBar.text! != "" {
+            cell.book = filteredBooks[indexPath.row]
+        } else {
+            cell.book = books[indexPath.row]
+        }
         cell.delegate = self
         
         return cell
@@ -96,6 +115,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
         let indexPath = self.tableView.indexPath(for: cell)
+        
         let book = books[(indexPath?.row)!]
         
         if direction == MGSwipeDirection.leftToRight {
@@ -142,6 +162,15 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         return true
     }
     
+    // SEARCHBAR CONFIGURATION AND METHODS
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredBooksForSearchText(searchText: searchController.searchBar.text!)
+    }
+    
+    private func filteredBooksForSearchText(searchText: String, category: String = "Title") {
+        filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
+        tableView.reloadData()
+    }
 
     /*
     // Override to support editing the table view.
