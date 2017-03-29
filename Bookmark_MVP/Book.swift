@@ -11,6 +11,7 @@ import UIKit
 import Realm
 import RealmSwift
 
+// TODO: Not necessary to use enum. Use string to be more descriptive
 enum State: Int {
     case reading = 0
     case completed = 1
