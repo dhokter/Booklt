@@ -77,11 +77,13 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         return cell
     }
     
+    // TODO: Make the searchCOntroller be inactive before perform the segue to prevent an overlap display.
     // Select a book to move to its details page.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
     }
     
+    // TODO: the books list used in this method is also depended on the searchController is active or inactive.
     // Prepare for the BookDetailView before perform the segue to it.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -112,7 +114,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
         return true
     }
-    
+    // TODO: The books list used inside this function needs to be depended on searchController is active or not.
     func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
         let indexPath = self.tableView.indexPath(for: cell)
         
@@ -132,6 +134,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
     }
     
+    // TODO: The deletion will need to consider update both books lists variables if the searchController is active
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         self.tableView.beginUpdates()
