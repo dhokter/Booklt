@@ -64,7 +64,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive && searchController.searchBar.text! != "" {
+        if searchController.isActive {
             return filteredBooks.count
         }
         return books.count
@@ -74,7 +74,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
-        if searchController.isActive && searchController.searchBar.text! != "" {
+        if searchController.isActive {
             cell.book = filteredBooks[indexPath.row]
         } else {
             cell.book = books[indexPath.row]
@@ -198,6 +198,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     private func filteredBooksForSearchText(searchText: String, category: String = "All") {
         switch category {
         case "All":
+            print("-----------> All is selected!!!")
             filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
         case "Title":
             filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
