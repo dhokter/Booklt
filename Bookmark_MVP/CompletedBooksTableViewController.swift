@@ -30,6 +30,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         self.definesPresentationContext = true
         
         tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
         
         
         // Uncomment the following line to preserve selection between presentations
@@ -189,11 +190,23 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     // SEARCHBAR CONFIGURATION AND METHODS
     func updateSearchResults(for searchController: UISearchController) {
-        filteredBooksForSearchText(searchText: searchController.searchBar.text!)
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        filteredBooksForSearchText(searchText: searchBar.text!, category: scope)
     }
     
     private func filteredBooksForSearchText(searchText: String, category: String = "All") {
-        filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
+        switch category {
+        case "All":
+            filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
+        case "Title":
+            filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
+        case "Author":
+            filteredBooks = books.filter({($0.author.lowercased().contains(searchText.lowercased()))})
+        default:
+            return
+        }
+        
         tableView.reloadData()
     }
 
