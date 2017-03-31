@@ -9,7 +9,7 @@
 import UIKit
 import MGSwipeTableCell
 
-class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating {
+class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
     private var books = [Book]()
     private var filterType: FilterType = .chronological
@@ -30,6 +30,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         self.definesPresentationContext = true
         
         tableView.tableHeaderView = searchController.searchBar
+        searchController.searchBar.delegate = self
         searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
         
         
@@ -198,7 +199,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     private func filteredBooksForSearchText(searchText: String, category: String = "All") {
         switch category {
         case "All":
-            print("-----------> All is selected!!!")
             filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
         case "Title":
             filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
@@ -209,6 +209,12 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
         
         tableView.reloadData()
+    }
+    
+    // Making the search react instantaneously if the user keep the text in the searchbar and switch between different scope
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        let scope = searchBar.scopeButtonTitles![selectedScope]
+        filteredBooksForSearchText(searchText: searchBar.text!, category: scope)
     }
 
     /*
