@@ -26,8 +26,20 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var fourStar: UIButton!
     @IBOutlet weak var fiveStar: UIButton!
     
+    //Color picker buttons
+    @IBOutlet weak var redPicker: UIButton!
+    @IBOutlet weak var purplePicker: UIButton!
+    @IBOutlet weak var bluePicker: UIButton!
+    @IBOutlet weak var greenPicker: UIButton!
+    @IBOutlet weak var goldPicker: UIButton!
+    
+    
+    private var selectedColor = "red"
+    
+    
     var book: Book?
     var userIsEditingTheBook = false
+    
     
     // (Spencer) Default background for the personalNotes section when uneditable
     let greyBackgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
@@ -44,6 +56,8 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
             totalPagesTextField.text = String(book.totalPages)
             currentPageTextField.text = String(book.currentPage)
             personalNotesTextView.text = book.personalNotes
+            selectedColor = book.color
+            highlightColorButtonFromString(bookColor: selectedColor)
         }
         updateStarRating()
     }
@@ -67,6 +81,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
                 book?.currentPage = Int(currentPageTextField.text!) ?? 0
                 book?.personalNotes = personalNotesTextView.text!               // (Spencer) Save and store the user's personal notes
                 personalNotesTextView.backgroundColor = greyBackgroundColor     // (Spencer) Sets the color of the personalNotes section to be grey when uneditable
+                book?.color = selectedColor
             }
             navigationItem.title = book?.title
         }
@@ -108,6 +123,54 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         textField.resignFirstResponder()
         return true
     }
+    
+    @IBAction func colorSelected(_ sender: UIButton) {
+        switch sender{
+        case redPicker:
+            selectedColor = "red"
+        case purplePicker:
+            selectedColor = "purple"
+        case bluePicker:
+            selectedColor = "blue"
+        case greenPicker:
+            selectedColor = "green"
+        case goldPicker:
+            selectedColor = "gold"
+        default:
+            return
+        }
+        highlightColorButton(sender: sender)
+    }
+    
+    private func highlightColorButton(sender: UIButton){
+        let colorButtons = [redPicker, purplePicker, bluePicker, greenPicker, goldPicker]
+        for button in colorButtons{
+            if button != sender{
+                button?.setImage(nil, for: UIControlState.normal)
+            }
+            else{
+                button?.setImage(#imageLiteral(resourceName: "colorpicker_highlighted"), for: UIControlState.normal)
+            }
+        }
+    }
+    
+    private func highlightColorButtonFromString(bookColor: String){
+        switch bookColor{
+            case "red":
+                highlightColorButton(sender: redPicker)
+            case "purple":
+                highlightColorButton(sender: purplePicker)
+            case "blue":
+                highlightColorButton(sender: bluePicker)
+            case "green":
+                highlightColorButton(sender: greenPicker)
+            case "gold":
+                highlightColorButton(sender: goldPicker)
+            default:
+                return
+        }
+    }
+    
     
     @IBAction func ratingChange(_ sender: UIButton) {
         switch sender{

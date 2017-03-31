@@ -20,6 +20,14 @@ enum FilterType {
     case decreasingProgress
 }
 
+let iconColor: [String:UIImage] = [
+    "red"    : #imageLiteral(resourceName: "default"),
+    "blue"   : #imageLiteral(resourceName: "default_blue"),
+    "green"  : #imageLiteral(resourceName: "default_green"),
+    "gold"   : #imageLiteral(resourceName: "default_gold"),
+    "purple" : #imageLiteral(resourceName: "default_purple")
+]
+
 class BookManager {
     
     

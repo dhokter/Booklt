@@ -20,6 +20,7 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
             if let book = self.book {
                 titleLabel.text  = book.title
                 authorLabel.text = book.author
+                coverImageView.image = iconColor[book.color]
             }
         }
     }

@@ -31,6 +31,7 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                 currentPageView.delegate = self
                 progressBarView.progress = bookManager.getProgress(book: book)
                 progressLabelView.text   = String(Int(bookManager.getProgress(book: book)*100))+"%"
+                coverImageView.image     = iconColor[book.color]
             }
         }
     }

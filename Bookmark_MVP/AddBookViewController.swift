@@ -15,7 +15,15 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
     
-    // we should links or the buttons of choosing colors to ViewController?
+    // Color picker buttons
+    @IBOutlet weak var redPicker: UIButton!
+    @IBOutlet weak var purplePicker: UIButton!
+    @IBOutlet weak var bluePicker: UIButton!
+    @IBOutlet weak var greenPicker: UIButton!
+    @IBOutlet weak var goldPicker: UIButton!
+    
+    private var selectedColor = "red"
+    
     
     var newBook: Book?
     
@@ -37,7 +45,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"))
+        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"), color: selectedColor)
     }
     
     // Process of adding a new book:
@@ -45,6 +53,38 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     // 2. Add the newly created book to the list allBooks in the BookManager, since this is newly created, put it in the displayed list as well.
     // 3. insertRow in the tableView for the new book
     // Return to the listbook view with the new book displayed
+    
+    
+    @IBAction func colorSelected(_ sender: UIButton) {
+        switch sender{
+            case redPicker:
+                selectedColor = "red"
+        case purplePicker:
+            selectedColor = "purple"
+            case bluePicker:
+                selectedColor = "blue"
+            case greenPicker:
+                selectedColor = "green"
+            case goldPicker:
+                selectedColor = "gold"
+            default:
+                return
+        }
+        highlightColorButton(sender: sender)
+    
+    }
+    
+    private func highlightColorButton(sender: UIButton){
+        let colorButtons = [redPicker, purplePicker, bluePicker, greenPicker, goldPicker]
+        for button in colorButtons{
+            if button != sender{
+                button?.setImage(nil, for: UIControlState.normal)
+            }
+            else{
+                button?.setImage(#imageLiteral(resourceName: "colorpicker_highlighted"), for: UIControlState.normal)
+            }
+        }
+    }
     
     
     // Adds the done button to the number pad
