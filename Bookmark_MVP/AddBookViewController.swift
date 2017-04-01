@@ -14,6 +14,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authorTextField: UITextField!
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // Color picker buttons
     @IBOutlet weak var redPicker: UIButton!
@@ -43,9 +44,41 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // TODO: 2 functions below provide the same result and it is unecessary to have both. Consider delete one of them. Suggest to delete shouldPerformSegue
+    // Disable the SAVE button until there is some content in the bookTitleTextField
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === bookTitleTextField {
+            if string != "" {
+                saveButton.isEnabled = true
+            } else {
+                saveButton.isEnabled = false
+            }
+        }
+        
+        return true
+    }
+    
+    
+    // Check if the book is created correctly with all required information before transfer to the ReadingBooksViewController
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case "addBookBackToReadingSegue":
+            if bookTitleTextField.text! == "" {
+                // TODO: Create an alert notify the problem for user.
+                return false
+            }
+            return true
+        default:
+            return true
+        }
+        
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"), color: selectedColor)
+        // TODO: Make the save button to be disabled until user enter enough information.
+        print("-----> Book title: \(bookTitleTextField.text!)")
+        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"), color: selectedColor)
     }
     
     // Process of adding a new book:

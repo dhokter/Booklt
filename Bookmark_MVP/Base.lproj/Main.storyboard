@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1217" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KdN-94-4o5">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KdN-94-4o5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -46,7 +46,7 @@
                                             </constraints>
                                         </imageView>
                                         <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ISl-2M-Fvd">
-                                            <rect key="frame" x="123" y="57" width="100" height="23"/>
+                                            <rect key="frame" x="123" y="57" width="100" height="22.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="50%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="L3l-9w-5ot">
@@ -121,13 +121,14 @@
                     <navigationItem key="navigationItem" title="Reading" id="Om9-fX-aLO">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="GbP-lC-u8F">
                             <connections>
-                                <segue destination="BYZ-38-t0r" kind="presentation" id="R1H-Eq-GW8"/>
+                                <action selector="addButton:" destination="TkE-vq-6g0" id="plB-Xr-mAv"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="sortType" destination="wGL-vz-DBp" id="REG-hI-vbf"/>
                         <segue destination="QCX-LA-fGm" kind="show" identifier="MoveToBookDetailsSegue" id="Tfq-AS-43h"/>
+                        <segue destination="BYZ-38-t0r" kind="presentation" identifier="readingToAddManuallySegue" id="oSY-mS-UzR"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4i-Hy-rOK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -142,20 +143,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <segmentedControl key="tableHeaderView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="1" id="3Ah-zM-Col">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <segments>
-                                <segment title="A-Z"/>
-                                <segment title="Date"/>
-                            </segments>
-                            <connections>
-                                <action selector="sortTypeChanged:" destination="kfh-Rg-kya" eventType="valueChanged" id="IIG-bC-XgV"/>
-                            </connections>
-                        </segmentedControl>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompletedBooksTableViewCell" rowHeight="100" id="jOV-Zr-DAG" customClass="CompletedBooksTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="58" width="375" height="100"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jOV-Zr-DAG" id="j2Y-8f-3da">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
@@ -213,7 +203,6 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="Complete" id="s9f-q7-2Pd"/>
                     <connections>
-                        <outlet property="allSortType" destination="3Ah-zM-Col" id="LXu-xL-JzH"/>
                         <segue destination="QCX-LA-fGm" kind="show" identifier="CompletedToBookDetailsSegue" id="mKs-l1-p0q"/>
                     </connections>
                 </tableViewController>
@@ -221,7 +210,7 @@
             </objects>
             <point key="canvasLocation" x="1135" y="1058"/>
         </scene>
-        <!--Title-->
+        <!--Find new book-->
         <scene sceneID="Mwj-at-DXW">
             <objects>
                 <viewController id="JBT-ny-MJE" customClass="SearchViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
@@ -233,29 +222,72 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kOP-JQ-sut">
-                                <rect key="frame" x="76" y="139" width="223" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="kOP-JQ-sut">
+                                <rect key="frame" x="76" y="101" width="223" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="JBT-ny-MJE" id="yu0-Fk-5Nq"/>
+                                </connections>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Author" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEp-sw-aUT">
-                                <rect key="frame" x="47" y="191" width="281" height="21"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="BZK-Wg-tKY">
+                                <rect key="frame" x="0.0" y="307" width="375" height="311"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Page count" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TfU-Z8-M1M">
-                                <rect key="frame" x="144" y="234" width="87" height="21"/>
+                                <color key="backgroundColor" red="0.72647133331297864" green="0.82213313297000523" blue="0.83743780851364136" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="searchResultCell" rowHeight="100" id="pvE-bj-Cyy" customClass="SearchBookTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pvE-bj-Cyy" id="p9x-Wn-5YT">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vf-Gp-bne">
+                                                    <rect key="frame" x="8" y="6" width="85" height="85"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dUa-kH-gGM">
+                                                    <rect key="frame" x="105" y="6" width="262" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Author(s)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMY-VW-yqw">
+                                                    <rect key="frame" x="105" y="53" width="248" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="authorLabel" destination="aMY-VW-yqw" id="6IZ-aH-MEZ"/>
+                                            <outlet property="coverImage" destination="9Vf-Gp-bne" id="M8Z-7n-SMv"/>
+                                            <outlet property="titleLabel" destination="dUa-kH-gGM" id="E1t-tr-5kU"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="JBT-ny-MJE" id="Ary-Po-gGK"/>
+                                    <outlet property="delegate" destination="JBT-ny-MJE" id="PtS-GP-knC"/>
+                                </connections>
+                            </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Author (optional)" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="H94-yo-jC0">
+                                <rect key="frame" x="76" y="153" width="223" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="JBT-ny-MJE" id="2UW-HU-ysN"/>
+                                </connections>
+                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8mJ-e7-rYD">
-                                <rect key="frame" x="129" y="304" width="117" height="40"/>
+                                <rect key="frame" x="129" y="206" width="117" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Search"/>
@@ -266,12 +298,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="3a9-2M-6U9">
-                        <barButtonItem key="rightBarButtonItem" title="Search" id="4N2-1D-6Sp"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Find new book" id="3a9-2M-6U9"/>
                     <connections>
-                        <outlet property="authorLabel" destination="hEp-sw-aUT" id="STi-Pn-BeE"/>
-                        <outlet property="pageCountLabel" destination="TfU-Z8-M1M" id="bo5-Oy-R2e"/>
+                        <outlet property="authorTextField" destination="H94-yo-jC0" id="fpg-Vj-QVp"/>
+                        <outlet property="tableView" destination="BZK-Wg-tKY" id="lu0-fM-moG"/>
                         <outlet property="titleTextField" destination="kOP-JQ-sut" id="rPM-l8-Vky"/>
                     </connections>
                 </viewController>
@@ -750,9 +780,9 @@
                                                 <action selector="tochedCancel:" destination="BYZ-38-t0r" id="KyV-rV-1Fr"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="Save" id="f6M-jV-PVt">
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="f6M-jV-PVt">
                                             <connections>
-                                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookAndUnwindWithSender:" id="iZc-YO-BPH"/>
+                                                <segue destination="bLJ-Fo-g44" kind="unwind" identifier="addBookBackToReadingSegue" unwindAction="addNewBookManuallyUnwindWithSender:" id="mRN-8i-0xi"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -774,11 +804,7 @@
                                 <action selector="tochedCancel:" destination="BYZ-38-t0r" id="bBS-Xj-E39"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1FZ-me-JtR">
-                            <connections>
-                                <segue destination="bLJ-Fo-g44" kind="unwind" unwindAction="addNewBookAndUnwindWithSender:" id="Lcs-CZ-2eL"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="1FZ-me-JtR"/>
                     </navigationItem>
                     <connections>
                         <outlet property="authorTextField" destination="hkN-s2-RtH" id="baN-SL-Xz5"/>
@@ -789,13 +815,14 @@
                         <outlet property="greenPicker" destination="IVN-lo-dG4" id="4Eh-vY-vMM"/>
                         <outlet property="purplePicker" destination="l6B-Nl-Q81" id="H6e-Sd-him"/>
                         <outlet property="redPicker" destination="3Mj-wm-Kfo" id="Dej-i0-STT"/>
+                        <outlet property="saveButton" destination="f6M-jV-PVt" id="yPB-VZ-FnB"/>
                         <outlet property="totalPageTextField" destination="fup-IM-Jh1" id="sfx-we-zjh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <exit id="bLJ-Fo-g44" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2173.5999999999999" y="-269.41529235382313"/>
+            <point key="canvasLocation" x="2449" y="-318"/>
         </scene>
         <!--Reading-->
         <scene sceneID="TMH-iX-cT6">
@@ -1177,7 +1204,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o3k-oC-Wmf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2173.5999999999999" y="635.08245877061472"/>
+            <point key="canvasLocation" x="2450" y="1057"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="bV1-Ox-LMe">
@@ -1219,11 +1246,11 @@
             </objects>
             <point key="canvasLocation" x="324" y="1058"/>
         </scene>
-        <!--Search-->
+        <!--Navigation Controller-->
         <scene sceneID="WA7-0I-9ko">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="PCC-Ag-Y2d" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" systemItem="search" id="TfA-os-hkf"/>
+                    <tabBarItem key="tabBarItem" title="" systemItem="search" id="TfA-os-hkf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="8gi-Tf-brX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -1270,6 +1297,6 @@
         <image name="star_open" width="300" height="295"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Tfq-AS-43h"/>
+        <segue reference="mKs-l1-p0q"/>
     </inferredMetricsTieBreakers>
 </document>
