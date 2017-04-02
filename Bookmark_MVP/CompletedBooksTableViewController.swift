@@ -50,6 +50,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        searchController.isActive = false
         print("Completed tab disappear!!")
     }
     
