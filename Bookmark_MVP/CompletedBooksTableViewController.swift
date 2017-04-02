@@ -148,7 +148,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
                 bookManager.markAsReading(book: book)
                 // If the searchController is active, make sure to delete the marked as reading book from the list of search result
                 if self.searchController.isActive {
-                    self.filteredBooks = self.books.filter({($0 === book)})
+                    self.filteredBooks = self.filteredBooks.filter({($0 !== book)})
                 }
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
@@ -170,7 +170,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
             if self.searchController.isActive {
-                self.filteredBooks = self.books.filter({($0 === book)})
+                self.filteredBooks = self.filteredBooks.filter({($0 !== book)})
             }
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
