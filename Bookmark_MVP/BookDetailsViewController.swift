@@ -17,7 +17,6 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var authorTextField: UITextField!
     @IBOutlet weak var totalPagesTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
-    @IBOutlet weak var personalNotesTextView: UITextView!
     
     //Star rating buttons
     @IBOutlet weak var oneStar: UIButton!
@@ -41,8 +40,6 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     var userIsEditingTheBook = false
     
     
-    // (Spencer) Default background for the personalNotes section when uneditable
-    let greyBackgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +52,6 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
             authorTextField.text = book.author
             totalPagesTextField.text = String(book.totalPages)
             currentPageTextField.text = String(book.currentPage)
-            personalNotesTextView.text = book.personalNotes
             selectedColor = book.color
             highlightColorButtonFromString(bookColor: selectedColor)
         }
@@ -71,7 +67,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBAction func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
             sender.title = "Save"
-            personalNotesTextView.backgroundColor = UIColor.white               // (Spencer) Sets the color of the personalNotes section to be white when editable
+
         } else {
             sender.title = "Edit"
             try! realm.write {
@@ -79,8 +75,6 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
                 book?.author = authorTextField.text!
                 book?.totalPages = Int(totalPagesTextField.text!) ?? 0
                 book?.currentPage = Int(currentPageTextField.text!) ?? 0
-                book?.personalNotes = personalNotesTextView.text!               // (Spencer) Save and store the user's personal notes
-                personalNotesTextView.backgroundColor = greyBackgroundColor     // (Spencer) Sets the color of the personalNotes section to be grey when uneditable
                 book?.color = selectedColor
             }
             navigationItem.title = book?.title
@@ -91,7 +85,6 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
         authorTextField.isEnabled = userIsEditingTheBook
         totalPagesTextField.isEnabled = userIsEditingTheBook
         currentPageTextField.isEnabled = userIsEditingTheBook
-        personalNotesTextView.isEditable = userIsEditingTheBook                 // (Spencer) Allow user to edit their personal notes only after they have hit "Edit"
     }
     
     // Adds the done button to the number pad. 

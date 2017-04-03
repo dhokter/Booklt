@@ -78,7 +78,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         super.prepare(for: segue, sender: sender)
         // TODO: Make the save button to be disabled until user enter enough information.
         print("-----> Book title: \(bookTitleTextField.text!)")
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), personalNotes: String("Personal Notes"), color: selectedColor)
+        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
     }
     
     // Process of adding a new book:
