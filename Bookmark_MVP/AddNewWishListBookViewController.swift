@@ -10,10 +10,18 @@ import UIKit
 
 class AddNewWishListBookViewController: UIViewController, UITextFieldDelegate {
     
-    @IBOutlet weak var bookTitleTextField: UITextField!
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
-    @IBOutlet weak var totalPageTextField: UITextField!
-    @IBOutlet weak var currentPageTextField: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    
+    // Color picker buttons
+    @IBOutlet weak var redPicker: UIButton!
+    @IBOutlet weak var purplePicker: UIButton!
+    @IBOutlet weak var bluePicker: UIButton!
+    @IBOutlet weak var greenPicker: UIButton!
+    @IBOutlet weak var goldPicker: UIButton!
+    
+    private var selectedColor = "red"
     
     // we should links or the buttons of choosing colors to ViewController?
     
@@ -21,11 +29,11 @@ class AddNewWishListBookViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        addDoneButtonOnKeyboard()
     }
     
     // Method to get back the list book screen and dismiss all changes made in Add book page.
-    @IBAction func tochedCancel(_ sender: UIBarButtonItem) {
+    
+    @IBAction func touchedCancel(_ sender: UIBarButtonItem) {
         dismiss(animated: true, completion: nil)
     }
     
@@ -35,9 +43,67 @@ class AddNewWishListBookViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // TODO: 2 functions below provide the same result and it is unecessary to have both. Consider delete one of them. Suggest to delete shouldPerformSegue
+    // Disable the SAVE button until there is some content in the bookTitleTextField
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField === titleTextField {
+            if string != "" {
+                saveButton.isEnabled = true
+            } else {
+                saveButton.isEnabled = false
+            }
+        }
+        
+        return true
+    }
+    
+    // Check if the book is created correctly with all required information before transfer to the WishlistBooksViewController
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        switch identifier {
+        case "AddWishlistSegue":
+            if titleTextField.text! == "" {
+                // TODO: Create an alert notify the problem for user.
+                return false
+            }
+            return true
+        default:
+            return true
+        }
+        
+    }
+    
+    @IBAction func colorSelected(_ sender: UIButton) {
+        switch sender{
+        case redPicker:
+            selectedColor = "red"
+        case purplePicker:
+            selectedColor = "purple"
+        case bluePicker:
+            selectedColor = "blue"
+        case greenPicker:
+            selectedColor = "green"
+        case goldPicker:
+            selectedColor = "gold"
+        default:
+            return
+        }
+        highlightColorButton(sender: sender)
+    }
+    
+    private func highlightColorButton(sender: UIButton){
+        let colorButtons = [redPicker, purplePicker, bluePicker, greenPicker, goldPicker]
+        for button in colorButtons {
+            if button != sender {
+                button?.setImage(nil, for: UIControlState.normal)
+            }
+            else {
+                button?.setImage(#imageLiteral(resourceName: "colorpicker_highlighted"), for: UIControlState.normal)
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!)!, currentPage: Int(currentPageTextField.text!)!, author: authorTextField.text!, whenCreated: Date())
     }
     
     // Process of adding a new book:
@@ -45,30 +111,4 @@ class AddNewWishListBookViewController: UIViewController, UITextFieldDelegate {
     // 2. Add the newly created book to the list allBooks in the BookManager, since this is newly created, put it in the displayed list as well.
     // 3. insertRow in the tableView for the new book
     // Return to the listbook view with the new book displayed
-    
-    
-    // Adds the done button to the number pad
-    // Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
-    private func addDoneButtonOnKeyboard() {
-        let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
-        doneToolbar.barStyle       = UIBarStyle.default
-        let flexSpace              = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: nil, action: nil)
-        let done: UIBarButtonItem  = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.done, target: self, action: #selector(doneButtonAction))
-        
-        var items = [UIBarButtonItem]()
-        items.append(flexSpace)
-        items.append(done)
-        
-        doneToolbar.items = items
-        doneToolbar.sizeToFit()
-        
-        self.currentPageTextField.inputAccessoryView = doneToolbar
-        self.totalPageTextField.inputAccessoryView   = doneToolbar
-    }
-    
-    // Gets rid of the number pad when the user hits "Done"
-    func doneButtonAction() {
-        self.currentPageTextField.resignFirstResponder()
-        self.totalPageTextField.resignFirstResponder()
-    }
 }
