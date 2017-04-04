@@ -16,7 +16,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     // Search controller using the current tableView to display the result
     private let searchController = UISearchController(searchResultsController: nil)
-    private var filteredBooks = [Book]()
+    private var searchResults = [Book]()
     
     @IBOutlet weak var allSortType: UISegmentedControl!
     
@@ -51,7 +51,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
         searchController.isActive = false
-        print("Completed tab disappear!!")
     }
     
     // Dispose of any resources that can be recreated.
@@ -67,7 +66,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive {
-            return filteredBooks.count
+            return searchResults.count
         }
         return books.count
     }
@@ -77,7 +76,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
         if searchController.isActive {
-            cell.book = filteredBooks[indexPath.row]
+            cell.book = searchResults[indexPath.row]
         } else {
             cell.book = books[indexPath.row]
         }
@@ -101,7 +100,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
                 return
             }
             if searchController.isActive {
-                destination.book = filteredBooks[(tableView.indexPathForSelectedRow?.row)!]
+                destination.book = searchResults[(tableView.indexPathForSelectedRow?.row)!]
             } else {
                 destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
             }
@@ -133,7 +132,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         let book: Book
         
         if searchController.isActive {
-            book = filteredBooks[(indexPath?.row)!]
+            book = searchResults[(indexPath?.row)!]
         } else {
             book = books[(indexPath?.row)!]
         }
@@ -148,7 +147,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
                 bookManager.markAsReading(book: book)
                 // If the searchController is active, make sure to delete the marked as reading book from the list of search result
                 if self.searchController.isActive {
-                    self.filteredBooks = self.filteredBooks.filter({($0 !== book)})
+                    self.searchResults = self.searchResults.filter({($0 !== book)})
                 }
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
@@ -170,7 +169,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
             if self.searchController.isActive {
-                self.filteredBooks = self.filteredBooks.filter({($0 !== book)})
+                self.searchResults = self.searchResults.filter({($0 !== book)})
             }
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
@@ -194,17 +193,23 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        filteredBooksForSearchText(searchText: searchBar.text!, category: scope)
+        search(searchText: searchBar.text!, category: scope)
     }
     
-    private func filteredBooksForSearchText(searchText: String, category: String = "All") {
+    // Making the search react instantaneously if the user keep the text in the searchbar and switch between different scope
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        let scope = searchBar.scopeButtonTitles![selectedScope]
+        search(searchText: searchBar.text!, category: scope)
+    }
+
+    private func search(searchText: String, category: String = "All") {
         switch category {
         case "All":
-            filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
+            searchResults = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
         case "Title":
-            filteredBooks = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
+            searchResults = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
         case "Author":
-            filteredBooks = books.filter({($0.author.lowercased().contains(searchText.lowercased()))})
+            searchResults = books.filter({($0.author.lowercased().contains(searchText.lowercased()))})
         default:
             return
         }
@@ -212,12 +217,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         tableView.reloadData()
     }
     
-    // Making the search react instantaneously if the user keep the text in the searchbar and switch between different scope
-    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        let scope = searchBar.scopeButtonTitles![selectedScope]
-        filteredBooksForSearchText(searchText: searchBar.text!, category: scope)
-    }
-
+   
     /*
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
