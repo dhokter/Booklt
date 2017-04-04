@@ -71,7 +71,6 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
                 book?.author = authorTextField.text!
                 book?.totalPages = Int(totalPagesTextField.text!) ?? 0
                 book?.currentPage = Int(currentPageTextField.text!) ?? 0
-                book?.color = selectedColor
             }
             navigationItem.title = book?.title
         }
@@ -129,6 +128,9 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
             return
         }
         highlightColorButton(sender: sender)
+        try! realm.write {
+            book?.color = selectedColor
+        }
     }
     
     private func highlightColorButton(sender: UIButton){

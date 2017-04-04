@@ -79,7 +79,6 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             }
             destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
         default: break
-            
         }
     }
     
