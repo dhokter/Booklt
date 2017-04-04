@@ -16,7 +16,6 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
     
     @IBOutlet weak var coverImageView:      UIImageView!
     @IBOutlet weak var titleBookView:       UILabel!
-    @IBOutlet weak var progressLabelView:   UILabel!
     @IBOutlet weak var currentPageView:     UITextField!
     @IBOutlet weak var progressBarView:     UIProgressView!
     
@@ -30,7 +29,6 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                 currentPageView.text     = String(book.currentPage)
                 currentPageView.delegate = self
                 progressBarView.progress = bookManager.getProgress(book: book)
-                progressLabelView.text   = String(Int(bookManager.getProgress(book: book)*100))+"%"
                 coverImageView.image     = iconColor[book.color]
             }
         }
@@ -50,7 +48,7 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                 book.whenCreated = Date()
             }
             progressBarView.progress = bookManager.getProgress(book: book)
-            progressLabelView.text   = String(Int(bookManager.getProgress(book: book)*100))+"%"
+
         }
     }
     
