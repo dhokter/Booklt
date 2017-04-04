@@ -19,11 +19,7 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var currentPageTextField: UITextField!
     
     //Star rating buttons
-    @IBOutlet weak var oneStar: UIButton!
-    @IBOutlet weak var twoStar: UIButton!
-    @IBOutlet weak var threeStar: UIButton!
-    @IBOutlet weak var fourStar: UIButton!
-    @IBOutlet weak var fiveStar: UIButton!
+    @IBOutlet var ratingStars: [UIButton]!
     
     //Color picker buttons
     @IBOutlet weak var redPicker: UIButton!
@@ -167,20 +163,20 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func ratingChange(_ sender: UIButton) {
         switch sender{
-        case oneStar:
+        case ratingStars[0]:
             if book?.rating != 1 {
                 setRating(rate: 1)
             }
             else{
                 setRating(rate: 0)
             }
-        case twoStar:
+        case ratingStars[1]:
             setRating(rate: 2)
-        case threeStar:
+        case ratingStars[2]:
             setRating(rate: 3)
-        case fourStar:
+        case ratingStars[3]:
             setRating(rate: 4)
-        case fiveStar:
+        case ratingStars[4]:
             setRating(rate: 5)
         default:
             return
@@ -196,20 +192,19 @@ class BookDetailsViewController: UIViewController, UITextFieldDelegate {
     
     private func updateStarRating(){
         let rating = book?.rating
-        let stars = [oneStar, twoStar, threeStar, fourStar, fiveStar]
         if rating != 0 {
             for i in 0...rating!-1{
-                stars[i]?.setImage(#imageLiteral(resourceName: "star_closed"), for: UIControlState.normal)
+                ratingStars[i].setImage(#imageLiteral(resourceName: "star_closed"), for: UIControlState.normal)
             }
             if rating! < 5{
                 for i in rating!...4{
-                    stars[i]?.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+                    ratingStars[i].setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
                 }
             }
         }
         else{
-            for star in stars{
-                star?.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+            for star in ratingStars{
+                star.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
             }
         }
     }
