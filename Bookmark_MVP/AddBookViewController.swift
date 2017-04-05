@@ -55,36 +55,6 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    // TODO: 2 functions below provide the same result and it is unecessary to have both. Consider delete one of them. Suggest to delete shouldPerformSegue
-    // Disable the SAVE button until there is some content in the bookTitleTextField
-//    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-//        if textField === bookTitleTextField {
-//            if string == "" && textField.text == "" {
-//                saveButton.isEnabled = false
-//            } else {
-//                saveButton.isEnabled = true
-//            }
-//        }
-//        
-//        return true
-//    }
-    
-    
-    // Check if the book is created correctly with all required information before transfer to the ReadingBooksViewController
-    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        switch identifier {
-        case "addBookBackToReadingSegue":
-            if bookTitleTextField.text! == "" {
-                // TODO: Create an alert notify the problem for user.
-                return false
-            }
-            return true
-        default:
-            return true
-        }
-        
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         // TODO: Make the save button to be disabled until user enter enough information.
