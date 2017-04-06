@@ -221,7 +221,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pvE-bj-Cyy" id="p9x-Wn-5YT">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Vf-Gp-bne">
@@ -292,17 +292,17 @@
         <!--Wishlist-->
         <scene sceneID="zlA-bk-maw">
             <objects>
-                <tableViewController id="sy9-to-OkB" sceneMemberID="viewController">
+                <tableViewController id="sy9-to-OkB" customClass="WishListBooksTableViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="lm7-Za-Xq2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="xxN-0y-WuO">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WishListBooksTableViewCell" rowHeight="100" id="xxN-0y-WuO" customClass="WishListBooksTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xxN-0y-WuO" id="p28-mW-jY3">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="sUO-Oq-ikr">
@@ -343,6 +343,11 @@
                                         <constraint firstItem="0Zt-dV-khb" firstAttribute="leading" secondItem="e0T-Bl-SIw" secondAttribute="leading" id="kA8-Hn-g9z"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorLabel" destination="0Zt-dV-khb" id="KBf-VN-juH"/>
+                                    <outlet property="coverImage" destination="sUO-Oq-ikr" id="a2u-nm-foD"/>
+                                    <outlet property="titleLabel" destination="e0T-Bl-SIw" id="srt-2p-yqY"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -386,7 +391,11 @@
                                                 <action selector="touchedCancel:" destination="TiI-Xv-ezy" id="ucl-vW-cCY"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="MeY-tf-yAn"/>
+                                        <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="MeY-tf-yAn">
+                                            <connections>
+                                                <segue destination="qHK-YV-RvZ" kind="unwind" identifier="addBookWishList" unwindAction="addNewWishListBookManuallyUnwindWithSender:" id="eid-we-ChR"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -553,6 +562,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qz8-42-baB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="qHK-YV-RvZ" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1767" y="2284"/>
         </scene>
