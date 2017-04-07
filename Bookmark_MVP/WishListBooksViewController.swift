@@ -12,9 +12,7 @@ import MGSwipeTableCell
 class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
     
     private var books = [Book]()
-    private var filterType: FilterType = .chronological
-    
-    @IBOutlet weak var allSortType: UISegmentedControl!
+    private var filterType: FilterType = .alphabetical
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +27,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.wishListBooks, filter: filterType)
         self.tableView.reloadData()
     }
     
@@ -49,8 +47,8 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
-            fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "WishListBooksTableViewCell", for: indexPath) as? WishListBooksTableViewCell else {
+            fatalError("The dequeued cell is not an instance of WishListBookTableViewCell")
         }
         cell.book = books[indexPath.row]
         cell.delegate = self
@@ -59,39 +57,38 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     // Select a book to move to its details page.
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
-    }
+    //override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        //self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
+    //}
     
     // Prepare for the BookDetailView before perform the segue to it.
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier {
-        case "CompletedToBookDetailsSegue"?:
-            guard let destination = segue.destination as? BookDetailsViewController else {
-                return
-            }
-            destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
-        default:
-            return
-        }
-    }
-    
-    @IBAction func sortTypeChanged(_ sender: UISegmentedControl) {
-        switch allSortType.selectedSegmentIndex
-        {
-        case 0:
-            filterType = .alphabetical
-        case 1:
-            filterType = .chronological
-        default:
-            break
-        }
-        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
-        tableView.reloadData()
-    }
-    
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        switch segue.identifier {
+//        case "CompletedToBookDetailsSegue"?:
+//            guard let destination = segue.destination as? BookDetailsViewController else {
+//                return
+//            }
+//            destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
+//        default:
+//            return
+//        }
+//    }
+        
     func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
         return true
+    }
+    
+    @IBAction func addNewWishListBookManuallyUnwind(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? AddNewWishListBookViewController {
+            bookManager.addNewBook(book: sourceViewController.newBook!, state: .wishList)
+            books = bookManager.wishListBooks
+            let newIndexPath = IndexPath(row: books.count-1, section: 0)
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: [newIndexPath], with: UITableViewRowAnimation.automatic)
+            self.tableView.endUpdates()
+            
+            tableView.reloadData()
+        }
     }
     
     func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
@@ -113,7 +110,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     private func deleteAndUpdateCells(indexPath: IndexPath) {
-        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.wishListBooks, filter: filterType)
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
         self.tableView.endUpdates()
@@ -122,7 +119,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))

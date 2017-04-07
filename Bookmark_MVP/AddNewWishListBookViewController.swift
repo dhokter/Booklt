@@ -86,6 +86,8 @@ class AddNewWishListBookViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+        newBook = Book(title: titleTextField.text!, totalPages: 0, currentPage: 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
+        print("---> Prepared!!")
     }
     
     // Process of adding a new book:
