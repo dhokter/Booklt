@@ -15,7 +15,11 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     private var filterType: FilterType = .chronological
     
     // Search controller using the current tableView to display the result
+    private let searchAndSortingView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    
     private let searchController = UISearchController(searchResultsController: nil)
+    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent"])
+    
     private var searchResults = [Book]()
     
     @IBOutlet weak var allSortType: UISegmentedControl!
@@ -23,22 +27,33 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tableView.tableHeaderView = searchAndSortingView
+        createSearchBar()
+        createSegmentedControl()
+
+        
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    private func createSearchBar() {
         // Set up the search bar
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         // Set to make the view state the same when switching between tab while searching.
         self.definesPresentationContext = true
-        
-        tableView.tableHeaderView = searchController.searchBar
+        searchAndSortingView.addSubview(searchController.searchBar)
+
         searchController.searchBar.delegate = self
         searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
-        
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    private func createSegmentedControl() {
+        sortFilters.selectedSegmentIndex = 0;
+        sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
+        searchAndSortingView.addSubview(sortFilters)
     }
     
     // Reload the data of table to make it updated with changes in books (if any).
@@ -109,7 +124,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
     }
     
-    @IBAction func sortTypeChanged(_ sender: UISegmentedControl) {
+    func sortTypeChanged(_ sender: UISegmentedControl) {
         switch allSortType.selectedSegmentIndex
         {
         case 0:
