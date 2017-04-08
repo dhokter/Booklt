@@ -8,6 +8,7 @@
 
 import UIKit
 import MGSwipeTableCell
+import PureLayout
 
 class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
@@ -15,21 +16,17 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     private var filterType: FilterType = .chronological
     
     // Search controller using the current tableView to display the result
-    private let searchAndSortingView = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-    
     private let searchController = UISearchController(searchResultsController: nil)
     private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent"])
     
     private var searchResults = [Book]()
     
-    @IBOutlet weak var allSortType: UISegmentedControl!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tableView.tableHeaderView = searchAndSortingView
-        createSearchBar()
         createSegmentedControl()
+        createSearchBar()
+        createTableHeaderView()
 
         
         // Uncomment the following line to preserve selection between presentations
@@ -44,8 +41,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         searchController.dimsBackgroundDuringPresentation = false
         // Set to make the view state the same when switching between tab while searching.
         self.definesPresentationContext = true
-        searchAndSortingView.addSubview(searchController.searchBar)
-
         searchController.searchBar.delegate = self
         searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
     }
@@ -53,7 +48,21 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     private func createSegmentedControl() {
         sortFilters.selectedSegmentIndex = 0;
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
-        searchAndSortingView.addSubview(sortFilters)
+    }
+    
+    private func createTableHeaderView() {
+        let headerView = UIView()
+        headerView.bounds = searchController.searchBar.bounds
+        headerView.bounds.size.height += sortFilters.bounds.size.height
+        
+        headerView.addSubview(searchController.searchBar)
+        headerView.addSubview(sortFilters)
+        sortFilters.autoPinEdge(.bottom, to: .bottom, of: headerView)
+        sortFilters.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 0.0)
+        sortFilters.autoPinEdge(.trailing, to: .trailing, of: headerView, withOffset: 0.0)
+        //searchController.searchBar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        
+        tableView.tableHeaderView = headerView
     }
     
     // Reload the data of table to make it updated with changes in books (if any).
@@ -124,8 +133,10 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
     }
     
+    
+    // TODO: This method should consider the books list in the context of searchViewController is active or not
     func sortTypeChanged(_ sender: UISegmentedControl) {
-        switch allSortType.selectedSegmentIndex
+        switch sortFilters.selectedSegmentIndex
         {
         case 0:
             filterType = .alphabetical
@@ -133,6 +144,9 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             filterType = .chronological
         default:
             break
+        }
+        if searchController.isActive {
+            searchResults = bookManager.sortBooks(books: searchResults, filter: filterType)
         }
         books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
         tableView.reloadData()
