@@ -40,13 +40,13 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         addDoneButtonOnKeyboard()
         if book != nil {
             // Check if the view is in BookDetails mode
-            showBookDetails()
+            prepareBookDetails()
         } else {
-            bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
+            prepareAddNewBook()
         }
     }
     
-    private func showBookDetails() {
+    private func prepareBookDetails() {
         let book = self.book!
         // Update the information of the book to screen if the view is on BookDetails mode
         bookTitleTextField.text = book.title
@@ -65,6 +65,12 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         
         navigationItem.title = book.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editButtonTouched(_:)))
+    }
+    
+    private func prepareAddNewBook() {
+        ratingView.isHidden = true
+        bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
+        
     }
     
     // Method to get back the list book screen and dismiss all changes made in Add book page.
