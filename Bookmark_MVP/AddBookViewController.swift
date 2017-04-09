@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddBookViewController: UIViewController, UITextFieldDelegate {
+    
+    let realm = try! Realm()
     
     @IBOutlet weak var bookTitleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
@@ -23,15 +26,45 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var greenPicker: UIButton!
     @IBOutlet weak var goldPicker: UIButton!
     
+    @IBOutlet var ratingButtons: [UIButton]!
+    @IBOutlet weak var ratingView: UIStackView!
+    
     private var selectedColor = "red"
+    private var userIsEditingTheBook = false
     
     
-    var newBook: Book?
+    var book: Book?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
         addDoneButtonOnKeyboard()
+        if book != nil {
+            // Check if the view is in BookDetails mode
+            showBookDetails()
+        } else {
+            bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
+        }
+    }
+    
+    private func showBookDetails() {
+        let book = self.book!
+        // Update the information of the book to screen if the view is on BookDetails mode
+        bookTitleTextField.text = book.title
+        authorTextField.text = book.author
+        currentPageTextField.text = String(describing: book.currentPage)
+        totalPageTextField.text = String(describing: book.totalPages)
+        
+        highlightColorButtonFromString(bookColor: book.color)
+        updateStarRating()
+        
+        // Make all textFields disabled if the view is in BookDetails mode
+        bookTitleTextField.isEnabled = false
+        authorTextField.isEnabled = false
+        currentPageTextField.isEnabled = false
+        totalPageTextField.isEnabled = false
+        
+        navigationItem.title = book.title
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editButtonTouched(_:)))
     }
     
     // Method to get back the list book screen and dismiss all changes made in Add book page.
@@ -59,7 +92,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         super.prepare(for: segue, sender: sender)
         // TODO: Make the save button to be disabled until user enter enough information.
         print("-----> Book title: \(bookTitleTextField.text!)")
-        newBook = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
+        book = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
     }
     
     // Process of adding a new book:
@@ -71,21 +104,26 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func colorSelected(_ sender: UIButton) {
         switch sender{
-            case redPicker:
-                selectedColor = "red"
+        case redPicker:
+            selectedColor = "red"
         case purplePicker:
             selectedColor = "purple"
-            case bluePicker:
-                selectedColor = "blue"
-            case greenPicker:
-                selectedColor = "green"
-            case goldPicker:
-                selectedColor = "gold"
-            default:
-                return
+        case bluePicker:
+            selectedColor = "blue"
+        case greenPicker:
+            selectedColor = "green"
+        case goldPicker:
+            selectedColor = "gold"
+        default:
+            return
         }
         highlightColorButton(sender: sender)
-    
+        // Update the color icon when selected if the view is in BookDetails mode
+        if book != nil {
+            try! realm.write {
+                book?.color = selectedColor
+            }
+        }
     }
     
     private func highlightColorButton(sender: UIButton){
@@ -99,6 +137,24 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
             }
         }
     }
+    
+    private func highlightColorButtonFromString(bookColor: String){
+        switch bookColor{
+        case "red":
+            highlightColorButton(sender: redPicker)
+        case "purple":
+            highlightColorButton(sender: purplePicker)
+        case "blue":
+            highlightColorButton(sender: bluePicker)
+        case "green":
+            highlightColorButton(sender: greenPicker)
+        case "gold":
+            highlightColorButton(sender: goldPicker)
+        default:
+            return
+        }
+    }
+
     
     
     // Adds the done button to the number pad
@@ -125,4 +181,75 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         self.currentPageTextField.resignFirstResponder()
         self.totalPageTextField.resignFirstResponder()
     }
+    
+    @IBAction func ratingChange(_ sender: UIButton) {
+        switch sender{
+        case ratingButtons[0]:
+            if book?.rating != 1 {
+                setRating(rate: 1)
+            }
+            else{
+                setRating(rate: 0)
+            }
+        case ratingButtons[1]:
+            setRating(rate: 2)
+        case ratingButtons[2]:
+            setRating(rate: 3)
+        case ratingButtons[3]:
+            setRating(rate: 4)
+        case ratingButtons[4]:
+            setRating(rate: 5)
+        default:
+            return
+        }
+        updateStarRating()
+    }
+    
+    private func setRating(rate: Int){
+        try! realm.write {
+            book?.rating = rate
+        }
+    }
+    
+    private func updateStarRating(){
+        let rating = book?.rating
+        if rating != 0 {
+            for i in 0...rating!-1{
+                ratingButtons[i].setImage(#imageLiteral(resourceName: "star_closed"), for: UIControlState.normal)
+            }
+            if rating! < 5{
+                for i in rating!...4{
+                    ratingButtons[i].setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+                }
+            }
+        }
+        else{
+            for star in ratingButtons{
+                star.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+            }
+        }
+    }
+    
+    func editButtonTouched(_ sender: UIBarButtonItem) {
+        if !userIsEditingTheBook {
+            sender.title = "Save"
+        } else {
+            sender.title = "Edit"
+            try! realm.write {
+                book?.title = bookTitleTextField.text!
+                book?.author = authorTextField.text!
+                book?.totalPages = Int(totalPageTextField.text!) ?? 0
+                book?.currentPage = Int(currentPageTextField.text!) ?? 0
+            }
+            navigationItem.title = book?.title
+        }
+        userIsEditingTheBook = !userIsEditingTheBook
+        
+        bookTitleTextField.isEnabled = userIsEditingTheBook
+        authorTextField.isEnabled = userIsEditingTheBook
+        totalPageTextField.isEnabled = userIsEditingTheBook
+        currentPageTextField.isEnabled = userIsEditingTheBook
+    }
+
+
 }

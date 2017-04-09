@@ -116,14 +116,15 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.performSegue(withIdentifier: "MoveToBookDetailsSegue", sender: self)
+        self.performSegue(withIdentifier: "ReadingToDetails", sender: self)
     }
     
     // Prepare the data before a segue. Divided by cases, each cases using Segue Identifier to perform appropriate action
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
         switch segue.identifier {
-        case "MoveToBookDetailsSegue"?:
-            guard let destination = segue.destination as? BookDetailsViewController else {     // Pass the book instance of the cell to the ViewController to display
+        case "ReadingToDetails"?:
+            guard let destination = segue.destination as? AddBookViewController else {     // Pass the book instance of the cell to the ViewController to display
                 return
             }
             if searchController.isActive {
@@ -170,7 +171,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBookManuallyUnwind(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddBookViewController {
-            bookManager.addNewBook(book: sourceViewController.newBook!, state: .reading)
+            bookManager.addNewBook(book: sourceViewController.book!, state: .reading)
             books = bookManager.readingBooks
             let newIndexPath = IndexPath(row: books.count-1, section: 0)        // Creates a new cell for the book
             self.tableView.beginUpdates()
@@ -248,7 +249,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         self.present(alert, animated: true, completion: nil)
     }
     
-    
+    // TODO: Delete this function later on
     @IBAction func addButton(_ sender: UIBarButtonItem) {
         let selectAddMethodAlert = UIAlertController(title: "Select method", message: "How do you want to add your book?", preferredStyle: .actionSheet)
         
