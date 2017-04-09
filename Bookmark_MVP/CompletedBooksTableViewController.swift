@@ -222,17 +222,17 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-        search(searchText: searchBar.text!, category: scope)
+        search(searchText: searchBar.text!, scope: scope)
     }
     
     // Making the search react instantaneously if the user keep the text in the searchbar and switch between different scope
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         let scope = searchBar.scopeButtonTitles![selectedScope]
-        search(searchText: searchBar.text!, category: scope)
+        search(searchText: searchBar.text!, scope: scope)
     }
 
-    private func search(searchText: String, category: String = "All") {
-        switch category {
+    private func search(searchText: String, scope: String = "All") {
+        switch scope {
         case "All":
             searchResults = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
         case "Title":

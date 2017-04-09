@@ -36,7 +36,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
+    
     private func setUpSearchBar() {
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -73,6 +73,11 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         tableView.reloadData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        searchController.isActive = false
+    }
+    
     // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -87,6 +92,9 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
+        if searchController.isActive {
+            return searchResults.count
+        }
         return books.count
     }
     
@@ -97,9 +105,12 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         guard let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as? ReadingBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of BookTableViewCell")
         }
+        if searchController.isActive {
+            cell.book = searchResults[indexPath.row]
+        } else {
+            cell.book = books[indexPath.row]
+        }
         cell.delegate = self
-        let book = books[indexPath.row]
-        cell.book = book    // Loads the information in the book to the cell to display
         
         return cell
     }
@@ -115,7 +126,11 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             guard let destination = segue.destination as? BookDetailsViewController else {     // Pass the book instance of the cell to the ViewController to display
                 return
             }
-            destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
+            if searchController.isActive {
+                destination.book = searchResults[(tableView.indexPathForSelectedRow?.row)!]
+            } else {
+                destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
+            }
         default: break
         }
     }
@@ -126,7 +141,13 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
         let indexPath = self.tableView.indexPath(for: cell)
-        let book = books[(indexPath?.row)!]
+        let book: Book
+        
+        if searchController.isActive {
+            book = searchResults[(indexPath?.row)!]
+        } else {
+            book = books[(indexPath?.row)!]
+        }
         
         if direction == MGSwipeDirection.leftToRight {
             return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell)->Bool in
@@ -136,6 +157,9 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         } else {
             return [MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
                 bookManager.markAsFinished(book: book)
+                if self.searchController.isActive {
+                    self.searchResults = self.searchResults.filter({$0 !== book})
+                }
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
             })]
@@ -172,7 +196,11 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         default:
             break
         }
-        books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
+        if searchController.isActive {
+            searchResults = bookManager.sortBooks(books: searchResults, filter: filterType)
+        } else {
+            books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
+        }
         tableView.reloadData()
     }
     
@@ -206,6 +234,9 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         
         alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
+            if self.searchController.isActive {
+                self.searchResults = self.searchResults.filter({$0 !== book})
+            }
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
@@ -236,6 +267,26 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        search(searchText: searchBar.text!, scope: scope)
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        let scope = searchBar.scopeButtonTitles![selectedScope]
+        search(searchText: searchBar.text!, scope: scope)
+    }
+    
+    private func search(searchText: String, scope: String = "All") {
+        switch scope {
+        case "All":
+            searchResults = books.filter({$0.title.lowercased().contains(searchText.lowercased()) || $0.author.lowercased().contains(searchText.lowercased())})
+        case "Title":
+            searchResults = books.filter({$0.title.lowercased().contains(searchText.lowercased())})
+        case "Author":
+            searchResults = books.filter({$0.author.lowercased().contains(searchText.lowercased())})
+        default:
+            return
+        }
+        tableView.reloadData()
     }
     
     
