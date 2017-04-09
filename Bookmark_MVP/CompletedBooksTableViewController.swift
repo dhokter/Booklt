@@ -24,8 +24,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        createSegmentedControl()
-        createSearchBar()
+        setUpSortFilters()
+        setUpSearchBar()
         createTableHeaderView()
 
         
@@ -35,7 +35,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
-    private func createSearchBar() {
+    private func setUpSearchBar() {
         // Set up the search bar
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
@@ -45,8 +45,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
     }
     
-    private func createSegmentedControl() {
-        sortFilters.selectedSegmentIndex = 0;
+    private func setUpSortFilters() {
+        sortFilters.selectedSegmentIndex = 0
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
     }
     
@@ -57,10 +57,10 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         
         headerView.addSubview(searchController.searchBar)
         headerView.addSubview(sortFilters)
+        
         sortFilters.autoPinEdge(.bottom, to: .bottom, of: headerView)
-        sortFilters.autoPinEdge(.leading, to: .leading, of: headerView, withOffset: 0.0)
-        sortFilters.autoPinEdge(.trailing, to: .trailing, of: headerView, withOffset: 0.0)
-        //searchController.searchBar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        sortFilters.autoPinEdge(.leading, to: .leading, of: headerView)
+        sortFilters.autoPinEdge(.trailing, to: .trailing, of: headerView)
         
         tableView.tableHeaderView = headerView
     }
@@ -134,7 +134,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
     
     
-    // TODO: This method should consider the books list in the context of searchViewController is active or not
+    // TODO: This method should consider the books list in the context of searchViewController is active or not ----> SOLVED
     func sortTypeChanged(_ sender: UISegmentedControl) {
         switch sortFilters.selectedSegmentIndex
         {

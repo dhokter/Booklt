@@ -8,24 +8,62 @@
 
 import UIKit
 import MGSwipeTableCell
+import PureLayout
 
-class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
+class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
+    private var searchResults = [Book]()
     private var filterType: FilterType = .chronological
     
-    //(Kelli) Sort method buttons
-    @IBOutlet weak var sortType: UISegmentedControl!
+    // Elements of the header view
+    private let searchController = UISearchController(searchResultsController: nil)
+    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Progress ↑", "Progress ↓"])
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setUpSearchBar()
+        setUpSortFilters()
+        createTableHeaderView()
+        // TODO: Make all the methods related to searchController take care of the case active and inactive
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+
+    private func setUpSearchBar() {
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        
+        self.definesPresentationContext = true
+        searchController.searchBar.delegate = self
+        searchController.searchBar.scopeButtonTitles  = ["All", "Title", "Author"]
+    }
+    
+    private func setUpSortFilters() {
+        sortFilters.selectedSegmentIndex = 0
+        sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
+    }
+    
+    private func createTableHeaderView() {
+        let headerView = UIView()
+        headerView.bounds = searchController.searchBar.bounds
+        headerView.bounds.size.height += sortFilters.bounds.size.height
+        
+        headerView.addSubview(searchController.searchBar)
+        headerView.addSubview(sortFilters)
+        
+        sortFilters.autoPinEdge(.bottom, to: .bottom, of: headerView)
+        sortFilters.autoPinEdge(.leading, to: .leading, of: headerView)
+        sortFilters.autoPinEdge(.trailing, to: .trailing, of: headerView)
+        
+        self.tableView.tableHeaderView = headerView
     }
     
     // The function to reload the data if the view appear again by the BACK button of some other ViewController
@@ -120,8 +158,8 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     }
     
     //(Kelli) Activated when user switches between "A-Z" and "Date" sort methods
-    @IBAction private func sortTypeChanged(_ sender: Any) {
-        switch sortType.selectedSegmentIndex
+    func sortTypeChanged(_ sender: Any) {
+        switch sortFilters.selectedSegmentIndex
         {
         case 0:                             // "A-Z" is selected
             filterType = .alphabetical
@@ -192,6 +230,14 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         
         self.present(selectAddMethodAlert, animated: true, completion: nil)
     }
+    
+    // SEARCHBAR CONFIGURATION
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+    }
+    
     
     /*
      // Override to support rearranging the table view.
