@@ -120,7 +120,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "CompletedToBookDetailsSegue"?:
-            guard let destination = segue.destination as? BookDetailsViewController else {
+            guard let destination = segue.destination as? AddBookViewController else {
                 return
             }
             if searchController.isActive {
