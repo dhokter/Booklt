@@ -794,7 +794,7 @@
                                         </barButtonItem>
                                         <barButtonItem key="rightBarButtonItem" enabled="NO" title="Save" id="1HW-bs-GsO">
                                             <connections>
-                                                <segue destination="KGN-Ac-Yij" kind="unwind" unwindAction="addNewBookManuallyUnwindWithSender:" id="Cya-5E-1fZ"/>
+                                                <segue destination="KGN-Ac-Yij" kind="unwind" identifier="addNewBook" unwindAction="addNewBookManuallyUnwindWithSender:" id="Cya-5E-1fZ"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>

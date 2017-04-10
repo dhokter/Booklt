@@ -68,9 +68,11 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     }
     
     private func prepareAddNewBook() {
+        // Hide the rating from user if they are creating a new book
         ratingView.isHidden = true
+        // Make the save button disabled if the title field is empty
         bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
-        
+        bookTitleTextField.becomeFirstResponder() // Pop up the keyboard immediately so user can begin to type righ away when creating new book
     }
     
     // Method to get back the list book screen and dismiss all changes made in Add book page.
@@ -96,9 +98,13 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        // TODO: Make the save button to be disabled until user enter enough information.
-        print("-----> Book title: \(bookTitleTextField.text!)")
-        book = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
+        switch segue.identifier {
+        case "addNewBook"?:
+            book = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
+        default:
+            return
+        }
+        
     }
     
     // Process of adding a new book:
@@ -250,7 +256,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
             navigationItem.title = book?.title
         }
         userIsEditingTheBook = !userIsEditingTheBook
-        
+        // Make sure the all text field is disabled or enabled relevant to the Save button's state
         bookTitleTextField.isEnabled = userIsEditingTheBook
         authorTextField.isEnabled = userIsEditingTheBook
         totalPageTextField.isEnabled = userIsEditingTheBook
