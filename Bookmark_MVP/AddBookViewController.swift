@@ -37,7 +37,11 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addDoneButtonOnKeyboard()
+        // Make the save button disabled if the title field is empty
+        bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
+        
         if book != nil {
             // Check if the view is in BookDetails mode
             prepareBookDetails()
@@ -70,8 +74,6 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     private func prepareAddNewBook() {
         // Hide the rating from user if they are creating a new book
         ratingView.isHidden = true
-        // Make the save button disabled if the title field is empty
-        bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
         bookTitleTextField.becomeFirstResponder() // Pop up the keyboard immediately so user can begin to type righ away when creating new book
     }
     
@@ -87,6 +89,14 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     }
     
     func titleDidChange(textField: UITextField) {
+        var saveButton: UIBarButtonItem
+        // Depends on whether the view is displaying BookDetails or AddBook, the save button will be assgined accordingly
+        if self.book != nil {
+            saveButton = navigationItem.rightBarButtonItem!
+        } else {
+            saveButton = self.saveButton
+        }
+        // Disable the save button on navigation bar if the title is empty
         if textField == bookTitleTextField {
             if textField.text == "" {
                 saveButton.isEnabled = false
@@ -247,6 +257,12 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
             sender.title = "Save"
         } else {
             sender.title = "Edit"
+            // If the current page is being changed, then the book will become "most recent" in the tableView
+            if book?.currentPage != Int(currentPageTextField.text!) {
+                try! realm.write {
+                    book?.whenCreated = Date()
+                }
+            }
             try! realm.write {
                 book?.title = bookTitleTextField.text!
                 book?.author = authorTextField.text!
