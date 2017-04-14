@@ -8,11 +8,16 @@
 
 import UIKit
 import MGSwipeTableCell
+import RealmSwift
 
 class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate {
     
+    let realm = try! Realm()
+    
     private var books = [Book]()
     private var filterType: FilterType = .alphabetical
+    
+    @IBOutlet weak var currentPageView:     UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,8 +107,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             })]
         } else {
             return [MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
-                bookManager.markAsReading(book: book)
-                self.deleteAndUpdateCells(indexPath: indexPath!)
+                self.beginReading(indexPath: indexPath!, book: book)
                 return false
             })]
         }
@@ -131,6 +135,34 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         self.present(alert, animated: false, completion: nil)
     }
     
+    /////IN PROGRESS
+    private func beginReading(indexPath: IndexPath, book: Book) {
+        let alert = UIAlertController(title: "More Info Required", message: "Please provide the following information before you begin reading", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Done", style: .destructive, handler: {(action: UIAlertAction) in
+            try! self.realm.write {
+                book.currentPage = Int((alert.textFields?[0].text)!)!
+                book.totalPages = Int((alert.textFields?[1].text)!)!
+            }
+            bookManager.markAsReading(book: book)
+            self.deleteAndUpdateCells(indexPath: indexPath)
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
+            let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
+            cell.hideSwipe(animated: true)
+        }))
+        
+        alert.addTextField { (currentPage) in
+            currentPage.placeholder = "Current page"
+        }
+        
+        alert.addTextField { (totalPages) in
+            totalPages.placeholder = "Total number of pages"
+        }
+        
+        self.present(alert, animated: false, completion: nil)
+    }
+    
     
     
     // Override to support conditional editing of the table view.
@@ -138,7 +170,6 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         // Return false if you do not want the specified item to be editable.
         return true
     }
-    
     
     /*
      // Override to support editing the table view.
