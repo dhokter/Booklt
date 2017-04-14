@@ -169,7 +169,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     
     // The function the for unwind segue from the AddBookView.
-    @IBAction func addNewBookManuallyUnwind(sender: UIStoryboardSegue) {
+    @IBAction func addNewBook(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? AddBookViewController {
             bookManager.addNewBook(book: sourceViewController.book!, state: .reading)
             books = bookManager.readingBooks

@@ -83,9 +83,9 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         return true
     }
     
-    @IBAction func addNewWishListBookManuallyUnwind(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? AddNewWishListBookViewController {
-            bookManager.addNewBook(book: sourceViewController.newBook!, state: .wishList)
+    @IBAction func addNewBook(sender: UIStoryboardSegue) {
+        if let sourceViewController = sender.source as? AddBookViewController {
+            bookManager.addNewBook(book: sourceViewController.book!, state: .wishList)
             books = bookManager.wishListBooks
             let newIndexPath = IndexPath(row: books.count-1, section: 0)
             self.tableView.beginUpdates()
