@@ -132,17 +132,17 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             cell.hideSwipe(animated: true)
         }))
         
-        self.present(alert, animated: false, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     /////IN PROGRESS
     private func beginReading(indexPath: IndexPath, book: Book) {
         let alert = UIAlertController(title: "More Info Required", message: "Please provide the following information before you begin reading", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Done", style: .destructive, handler: {(action: UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Done", style: .default, handler: {(action: UIAlertAction) in
             try! self.realm.write {
-                book.currentPage = Int((alert.textFields?[0].text)!)!
-                book.totalPages = Int((alert.textFields?[1].text)!)!
+                book.currentPage = Int((alert.textFields?[0].text)!) ?? 0
+                book.totalPages = Int((alert.textFields?[1].text)!) ?? 0
             }
             bookManager.markAsReading(book: book)
             self.deleteAndUpdateCells(indexPath: indexPath)
@@ -154,13 +154,15 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         
         alert.addTextField { (currentPage) in
             currentPage.placeholder = "Current page"
+            currentPage.keyboardType = .numberPad
         }
         
         alert.addTextField { (totalPages) in
             totalPages.placeholder = "Total number of pages"
+            totalPages.keyboardType = .numberPad
         }
         
-        self.present(alert, animated: false, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
     
     

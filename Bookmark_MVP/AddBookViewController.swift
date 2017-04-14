@@ -26,6 +26,7 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var greenPicker: UIButton!
     @IBOutlet weak var goldPicker: UIButton!
     
+    // Rating star buttons and rating stack view
     @IBOutlet var ratingButtons: [UIButton]!
     @IBOutlet weak var ratingView: UIStackView!
     
