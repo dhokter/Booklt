@@ -111,7 +111,11 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             cell.book = books[indexPath.row]
         }
         cell.delegate = self
-        
+        if cell.book?.totalPages != 0 {
+            cell.progressBarView.isHidden = false
+        } else {
+            cell.progressBarView.isHidden = true
+        }
         return cell
     }
     
