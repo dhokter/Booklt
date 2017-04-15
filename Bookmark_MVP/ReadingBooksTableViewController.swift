@@ -28,7 +28,6 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         setUpSearchBar()
         setUpSortFilters()
         createTableHeaderView()
-        // TODO: Make all the methods related to searchController take care of the case active and inactive
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false

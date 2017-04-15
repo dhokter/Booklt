@@ -108,6 +108,17 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		4C8859F01EA2C9AF001B1DA4 /* Unused codes */ = {
+			isa = PBXGroup;
+			children = (
+				4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */,
+				4C8D581B1E85B07000A40D0F /* SearchBookTableViewCell.swift */,
+				4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */,
+				092011A21E8B5C7B00CE4F79 /* AddNewWishListBookViewController.swift */,
+			);
+			name = "Unused codes";
+			sourceTree = "<group>";
+		};
 		4CB2208F1E54E84C00AF0647 = {
 			isa = PBXGroup;
 			children = (
@@ -128,20 +139,17 @@
 		4CB2209A1E54E84C00AF0647 /* Bookmark_MVP */ = {
 			isa = PBXGroup;
 			children = (
+				4C8859F01EA2C9AF001B1DA4 /* Unused codes */,
 				4CB220AD1E54E85D00AF0647 /* Supporting Files */,
 				4CB2209D1E54E84C00AF0647 /* AddBookViewController.swift */,
 				4CE19B361E5FF0860085B508 /* ReadingBooksTableViewCell.swift */,
-				4CBF6F331E67EF5B003EE5B5 /* BookDetailsViewController.swift */,
 				4CE19B381E5FF2480085B508 /* ReadingBooksTableViewController.swift */,
 				4C99EFD21E6F9E8F001D5EB1 /* CompletedBooksTableViewCell.swift */,
 				4C99EFD01E6F9E20001D5EB1 /* CompletedBooksTableViewController.swift */,
-				4C8D581B1E85B07000A40D0F /* SearchBookTableViewCell.swift */,
-				4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */,
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
 				4CE19B341E5FEEB20085B508 /* Book.swift */,
 				4CC111911E651F1D00A9B8E4 /* BookManager.swift */,
 				092011A01E8B5C6A00CE4F79 /* WishListBooksViewController.swift */,
-				092011A21E8B5C7B00CE4F79 /* AddNewWishListBookViewController.swift */,
 				097C94231E94748700866ADB /* WishListBooksTableViewCell.swift */,
 			);
 			path = Bookmark_MVP;
