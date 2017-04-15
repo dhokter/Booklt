@@ -174,10 +174,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         } else {
             return [MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
                 bookManager.markAsReading(book: book)
-                // If the searchController is active, make sure to delete the marked as reading book from the list of search result
-                if self.searchController.isActive {
-                    self.searchResults = self.searchResults.filter({($0 !== book)})
-                }
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
             })]
@@ -187,6 +183,11 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     // TODO: The deletion will need to consider update both books lists variables if the searchController is active --> SOLVED in method above
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function,, maybe due to different threads perform the delete and search at the same time.
+        if self.searchController.isActive {
+            let book = searchResults[indexPath.row]
+            self.searchResults = self.searchResults.filter({$0 !== book})
+        }
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
         self.tableView.endUpdates()
@@ -197,9 +198,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         
         alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
-            if self.searchController.isActive {
-                self.searchResults = self.searchResults.filter({($0 !== book)})
-            }
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
