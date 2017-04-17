@@ -107,6 +107,10 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         
         return cell
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.performSegue(withIdentifier: "WishListToDetails", sender: self)
+    }
         
     func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
         return true
@@ -258,6 +262,28 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             return
         }
         tableView.reloadData()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "WishListToAdd"?:
+            guard let destination = segue.destination as? AddBookViewController else {
+                return
+            }
+            destination.displayMode = DisplayMode.newWishList
+        case "WishListToDetails"?:
+            guard let destination = segue.destination as? AddBookViewController else {
+                return
+            }
+            if searchController.isActive {
+                destination.book = searchResults[(self.tableView.indexPathForSelectedRow?.row)!]
+            } else {
+                destination.book = books[(self.tableView.indexPathForSelectedRow?.row)!]
+            }
+            destination.displayMode = DisplayMode.detailsWishList
+        default:
+            return
+        }
     }
     
     

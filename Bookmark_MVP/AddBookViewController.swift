@@ -9,6 +9,13 @@
 import UIKit
 import RealmSwift
 
+enum DisplayMode {
+    case newReading
+    case details
+    case newWishList
+    case detailsWishList
+}
+
 class AddBookViewController: UIViewController, UITextFieldDelegate {
     
     let realm = try! Realm()
@@ -33,8 +40,11 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
     private var selectedColor = "red"
     private var userIsEditingTheBook = false
     
+    // The stack view containing current and total pages view
+    @IBOutlet weak var pageViews: UIStackView!
     
     var book: Book?
+    var displayMode: DisplayMode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,12 +53,26 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
         // Make the save button disabled if the title field is empty
         bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
         
-        if book != nil {
-            // Check if the view is in BookDetails mode
-            prepareBookDetails()
-        } else {
+        switch displayMode! {
+        case .newReading:
             prepareAddNewBook()
+        case .details:
+            prepareBookDetails()
+        case .newWishList:
+            prepareAddNewBook()
+            pageViews.isHidden = true
+        case .detailsWishList:
+            prepareBookDetails()
+            pageViews.isHidden = true
+            ratingView.isHidden = true
         }
+        
+//        if book != nil {
+//            // Check if the view is in BookDetails mode
+//            prepareBookDetails()
+//        } else {
+//            prepareAddNewBook()
+//        }
     }
     
     private func prepareBookDetails() {

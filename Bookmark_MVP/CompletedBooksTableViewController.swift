@@ -128,6 +128,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             } else {
                 destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
             }
+            destination.displayMode = DisplayMode.details
         default:
             return
         }
