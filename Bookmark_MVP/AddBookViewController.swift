@@ -9,15 +9,15 @@
 import UIKit
 import RealmSwift
 
-enum DisplayMode {
-    case newReading
-    case details
-    case newWishList
-    case detailsWishList
-}
-
 class AddBookViewController: UIViewController, UITextFieldDelegate {
-    
+
+    enum DisplayMode {
+        case newReading
+        case details
+        case newWishList
+        case detailsWishList
+    }
+
     let realm = try! Realm()
     
     @IBOutlet weak var bookTitleTextField: UITextField!
@@ -66,13 +66,6 @@ class AddBookViewController: UIViewController, UITextFieldDelegate {
             pageViews.isHidden = true
             ratingView.isHidden = true
         }
-        
-//        if book != nil {
-//            // Check if the view is in BookDetails mode
-//            prepareBookDetails()
-//        } else {
-//            prepareAddNewBook()
-//        }
     }
     
     private func prepareBookDetails() {

@@ -270,7 +270,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             guard let destination = segue.destination as? AddBookViewController else {
                 return
             }
-            destination.displayMode = DisplayMode.newWishList
+            destination.displayMode = .newWishList
         case "WishListToDetails"?:
             guard let destination = segue.destination as? AddBookViewController else {
                 return
@@ -280,7 +280,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             } else {
                 destination.book = books[(self.tableView.indexPathForSelectedRow?.row)!]
             }
-            destination.displayMode = DisplayMode.detailsWishList
+            destination.displayMode = .detailsWishList
         default:
             return
         }

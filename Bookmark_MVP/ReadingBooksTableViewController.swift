@@ -134,12 +134,12 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             } else {
                 destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
             }
-            destination.displayMode = DisplayMode.details
+            destination.displayMode = .details
         case "ReadingToAdd"?:
             guard let destination = segue.destination as? AddBookViewController else {
                 return
             }
-            destination.displayMode = DisplayMode.newReading
+            destination.displayMode = .newReading
         default: break
         }
     }
