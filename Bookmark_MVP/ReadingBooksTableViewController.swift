@@ -126,7 +126,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         super.prepare(for: segue, sender: sender)
         switch segue.identifier {
         case "ReadingToDetails"?:
-            guard let destination = segue.destination as? AddBookViewController else {     // Pass the book instance of the cell to the ViewController to display
+            guard let destination = segue.destination as? BookViewController else {     // Pass the book instance of the cell to the ViewController to display
                 return
             }
             if searchController.isActive {
@@ -136,7 +136,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             }
             destination.displayMode = .details
         case "ReadingToAdd"?:
-            guard let destination = segue.destination as? AddBookViewController else {
+            guard let destination = segue.destination as? BookViewController else {
                 return
             }
             destination.displayMode = .newReading
@@ -175,7 +175,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBook(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? AddBookViewController {
+        if let sourceViewController = sender.source as? BookViewController {
             bookManager.addNewBook(book: sourceViewController.book!, state: .reading)
             books = bookManager.readingBooks
             let newIndexPath = IndexPath(row: books.count-1, section: 0)        // Creates a new cell for the book

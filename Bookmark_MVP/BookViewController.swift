@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 
-class AddBookViewController: UIViewController, UITextFieldDelegate {
+class BookViewController: UIViewController, UITextFieldDelegate {
 
     enum DisplayMode {
         case newReading

@@ -117,7 +117,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     @IBAction func addNewBook(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? AddBookViewController {
+        if let sourceViewController = sender.source as? BookViewController {
             bookManager.addNewBook(book: sourceViewController.book!, state: .wishList)
             books = bookManager.wishListBooks
             let newIndexPath = IndexPath(row: books.count-1, section: 0)
@@ -267,12 +267,12 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "WishListToAdd"?:
-            guard let destination = segue.destination as? AddBookViewController else {
+            guard let destination = segue.destination as? BookViewController else {
                 return
             }
             destination.displayMode = .newWishList
         case "WishListToDetails"?:
-            guard let destination = segue.destination as? AddBookViewController else {
+            guard let destination = segue.destination as? BookViewController else {
                 return
             }
             if searchController.isActive {
