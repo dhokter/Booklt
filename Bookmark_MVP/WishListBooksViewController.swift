@@ -181,12 +181,11 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     /////IN PROGRESS
     private func beginReading(indexPath: IndexPath, book: Book) {
-        let alert = UIAlertController(title: "More Info Required", message: "Please provide the following information before you begin reading", preferredStyle: .alert)
+        let alert = UIAlertController(title: "More Info Required", message: "How many pages does your book have?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: {(action: UIAlertAction) in
             try! self.realm.write {
-                book.currentPage = Int((alert.textFields?[0].text)!) ?? 0
-                book.totalPages = Int((alert.textFields?[1].text)!) ?? 0
+                book.totalPages = Int((alert.textFields?[0].text)!) ?? 0
             }
             bookManager.markAsReading(book: book)
             self.deleteAndUpdateCells(indexPath: indexPath)
