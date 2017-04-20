@@ -273,6 +273,10 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
             sender.title = "Save"
+            // Make the keyboard appears immediately and focus on the title textField when user hit "Edit"
+            // This code is used instead of becomeFirstResponder directly to guarantee a keyboard will popup
+            // The reason for this should be found on http://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8
+            bookTitleTextField.perform(#selector(becomeFirstResponder), with: nil, afterDelay: 0.0)
         } else {
             sender.title = "Edit"
             // If the current page is being changed, then the book will become "most recent" in the tableView

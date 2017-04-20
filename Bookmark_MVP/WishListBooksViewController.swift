@@ -196,11 +196,6 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             cell.hideSwipe(animated: true)
         }))
         
-        alert.addTextField { (currentPage) in
-            currentPage.placeholder = "Current page"
-            currentPage.keyboardType = .numberPad
-        }
-        
         alert.addTextField { (totalPages) in
             totalPages.placeholder = "Total number of pages"
             totalPages.keyboardType = .numberPad
