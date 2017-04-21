@@ -132,4 +132,17 @@ class BookManager {
         }
     }
     
+    public func search(searchText: String, books: [Book], scope: String = "All") -> [Book] {
+        switch scope {
+        case "All":
+            return books.filter({($0.title.lowercased().contains(searchText.lowercased()) || $0.author.lowercased().contains(searchText.lowercased()))})
+        case "Title":
+            return books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
+        case "Author":
+            return books.filter({($0.author.lowercased().contains(searchText.lowercased()))})
+        default:
+            return []
+        }
+    }
+    
 }

@@ -72,11 +72,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         self.tableView.reloadData()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(true)
-        searchController.isActive = false
-    }
-    
     // Dispose of any resources that can be recreated.
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -231,17 +226,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
 
     private func search(searchText: String, scope: String = "All") {
-        switch scope {
-        case "All":
-            searchResults = books.filter({($0.title.lowercased().contains(searchText.lowercased())) || $0.author.lowercased().contains(searchText.lowercased())})
-        case "Title":
-            searchResults = books.filter({($0.title.lowercased().contains(searchText.lowercased()))})
-        case "Author":
-            searchResults = books.filter({($0.author.lowercased().contains(searchText.lowercased()))})
-        default:
-            return
-        }
-        
+        searchResults = bookManager.search(searchText: searchText, books: books, scope: scope)
         tableView.reloadData()
     }
     
