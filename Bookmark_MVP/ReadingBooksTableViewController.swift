@@ -238,7 +238,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes, delete", style: .destructive, handler: {(action: UIAlertAction) in
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
