@@ -200,7 +200,7 @@
 				TargetAttributes = {
 					4CB220971E54E84C00AF0647 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 45DBHK3PL2;
+						DevelopmentTeam = 55US783MLA;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -397,14 +397,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 45DBHK3PL2;
+				DEVELOPMENT_TEAM = 55US783MLA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP-1543";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -414,14 +414,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 45DBHK3PL2;
+				DEVELOPMENT_TEAM = 55US783MLA;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
 				);
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP";
+				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP-1543";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

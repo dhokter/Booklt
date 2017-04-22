@@ -44,8 +44,9 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
         currentPageView.resignFirstResponder()
         if let book = self.book {
             try! realm.write {
-                book.currentPage = Int(self.currentPageView.text!)!
-                book.whenCreated = Date()
+                book.currentPage     = Int(self.currentPageView.text!)!
+                currentPageView.text = String(book.currentPage)
+                book.whenCreated     = Date()
             }
             progressBarView.progress = bookManager.getProgress(book: book)
 
