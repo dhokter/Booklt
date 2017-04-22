@@ -12,6 +12,8 @@ import PureLayout
 
 class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
+    let userDefaults = UserDefaults.standard
+    
     // List of books to be displayed on screen, with value passed by the bookManager
     private var books = [Book]()
     private var searchResults = [Book]()
@@ -28,6 +30,13 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         setUpSearchBar()
         setUpSortFilters()
         createTableHeaderView()
+        
+        if userDefaults.object(forKey: "isFirstTime") == nil {
+            print("-----> FIRST TIME!!!!")
+            userDefaults.set(true, forKey: "isFirstTime")
+        } else {
+            print("-----> NOT FIRST TIME")
+        }
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
