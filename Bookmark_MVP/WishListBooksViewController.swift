@@ -21,7 +21,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     // Elements of the header view
     private let searchController = UISearchController(searchResultsController: nil)
-    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent"])
+    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Color"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -211,9 +211,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         case 1:                             // "Date" is selected
             filterType = .chronological
         case 2:                             // "Progress ↑" is selected
-            filterType = .increasingProgress
-        case 3:                             // "Progress ↓" is selected
-            filterType = .decreasingProgress
+            filterType = .color
         default:
             break
         }

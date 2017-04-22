@@ -19,7 +19,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     // Elements of the header view
     private let searchController = UISearchController(searchResultsController: nil)
-    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Progress ↑", "Progress ↓"])
+    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Progress ↑", "Progress ↓", "Color"])
     
     
     override func viewDidLoad() {
@@ -194,6 +194,8 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             filterType = .increasingProgress
         case 3:                             // "Progress ↓" is selected
             filterType = .decreasingProgress
+        case 4:
+            filterType = .color
         default:
             break
         }

@@ -17,7 +17,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     // Search controller using the current tableView to display the result
     private let searchController = UISearchController(searchResultsController: nil)
-    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent"])
+    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Color"])
     
     private var searchResults = [Book]()
     
@@ -138,6 +138,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             filterType = .alphabetical
         case 1:
             filterType = .chronological
+        case 2:
+            filterType = .color
         default:
             break
         }

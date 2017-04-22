@@ -18,6 +18,7 @@ enum FilterType {
     case alphabetical
     case increasingProgress
     case decreasingProgress
+    case color
 }
 
 let iconColor: [String:UIImage] = [
@@ -119,6 +120,10 @@ class BookManager {
         return books.sorted(by: {bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1)})
     }
     
+    public func sortBooksByColor(books: [Book]) -> [Book] {
+        return books.sorted(by: {$0.color > $1.color})
+    }
+    
     public func sortBooks(books: [Book], filter: FilterType) -> [Book] {
         switch filter {
         case .alphabetical:
@@ -129,6 +134,8 @@ class BookManager {
             return sortBooksByDecreasingProgress(books: books)
         case .increasingProgress:
             return sortBooksByIncreasingProgress(books: books)
+        case .color:
+            return sortBooksByColor(books: books)
         }
     }
     
