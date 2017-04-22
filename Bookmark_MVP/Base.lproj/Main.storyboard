@@ -620,9 +620,8 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-SG-DgB">
-                                                        <rect key="frame" x="235" y="0.0" width="100" height="40"/>
+                                                        <rect key="frame" x="115" y="0.0" width="220" height="40"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="width" constant="100" id="RtF-5Y-3gL"/>
                                                             <constraint firstAttribute="height" constant="40" id="VMX-S6-6MX"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
@@ -637,6 +636,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="43t-Ej-WES"/>
                                                     <constraint firstItem="5Zj-a7-Tuu" firstAttribute="centerY" secondItem="azD-92-nAW" secondAttribute="centerY" id="GNv-KX-EP8"/>
+                                                    <constraint firstItem="uDw-SG-DgB" firstAttribute="leading" secondItem="5Zj-a7-Tuu" secondAttribute="trailing" constant="10" id="GiW-mh-t2t"/>
                                                     <constraint firstAttribute="leadingMargin" secondItem="5Zj-a7-Tuu" secondAttribute="leading" constant="10" id="TIg-8O-mAp"/>
                                                     <constraint firstAttribute="trailingMargin" secondItem="uDw-SG-DgB" secondAttribute="trailing" id="r3a-7i-fge"/>
                                                     <constraint firstItem="uDw-SG-DgB" firstAttribute="centerY" secondItem="azD-92-nAW" secondAttribute="centerY" id="vKd-Vy-vcP"/>
@@ -659,10 +659,9 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fup-IM-Jh1">
-                                                        <rect key="frame" x="235" y="0.0" width="100" height="40"/>
+                                                        <rect key="frame" x="102" y="0.0" width="233" height="40"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="40" id="Ccy-Pv-Ung"/>
-                                                            <constraint firstAttribute="width" constant="100" id="vev-YD-qOh"/>
                                                         </constraints>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -675,6 +674,7 @@
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
                                                     <constraint firstItem="fup-IM-Jh1" firstAttribute="centerY" secondItem="HpF-bg-2dw" secondAttribute="centerY" id="37d-Vf-5Sw"/>
+                                                    <constraint firstItem="fup-IM-Jh1" firstAttribute="leading" secondItem="HpF-bg-2dw" secondAttribute="trailing" constant="10" id="JVX-Tr-L3g"/>
                                                     <constraint firstAttribute="leadingMargin" secondItem="HpF-bg-2dw" secondAttribute="leading" constant="10" id="g1J-8k-EGY"/>
                                                     <constraint firstItem="HpF-bg-2dw" firstAttribute="centerY" secondItem="Xbp-g9-c3s" secondAttribute="centerY" id="m7D-ch-JE3"/>
                                                     <constraint firstAttribute="height" constant="40" id="oFc-nF-XPY"/>
