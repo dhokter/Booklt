@@ -16,7 +16,6 @@ let bookManager = BookManager()
 enum FilterType {
     case chronological
     case alphabetical
-    case increasingProgress
     case decreasingProgress
     case color
 }
@@ -132,8 +131,6 @@ class BookManager {
             return sortBooksChronologically(books: books)
         case .decreasingProgress:
             return sortBooksByDecreasingProgress(books: books)
-        case .increasingProgress:
-            return sortBooksByIncreasingProgress(books: books)
         case .color:
             return sortBooksByColor(books: books)
         }
