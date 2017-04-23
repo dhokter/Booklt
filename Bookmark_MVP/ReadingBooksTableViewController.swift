@@ -32,12 +32,10 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         createTableHeaderView()
         
         if userDefaults.object(forKey: "isFirstTime") == nil {
-            print("-----> FIRST TIME!!!!")
+            performSegue(withIdentifier: "displayTutorial", sender: self)
             userDefaults.set(true, forKey: "isFirstTime")
-        } else {
-            print("-----> NOT FIRST TIME")
         }
-        
+
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -144,7 +142,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
                 return
             }
             destination.displayMode = .newReading
-        default: break
+        default: return
         }
     }
     
