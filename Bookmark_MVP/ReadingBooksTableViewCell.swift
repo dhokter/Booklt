@@ -16,6 +16,7 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
     
     @IBOutlet weak var coverImageView:      UIImageView!
     @IBOutlet weak var titleBookView:       UILabel!
+    @IBOutlet weak var authorBookView:      UILabel!
     @IBOutlet weak var currentPageView:     UITextField!
     @IBOutlet weak var progressBarView:     UIProgressView!
     
@@ -26,6 +27,7 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
             if let book = self.book {
                 addDoneButtonOnKeyboard()
                 titleBookView.text       = book.title
+                authorBookView.text      = book.author
                 currentPageView.text     = String(book.currentPage)
                 currentPageView.delegate = self
                 progressBarView.progress = bookManager.getProgress(book: book)

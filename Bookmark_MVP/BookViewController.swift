@@ -22,6 +22,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var bookTitleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
+    
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
     @IBOutlet weak var saveButton: UIBarButtonItem!
