@@ -46,7 +46,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
     
     private func setUpSortFilters() {
-        sortFilters.selectedSegmentIndex = 0
+        sortFilters.selectedSegmentIndex = 1
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
     }
     
@@ -68,7 +68,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     // Reload the data of table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
         self.tableView.reloadData()
     }
     
@@ -146,7 +146,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         if searchController.isActive {
             searchResults = bookManager.sortBooks(books: searchResults, filter: filterType)
         }
-        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
         tableView.reloadData()
     }
     
@@ -180,7 +180,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     // TODO: The deletion will need to consider update both books lists variables if the searchController is active --> SOLVED in method above
     private func deleteAndUpdateCells(indexPath: IndexPath) {
-        books = bookManager.sortBooks(books: bookManager.finishedBooks, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
         // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function,, maybe due to different threads perform the delete and search at the same time.
         if self.searchController.isActive {
             let book = searchResults[indexPath.row]

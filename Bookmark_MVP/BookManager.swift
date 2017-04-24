@@ -35,33 +35,33 @@ class BookManager {
     
     // List of all the books that the user is currently reading.
     public var readingBooks: [Book] {
-        return Array(realm.objects(Book.self)).filter({$0.status == 0})
+        return Array(realm.objects(Book.self)).filter({$0.status == "reading"})
     }
     
     // List of all the books that the user has finished reading.
-    public var finishedBooks: [Book] {
-        return Array(realm.objects(Book.self).filter({$0.status == 1}))
+    public var completedBooks: [Book] {
+        return Array(realm.objects(Book.self).filter({$0.status == "completed"}))
     }
     
     //List of all the books that the user has on their wish list.
     public var wishListBooks: [Book] {
-        return Array(realm.objects(Book.self).filter({$0.status == 2}))
+        return Array(realm.objects(Book.self).filter({$0.status == "wishList"}))
     }
     
     
     
     // Adds a new book to the list of books that the user is currently reading.
-    public func addNewBook(book: Book, state: State) {
-        book.status = state.rawValue
+    public func addNewBook(book: Book, state: String) {
+        book.status = state
         try! realm.write {
             realm.add(book)
         }
     }
     
     // Indicates that the user is no longer reading the selected book.
-    public func markAsFinished(book: Book) {
+    public func markAsCompleted(book: Book) {
         try! realm.write {
-            book.status = 1
+            book.status = "completed"
             book.whenCreated = Date()
         }
     }
@@ -69,7 +69,7 @@ class BookManager {
     // Indicates that the user is currently reading the selected book.
     public func markAsReading(book: Book) {
         try! realm.write {
-            book.status = 0
+            book.status = "reading"
             book.whenCreated = Date()
         }
     }

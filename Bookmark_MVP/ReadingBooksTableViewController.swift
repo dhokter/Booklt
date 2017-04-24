@@ -53,7 +53,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     }
     
     private func setUpSortFilters() {
-        sortFilters.selectedSegmentIndex = 0
+        sortFilters.selectedSegmentIndex = 1
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
     }
     
@@ -167,7 +167,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             })]
         } else {
             return [MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
-                bookManager.markAsFinished(book: book)
+                bookManager.markAsCompleted(book: book)
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
             })]
@@ -178,7 +178,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     // The function the for unwind segue from the AddBookView.
     @IBAction func addNewBook(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? BookViewController {
-            bookManager.addNewBook(book: sourceViewController.book!, state: .reading)
+            bookManager.addNewBook(book: sourceViewController.book!, state: "reading")
             books = bookManager.readingBooks
             let newIndexPath = IndexPath(row: books.count-1, section: 0)        // Creates a new cell for the book
             self.tableView.beginUpdates()

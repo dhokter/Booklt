@@ -11,14 +11,6 @@ import UIKit
 import Realm
 import RealmSwift
 
-// TODO: Not necessary to use enum. Use string to be more descriptive
-enum State: Int {
-    case reading = 0
-    case completed = 1
-    case wishList = 2
-}
-
-
 class Book: Object {
     
     // Properties of book
@@ -27,13 +19,13 @@ class Book: Object {
     dynamic var currentPage: Int      = 0
     dynamic var author: String        = ""
     dynamic var whenCreated: Date     = Date()
-    dynamic var status: Int           = 0
+    dynamic var status: String        = "reading"
     dynamic var rating: Int           = 0
     dynamic var color: String         = ""
     
     
     // Failable initializer
-    convenience init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "", status: Int = 0, whenCreated: Date = Date(), rating: Int = 0, color: String = "red") {
+    convenience init?(title: String, totalPages: Int, cover: UIImage? = #imageLiteral(resourceName: "default"), currentPage: Int = 0, author: String = "", status: String = "reading", whenCreated: Date = Date(), rating: Int = 0, color: String = "red") {
         if title.isEmpty || totalPages < 0 || currentPage < 0 {
             return nil
         }

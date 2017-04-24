@@ -17,7 +17,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     private var books = [Book]()
     private var searchResults = [Book]()
-    private var filterType: FilterType = .alphabetical
+    private var filterType: FilterType = .chronological
     
     // Elements of the header view
     private let searchController = UISearchController(searchResultsController: nil)
@@ -47,7 +47,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     private func setUpSortFilters() {
-        sortFilters.selectedSegmentIndex = 0
+        sortFilters.selectedSegmentIndex = 1
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
     }
     
@@ -118,7 +118,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     @IBAction func addNewBook(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? BookViewController {
-            bookManager.addNewBook(book: sourceViewController.book!, state: .wishList)
+            bookManager.addNewBook(book: sourceViewController.book!, state: "wishList")
             books = bookManager.wishListBooks
             let newIndexPath = IndexPath(row: books.count-1, section: 0)
             self.tableView.beginUpdates()
