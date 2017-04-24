@@ -43,6 +43,8 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     
     // The stack view containing current and total pages view
     @IBOutlet weak var pageViews: UIStackView!
+    // The stack view containing author textField and the line break
+    @IBOutlet weak var authorView: UIStackView!
     
     var book: Book?
     var displayMode: DisplayMode?
@@ -73,7 +75,11 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         let book = self.book!
         // Update the information of the book to screen if the view is on BookDetails mode
         bookTitleTextField.text = book.title
-        authorTextField.text = book.author
+        if book.author == "" {
+            authorView.isHidden = true
+        } else {
+            authorTextField.text = book.author
+        }
         currentPageTextField.text = String(describing: book.currentPage)
         totalPageTextField.text = String(describing: book.totalPages)
         
@@ -274,6 +280,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
             sender.title = "Save"
+            authorView.isHidden = false
             // Make the keyboard appears immediately and focus on the title textField when user hit "Edit"
             // This code is used instead of becomeFirstResponder directly to guarantee a keyboard will popup
             // The reason for this should be found on http://stackoverflow.com/questions/27098097/becomefirstresponder-not-working-in-ios-8
