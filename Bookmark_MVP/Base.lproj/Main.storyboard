@@ -916,6 +916,7 @@
                         <outlet property="bluePicker" destination="oeR-Hm-zOv" id="OX4-w6-YGf"/>
                         <outlet property="bookTitleTextField" destination="798-IC-2m8" id="INg-uJ-o5O"/>
                         <outlet property="currentPageTextField" destination="uDw-SG-DgB" id="M8E-pp-20z"/>
+                        <outlet property="currentPageView" destination="FRZ-zK-DYU" id="mlm-iS-1bF"/>
                         <outlet property="goldPicker" destination="Njn-Rl-hdO" id="Avs-gQ-shn"/>
                         <outlet property="greenPicker" destination="IVN-lo-dG4" id="4Eh-vY-vMM"/>
                         <outlet property="pageViews" destination="0oQ-Ng-Awp" id="bfa-bm-w8n"/>
