@@ -43,6 +43,8 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     
     // The stack view containing current and total pages view
     @IBOutlet weak var pageViews: UIStackView!
+    // The stack view containing current page textField and the line break
+    @IBOutlet weak var currentPageView: UIStackView!
     // The stack view containing author textField and the line break
     @IBOutlet weak var authorView: UIStackView!
     
@@ -80,7 +82,11 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         } else {
             authorTextField.text = book.author
         }
-        currentPageTextField.text = String(describing: book.currentPage)
+        if book.status == "completed" {
+            currentPageView.isHidden = true
+        } else {
+            currentPageTextField.text = String(describing: book.currentPage)
+        }
         totalPageTextField.text = String(describing: book.totalPages)
         
         highlightColorButtonFromString(bookColor: book.color)
