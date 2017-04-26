@@ -18,6 +18,7 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
     @IBOutlet weak var titleBookView:       UILabel!
     @IBOutlet weak var authorBookView:      UILabel!
     @IBOutlet weak var currentPageView:     UITextField!
+    @IBOutlet weak var percentProgressView: UILabel!
     @IBOutlet weak var progressBarView:     UIProgressView!
     
     // The instance of the book the cell is displaying
@@ -26,11 +27,14 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
         didSet {
             if let book = self.book {
                 addDoneButtonOnKeyboard()
+                let progress = bookManager.getProgress(book: book)
+                let progressInt = Int(progress * 100)
                 titleBookView.text       = book.title
                 authorBookView.text      = book.author
                 currentPageView.text     = String(book.currentPage)
                 currentPageView.delegate = self
-                progressBarView.progress = bookManager.getProgress(book: book)
+                progressBarView.progress = progress
+                percentProgressView.text = "\(progressInt)%"
                 coverImageView.image     = iconColor[book.color]
             }
         }
@@ -49,8 +53,11 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                 book.currentPage     = Int(self.currentPageView.text!)!
                 book.whenCreated     = Date()
             }
+            let progress = bookManager.getProgress(book: book)
+            let progressInt = Int(progress * 100)
             currentPageView.text = String(book.currentPage)
-            progressBarView.progress = bookManager.getProgress(book: book)
+            progressBarView.progress = progress
+            percentProgressView.text = "\(progressInt)%"
         }
     }
     
