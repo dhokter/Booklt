@@ -234,6 +234,11 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         tableView.reloadData()
     }
     
+    
+    
+    
+    
+    
    
     /*
     // Override to support editing the table view.

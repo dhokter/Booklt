@@ -14,6 +14,7 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var coverImageView: UIImageView!
+    @IBOutlet var ratingButtons: [UIButton]!
     
     var book: Book? {
         didSet {
@@ -21,6 +22,7 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
                 titleLabel.text  = book.title
                 authorLabel.text = book.author
                 coverImageView.image = iconColor[book.color]
+                fillStars()
             }
         }
     }
@@ -34,4 +36,28 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
+    
+    
+    
+    
+    func fillStars() {
+        let rating = self.book?.rating
+        if rating != 0 {
+            for i in 0...rating!-1{
+                ratingButtons[i].setImage(#imageLiteral(resourceName: "star_closed"), for: UIControlState.normal)
+            }
+            if rating! < 5{
+                for i in rating!...4{
+                    ratingButtons[i].setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+                }
+            }
+        }
+        else{
+            for star in ratingButtons{
+                star.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
+            }
+        }
+    }
+    
+    
 }
