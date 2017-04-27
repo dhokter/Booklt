@@ -36,6 +36,14 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                 progressBarView.progress = progress
                 percentProgressView.text = "\(progressInt)%"
                 coverImageView.image     = iconColor[book.color]
+                if book.totalPages != 0 {
+                    progressBarView.isHidden = false
+                    percentProgressView.isHidden = false
+                } else {
+                    progressBarView.isHidden = true
+                    percentProgressView.isHidden = true
+                }
+
             }
         }
     }
