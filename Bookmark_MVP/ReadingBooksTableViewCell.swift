@@ -58,7 +58,8 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
         currentPageView.resignFirstResponder()
         if let book = self.book {
             try! realm.write {
-                book.currentPage     = Int(self.currentPageView.text!)!
+                // 0 will be assigned to the current page if it is left empty or the number entered is too large (overflow)
+                book.currentPage     = Int(self.currentPageView.text!) ?? 0
                 book.whenCreated     = Date()
             }
             let progress = bookManager.getProgress(book: book)
