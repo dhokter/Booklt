@@ -185,7 +185,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: {(action: UIAlertAction) in
             try! self.realm.write {
-                book.totalPages = Int((alert.textFields?[0].text)!) ?? 0
+                book.totalPages = convertPageNumber(textField: (alert.textFields?[0])!)
             }
             bookManager.markAsReading(book: book)
             self.deleteAndUpdateCells(indexPath: indexPath)

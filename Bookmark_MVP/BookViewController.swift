@@ -9,6 +9,14 @@
 import UIKit
 import RealmSwift
 
+func convertPageNumber(textField: UITextField) -> Int {
+    guard let pageNumber = textField.text else {
+        return 0
+    }
+    let numPage = Int(pageNumber) ?? 0
+    return (numPage < 0) ? 0 : numPage
+}
+
 class BookViewController: UIViewController, UITextFieldDelegate {
 
     enum DisplayMode {
@@ -141,7 +149,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         super.prepare(for: segue, sender: sender)
         switch segue.identifier {
         case "addNewBook"?:
-            book = Book(title: bookTitleTextField.text!, totalPages: Int(totalPageTextField.text!) ?? 0, currentPage: Int(currentPageTextField.text!) ?? 0, author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
+            book = Book(title: bookTitleTextField.text!, totalPages: convertPageNumber(textField: totalPageTextField), currentPage: convertPageNumber(textField: currentPageTextField), author: authorTextField.text!, whenCreated: Date(), color: selectedColor)
         default:
             return
         }
@@ -294,7 +302,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         } else {
             sender.title = "Edit"
             // If the current page is being changed, then the book will become "most recent" in the tableView
-            if book?.currentPage != Int(currentPageTextField.text!) {
+            if book?.currentPage != convertPageNumber(textField: currentPageTextField) {
                 try! realm.write {
                     book?.whenCreated = Date()
                 }
@@ -302,8 +310,8 @@ class BookViewController: UIViewController, UITextFieldDelegate {
             try! realm.write {
                 book?.title = bookTitleTextField.text!
                 book?.author = authorTextField.text!
-                book?.totalPages = Int(totalPageTextField.text!) ?? 0
-                book?.currentPage = Int(currentPageTextField.text!) ?? 0
+                book?.totalPages = convertPageNumber(textField: totalPageTextField)
+                book?.currentPage = convertPageNumber(textField: currentPageTextField)
             }
             currentPageTextField.text = book?.currentPage.description
             totalPageTextField.text = book?.totalPages.description
@@ -316,6 +324,4 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         totalPageTextField.isEnabled = userIsEditingTheBook
         currentPageTextField.isEnabled = userIsEditingTheBook
     }
-
-
 }
