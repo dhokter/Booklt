@@ -1,6 +1,6 @@
 //
 //  AllBooksTableViewCell.swift
-//  Bookmark_MVP
+//  BookIt
 //
 //  Created by Duc Le on 3/7/17.
 //  Copyright © 2017 Team Grant_le_mandel. All rights reserved.

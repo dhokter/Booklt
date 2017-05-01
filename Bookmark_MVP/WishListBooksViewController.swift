@@ -1,6 +1,6 @@
 //
 //  WishListBooksViewController.swift
-//  Bookmark_MVP
+//  BookIt
 //
 //  Created by Spencer Grant on 3/28/17.
 //  Copyright © 2017 Team Grant_le_mandel. All rights reserved.
