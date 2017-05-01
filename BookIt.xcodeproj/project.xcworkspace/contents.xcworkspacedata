@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:Bookmark_MVP.xcodeproj">
+      location = "self:/Users/DucLe/Developer/Bookmark_MVP/BookIt.xcodeproj">
    </FileRef>
 </Workspace>
