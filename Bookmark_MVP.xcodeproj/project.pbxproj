@@ -408,7 +408,7 @@
 				);
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.macalester.COMP225.BookIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -425,7 +425,7 @@
 				);
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.Bookmark-MVP";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.macalester.COMP225.BookIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
