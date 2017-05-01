@@ -13,13 +13,13 @@
         <!--Reading-->
         <scene sceneID="sHL-xf-YtA">
             <objects>
-                <tableViewController id="TkE-vq-6g0" customClass="ReadingBooksTableViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="TkE-vq-6g0" customClass="ReadingBooksTableViewController" customModule="BookIt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="8qk-he-bxa">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReadingBooksTableViewCell" rowHeight="100" id="gWn-SF-rew" customClass="ReadingBooksTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReadingBooksTableViewCell" rowHeight="100" id="gWn-SF-rew" customClass="ReadingBooksTableViewCell" customModule="BookIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="gWn-SF-rew" id="Hli-2H-Qd2">
@@ -135,7 +135,7 @@
         <!--Tutorial View Controller-->
         <scene sceneID="C9C-a7-VVr">
             <objects>
-                <viewController modalPresentationStyle="overFullScreen" id="M7Z-kX-rtI" customClass="TutorialViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="overFullScreen" id="M7Z-kX-rtI" customClass="TutorialViewController" customModule="BookIt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="S4H-G1-iTr"/>
                         <viewControllerLayoutGuide type="bottom" id="X0E-eM-iUH"/>
@@ -164,13 +164,13 @@
         <!--Complete-->
         <scene sceneID="vMu-Qt-B8n">
             <objects>
-                <tableViewController id="kfh-Rg-kya" customClass="CompletedBooksTableViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="kfh-Rg-kya" customClass="CompletedBooksTableViewController" customModule="BookIt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="N39-6l-FzZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompletedBooksTableViewCell" rowHeight="100" id="jOV-Zr-DAG" customClass="CompletedBooksTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CompletedBooksTableViewCell" rowHeight="100" id="jOV-Zr-DAG" customClass="CompletedBooksTableViewCell" customModule="BookIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jOV-Zr-DAG" id="j2Y-8f-3da">
@@ -299,13 +299,13 @@
         <!--Wish List-->
         <scene sceneID="zlA-bk-maw">
             <objects>
-                <tableViewController id="sy9-to-OkB" customClass="WishListBooksTableViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController id="sy9-to-OkB" customClass="WishListBooksTableViewController" customModule="BookIt" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="lm7-Za-Xq2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WishListBooksTableViewCell" rowHeight="100" id="xxN-0y-WuO" customClass="WishListBooksTableViewCell" customModule="Bookmark_MVP" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WishListBooksTableViewCell" rowHeight="100" id="xxN-0y-WuO" customClass="WishListBooksTableViewCell" customModule="BookIt" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xxN-0y-WuO" id="p28-mW-jY3">
@@ -380,7 +380,7 @@
         <!--Book View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="BookViewController" customModule="Bookmark_MVP" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="BookViewController" customModule="BookIt" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>

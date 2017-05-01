@@ -41,6 +41,4 @@ class Book: Object {
         self.rating        = rating
         self.color         = color
     }
-    
-    
 }
