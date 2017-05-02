@@ -18,6 +18,7 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
     
     var book: Book? {
         didSet {
+            // When the value of the book is set, the cell will fill out the UI with provided information
             if let book = self.book {
                 titleLabel.text  = book.title
                 authorLabel.text = book.author

@@ -12,13 +12,14 @@ import PureLayout
 
 class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     
+    // The list of completed book being displayed.
     private var books = [Book]()
     private var filterType: FilterType = .chronological
     
     // Search controller using the current tableView to display the result
     private let searchController = UISearchController(searchResultsController: nil)
     private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Rating", "Color"])
-    
+    // The list of books resutled from the user's search
     private var searchResults = [Book]()
     
     override func viewDidLoad() {
@@ -70,20 +71,20 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if searchController.isActive {
             return searchResults.count
         }
         return books.count
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
@@ -98,13 +99,11 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         return cell
     }
     
-    // TODO: Make the searchCOntroller be inactive before perform the segue to prevent an overlap display. --> SOLVED by set definesPresentationContext
     // Select a book to move to its details page.
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
     }
     
-    // TODO: the books list used in this method is also depended on the searchController is active or inactive --> SOLVED
     // Prepare for the BookDetailView before perform the segue to it.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
@@ -123,8 +122,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
     }
     
-    
-    // TODO: This method should consider the books list in the context of searchViewController is active or not ----> SOLVED
     func sortTypeChanged(_ sender: UISegmentedControl) {
         switch sortFilters.selectedSegmentIndex
         {
@@ -149,7 +146,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
         return true
     }
-    // TODO: The books list used inside this function needs to be depended on searchController is active or not ---> SOLVED
+    
     func swipeTableCell(_ cell: MGSwipeTableCell, swipeButtonsFor direction: MGSwipeDirection, swipeSettings: MGSwipeSettings, expansionSettings: MGSwipeExpansionSettings) -> [UIView]? {
         let indexPath = self.tableView.indexPath(for: cell)
         let book: Book
@@ -174,7 +171,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
     }
     
-    // TODO: The deletion will need to consider update both books lists variables if the searchController is active --> SOLVED in method above
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
         // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function,, maybe due to different threads perform the delete and search at the same time.
@@ -201,8 +197,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         
         self.present(alert, animated: true, completion: nil)
     }
-
-
+    
+    
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -222,7 +218,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         let scope = searchBar.scopeButtonTitles![selectedScope]
         search(searchText: searchBar.text!, scope: scope)
     }
-
+    
     private func search(searchText: String, scope: String = "All") {
         searchResults = bookManager.search(searchText: searchText, books: books, scope: scope)
         tableView.reloadData()

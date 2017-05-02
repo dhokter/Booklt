@@ -112,18 +112,17 @@ class BookManager {
         return books.sorted(by: {$0.whenCreated > $1.whenCreated})
     }
     
-    public func sortBooksByIncreasingProgress(books: [Book]) -> [Book]{
-        return books.sorted(by: {bookManager.getProgress(book: $0) < bookManager.getProgress(book: $1)})
-    }
-    
+    // Query displayed books from Realm and sort them by the progress, from the higest to least
     public func sortBooksByDecreasingProgress(books: [Book]) -> [Book]{
         return books.sorted(by: {(bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1))})
     }
     
+    // Query displayed books from Realm and sort them by color's name (A-Z)
     public func sortBooksByColor(books: [Book]) -> [Book] {
         return books.sorted(by: {$0.color > $1.color})
     }
     
+    // Query displayed books from Realm and sort them by rating, from highest to most lowest
     public func sortBooksByRating(books: [Book]) -> [Book] {
         return books.sorted(by: {$0.rating > $1.rating})
     }
@@ -143,6 +142,7 @@ class BookManager {
         }
     }
     
+    // The method in charge of search for books matched text and scope in the given list of books
     public func search(searchText: String, books: [Book], scope: String = "All") -> [Book] {
         switch scope {
         case "All":

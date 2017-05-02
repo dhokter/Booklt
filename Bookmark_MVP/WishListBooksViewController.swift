@@ -104,7 +104,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.performSegue(withIdentifier: "WishListToDetails", sender: self)
     }
-        
+    
     func swipeTableCell(_ cell: MGSwipeTableCell, canSwipe direction: MGSwipeDirection, from point: CGPoint) -> Bool {
         return true
     }
@@ -215,7 +215,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         }
         tableView.reloadData()
     }
-
+    
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
