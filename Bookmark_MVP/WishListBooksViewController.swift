@@ -147,7 +147,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.wishListBooks, filter: filterType)
-        // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function,, maybe due to different threads perform the delete and search at the same time.
+        // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function, maybe due to different threads perform the delete and search at the same time.
         if self.searchController.isActive {
             let book = searchResults[indexPath.row]
             self.searchResults = self.searchResults.filter({$0 !== book})
