@@ -27,36 +27,37 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Set up the header of the table view
         setUpSearchBar()
         setUpSortFilters()
         createTableHeaderView()
         
+        // Display tutorial if this is the first time user open the app.
         if userDefaults.object(forKey: "isFirstTime") == nil {
             performSegue(withIdentifier: "displayTutorial", sender: self)
             userDefaults.set(true, forKey: "isFirstTime")
         }
-        
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-        
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
     
+    // Creating the searchBar for the table header
     private func setUpSearchBar() {
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         
+        // Set to make the view state the same when switching between tab while searching.
         self.definesPresentationContext = true
+        
         searchController.searchBar.delegate = self
         searchController.searchBar.scopeButtonTitles  = ["All", "Title", "Author"]
     }
     
+    // Creating the sorting filters for the table header
     private func setUpSortFilters() {
         sortFilters.selectedSegmentIndex = 1
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
     }
     
+    // Combine searchBar and sorting filters to be table headers
     private func createTableHeaderView() {
         let headerView = UIView()
         headerView.bounds = searchController.searchBar.bounds
@@ -83,8 +84,6 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -121,6 +120,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     // Prepare the data before a segue. Divided by cases, each cases using Segue Identifier to perform appropriate action
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
+        // For each case, set the destination BookViewController displayMode to be the suitable mode
         switch segue.identifier {
         case "ReadingToDetails"?:
             guard let destination = segue.destination as? BookViewController else {     // Pass the book instance of the cell to the ViewController to display
@@ -216,7 +216,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     
     private func deleteAndUpdateCells(indexPath: IndexPath) {
         books = bookManager.sortBooks(books: bookManager.readingBooks, filter: filterType)
-        // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function,, maybe due to different threads perform the delete and search at the same time.
+        // Check add update the searchResult here to fix the bug that searchResult not updated if called from outside function, maybe due to different threads perform the delete and search at the same time.
         if self.searchController.isActive {
             let book = searchResults[indexPath.row]
             self.searchResults = self.searchResults.filter({$0 !== book})
@@ -226,17 +226,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         self.tableView.endUpdates()
     }
     
-    /*
-     //     Override to support editing the table view.
-     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-     if editingStyle == .delete {
-     // Delete the row from the tableview, but the book will still be in inventory
-     } else if editingStyle == .insert {
-     // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-     }
-     }
-     */
-    
+    // Present an alert to confirm the deletion of a book and perform tasks accordingly
     private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
@@ -247,7 +237,6 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
             let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
             cell.hideSwipe(animated: true)
-            
         }))
         
         self.present(alert, animated: true, completion: nil)
