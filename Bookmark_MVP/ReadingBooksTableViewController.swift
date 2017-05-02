@@ -35,7 +35,7 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
             performSegue(withIdentifier: "displayTutorial", sender: self)
             userDefaults.set(true, forKey: "isFirstTime")
         }
-
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -251,20 +251,6 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         }))
         
         self.present(alert, animated: true, completion: nil)
-    }
-    
-    // TODO: Delete this function later on
-    @IBAction func addButton(_ sender: UIBarButtonItem) {
-        let selectAddMethodAlert = UIAlertController(title: "Select method", message: "How do you want to add your book?", preferredStyle: .actionSheet)
-        
-        selectAddMethodAlert.addAction(UIAlertAction(title: "Manually", style: .default, handler: {(UIAlertAction) -> Void in
-            self.performSegue(withIdentifier: "readingToAddManuallySegue", sender: self)
-        }))
-        
-        
-        selectAddMethodAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(UIAlertAction) -> Void in return}))
-        
-        self.present(selectAddMethodAlert, animated: true, completion: nil)
     }
     
     // SEARCHBAR CONFIGURATION

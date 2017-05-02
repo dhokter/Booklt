@@ -20,7 +20,7 @@ func convertPageNumber(textField: UITextField) -> Int {
 }
 
 class BookViewController: UIViewController, UITextFieldDelegate {
-
+    
     // Diferent states of BookViewController, each state corresponding to a different setting for views and features
     enum DisplayMode {
         case newReading
@@ -28,7 +28,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         case newWishList
         case detailsWishList
     }
-
+    
     let realm = try! Realm()
     
     // UI elements containing information of a book
@@ -167,7 +167,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-   
+    
     // Method to pick a color for the book icon
     @IBAction func colorSelected(_ sender: UIButton) {
         switch sender{
@@ -222,7 +222,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
             return
         }
     }
-
+    
     
     
     // Adds the done button to the number pad

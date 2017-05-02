@@ -117,7 +117,7 @@ class BookManager {
     }
     
     public func sortBooksByDecreasingProgress(books: [Book]) -> [Book]{
-        return books.sorted(by: {(bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1)) && ($0.totalPages != 0)})
+        return books.sorted(by: {(bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1))})
     }
     
     public func sortBooksByColor(books: [Book]) -> [Book] {

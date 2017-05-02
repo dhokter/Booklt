@@ -43,7 +43,7 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                     progressBarView.isHidden = true
                     percentProgressView.isHidden = true
                 }
-
+                
             }
         }
     }
@@ -58,8 +58,8 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
         currentPageView.resignFirstResponder()
         if let book = self.book {
             try! realm.write {
-                // 0 will be assigned to the current page if it is left empty or the number entered is too large (overflow)
                 book.currentPage     = convertPageNumber(textField: currentPageView)
+                // Update the time the book is modified to make it become most recent
                 book.whenCreated     = Date()
             }
             let progress = bookManager.getProgress(book: book)
