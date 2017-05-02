@@ -11,10 +11,10 @@ import MGSwipeTableCell
 
 class CompletedBooksTableViewCell: MGSwipeTableCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var authorLabel: UILabel!
-    @IBOutlet weak var coverImageView: UIImageView!
-    @IBOutlet var ratingButtons: [UIButton]!
+    @IBOutlet weak var titleLabel:      UILabel!
+    @IBOutlet weak var authorLabel:     UILabel!
+    @IBOutlet weak var coverImageView:  UIImageView!
+    @IBOutlet var ratingButtons:        [UIButton]!
     
     var book: Book? {
         didSet {
@@ -37,23 +37,20 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
         super.setSelected(selected, animated: animated)
     }
     
-    
-    
-    
-    func fillStars() {
+    // Filling the rating view according to the rating of the displayed book
+    private func fillStars() {
         let rating = self.book?.rating
         if rating != 0 {
-            for i in 0...rating!-1{
+            for i in 0...rating!-1 {
                 ratingButtons[i].setImage(#imageLiteral(resourceName: "star_closed"), for: UIControlState.normal)
             }
-            if rating! < 5{
-                for i in rating!...4{
+            if rating! < 5 {
+                for i in rating!...4 {
                     ratingButtons[i].setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
                 }
             }
-        }
-        else{
-            for star in ratingButtons{
+        } else {
+            for star in ratingButtons {
                 star.setImage(#imageLiteral(resourceName: "star_open"), for: UIControlState.normal)
             }
         }

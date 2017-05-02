@@ -9,6 +9,8 @@
 import UIKit
 import RealmSwift
 
+// Method to convert the text in a TextField to Int as proper input for page numbers
+// Prevent in adequate input from user by return 0 as default
 func convertPageNumber(textField: UITextField) -> Int {
     guard let pageNumber = textField.text else {
         return 0
@@ -19,6 +21,7 @@ func convertPageNumber(textField: UITextField) -> Int {
 
 class BookViewController: UIViewController, UITextFieldDelegate {
 
+    // Diferent states of BookViewController, each state corresponding to a different setting for views and features
     enum DisplayMode {
         case newReading
         case details
@@ -28,11 +31,13 @@ class BookViewController: UIViewController, UITextFieldDelegate {
 
     let realm = try! Realm()
     
+    // UI elements containing information of a book
     @IBOutlet weak var bookTitleTextField: UITextField!
     @IBOutlet weak var authorTextField: UITextField!
-    
     @IBOutlet weak var totalPageTextField: UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
+    
+    // Save button for editting if the scene is in details/detailsWishList mode
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // Color picker buttons
@@ -46,7 +51,9 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet var ratingButtons: [UIButton]!
     @IBOutlet weak var ratingView: UIStackView!
     
+    // Initial value for a new book's icon
     private var selectedColor = "red"
+    // Initial state if the scene is in details/detailsWishList mode
     private var userIsEditingTheBook = false
     
     // The stack view containing current and total pages view
@@ -61,8 +68,8 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         addDoneButtonOnKeyboard()
+        
         // Make the save button disabled if the title field is empty
         bookTitleTextField.addTarget(self, action: #selector(titleDidChange(textField:)), for: .editingChanged)
         
@@ -81,15 +88,17 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Method to prepare the scene if it is in details/detailsWishList mode
     private func prepareBookDetails() {
         let book = self.book!
-        // Update the information of the book to screen if the view is on BookDetails mode
         bookTitleTextField.text = book.title
+        // Hiding optional information if it is empty
         if book.author == "" {
             authorView.isHidden = true
         } else {
             authorTextField.text = book.author
         }
+        // Hiding current page if the book is completed, so the scene is not counter intuitive
         if book.status == "completed" {
             currentPageView.isHidden = true
         } else {
@@ -97,6 +106,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         }
         totalPageTextField.text = String(describing: book.totalPages)
         
+        // Display the corresponding icon color and rating of the book
         highlightColorButtonFromString(bookColor: book.color)
         updateStarRating()
         
@@ -110,6 +120,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editButtonTouched(_:)))
     }
     
+    // Method to prepare the scene if it is in newReading/newWishList mode.
     private func prepareAddNewBook() {
         // Hide the rating from user if they are creating a new book
         ratingView.isHidden = true
@@ -127,6 +138,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         return true
     }
     
+    // The call back method for the bookTitleTextField if its content is changed
     func titleDidChange(textField: UITextField) {
         var saveButton: UIBarButtonItem
         // Depends on whether the view is displaying BookDetails or AddBook, the save button will be assgined accordingly
@@ -155,14 +167,8 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         }
         
     }
-    
-    // Process of adding a new book:
-    // 1. Making a new book from what user entered (using a method maybe, so all the field can be checked, this method return Book?,so it if there is any failed textfield entered, nil will be returned)
-    // 2. Add the newly created book to the list allBooks in the BookManager, since this is newly created, put it in the displayed list as well.
-    // 3. insertRow in the tableView for the new book
-    // Return to the listbook view with the new book displayed
-    
-    
+   
+    // Method to pick a color for the book icon
     @IBAction func colorSelected(_ sender: UIButton) {
         switch sender{
         case redPicker:
@@ -199,6 +205,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // Put a tick on the current color of the book
     private func highlightColorButtonFromString(bookColor: String){
         switch bookColor{
         case "red":
@@ -243,6 +250,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         self.totalPageTextField.resignFirstResponder()
     }
     
+    // Callback method when a user touch on a rating star
     @IBAction func ratingChange(_ sender: UIButton) {
         switch sender{
         case ratingButtons[0]:
@@ -291,6 +299,7 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
+    // When the edit button in details mode is touched, this function is called to check prepare for editting/saving
     func editButtonTouched(_ sender: UIBarButtonItem) {
         if !userIsEditingTheBook {
             sender.title = "Save"
