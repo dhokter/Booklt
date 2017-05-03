@@ -12,8 +12,7 @@ class TutorialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissTutorial)))
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissTutorial)))    // Do any additional setup after loading the view.
     }
     
     func dismissTutorial() {
@@ -22,6 +21,5 @@ class TutorialViewController: UIViewController {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 }
