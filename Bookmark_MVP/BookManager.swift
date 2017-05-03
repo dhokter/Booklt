@@ -77,6 +77,9 @@ class BookManager {
     
     // Indicates that the user would like to delete the selected book from the app's storage.
     public func delete(book: Book) {
+        if !Array(realm.objects(Book.self)).contains(book) {
+            return
+        }
         try! realm.write {
             realm.delete(book)
         }

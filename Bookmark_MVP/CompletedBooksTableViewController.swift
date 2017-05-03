@@ -11,16 +11,24 @@ import MGSwipeTableCell
 import PureLayout
 
 class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCellDelegate, UISearchResultsUpdating, UISearchBarDelegate {
-    
+
+    private var filterType: FilterType = .chronological
+
     // The list of completed book being displayed.
     private var books = [Book]()
-    private var filterType: FilterType = .chronological
     
     // Search controller using the current tableView to display the result
     private let searchController = UISearchController(searchResultsController: nil)
     private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Rating", "Color"])
     // The list of books resutled from the user's search
     private var searchResults = [Book]()
+    var displayedBooks: [Book] {
+        if searchController.isActive {
+            return searchResults
+        } else {
+            return books
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,21 +87,14 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive {
-            return searchResults.count
-        }
-        return books.count
+        return displayedBooks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
-        if searchController.isActive {
-            cell.book = searchResults[indexPath.row]
-        } else {
-            cell.book = books[indexPath.row]
-        }
+        cell.book = displayedBooks[indexPath.row]
         cell.delegate = self
         
         return cell
@@ -111,11 +112,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             guard let destination = segue.destination as? BookViewController else {
                 return
             }
-            if searchController.isActive {
-                destination.book = searchResults[(tableView.indexPathForSelectedRow?.row)!]
-            } else {
-                destination.book = books[(tableView.indexPathForSelectedRow?.row)!]
-            }
+            destination.book = displayedBooks[(tableView.indexPathForSelectedRow?.row)!]
             destination.displayMode = .details
         default:
             return
@@ -151,11 +148,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         let indexPath = self.tableView.indexPath(for: cell)
         let book: Book
         
-        if searchController.isActive {
-            book = searchResults[(indexPath?.row)!]
-        } else {
-            book = books[(indexPath?.row)!]
-        }
+        book = displayedBooks[(indexPath?.row)!]
         
         if direction == MGSwipeDirection.leftToRight {
             let delete = MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell) -> Bool in
@@ -168,20 +161,23 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
                 bookManager.markAsReading(book: book)
                 // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
                 sender.rightButtons[0].isUserInteractionEnabled = false
-                self.deleteAndUpdateCells(indexPath: indexPath!)
+                self.deleteAndUpdateCells(for: book)
                 return false
             })
             return [changeStatus]
         }
     }
     
-    private func deleteAndUpdateCells(indexPath: IndexPath) {
-        books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
-        // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function,, maybe due to different threads perform the delete and search at the same time.
-        if self.searchController.isActive {
-            let book = searchResults[indexPath.row]
-            self.searchResults = self.searchResults.filter({$0 !== book})
+    // TODO: Make this function take into a book as para and check whether that book is in the current list.
+    private func deleteAndUpdateCells(for book: Book) {
+        let indexPath: IndexPath
+        guard let index = displayedBooks.index(of: book) else {
+            return
         }
+        searchResults = bookManager.sortBooks(books: searchResults, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
+        
+        indexPath = IndexPath(row: index, section: 0)
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
         self.tableView.endUpdates()
@@ -194,7 +190,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
             bookManager.delete(book: book)
             // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
             sender.leftButtons[0].isUserInteractionEnabled = false
-            self.deleteAndUpdateCells(indexPath: indexPath)
+            self.deleteAndUpdateCells(for: book)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
             let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell

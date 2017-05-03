@@ -17,6 +17,13 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     private var books = [Book]()
     private var searchResults = [Book]()
+    private var displayedBooks: [Book] {
+        if searchController.isActive {
+            return searchResults
+        } else {
+            return books
+        }
+    }
     private var filterType: FilterType = .chronological
     
     // Elements of the header view
@@ -78,11 +85,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.isActive {
-            return searchResults.count
-        } else {
-            return books.count
-        }
+        return displayedBooks.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -90,12 +93,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             fatalError("The dequeued cell is not an instance of WishListBookTableViewCell")
         }
         
-        if searchController.isActive {
-            cell.book = searchResults[indexPath.row]
-        } else {
-            cell.book = books[indexPath.row]
-        }
-        
+        cell.book = displayedBooks[indexPath.row]
         cell.delegate = self
         
         return cell
@@ -126,11 +124,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         let indexPath = self.tableView.indexPath(for: cell)
         let book: Book
         
-        if searchController.isActive {
-            book = searchResults[(indexPath?.row)!]
-        } else {
-            book = books[(indexPath?.row)!]
-        }
+        book = displayedBooks[(indexPath?.row)!]
         
         if direction == MGSwipeDirection.leftToRight {
             let delete = MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell) -> Bool in
@@ -147,17 +141,18 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         }
     }
     
-    private func deleteAndUpdateCells(indexPath: IndexPath) {
-        books = bookManager.sortBooks(books: bookManager.wishListBooks, filter: filterType)
-        // Check add update the searchResult here to fix the bug that searchResult not updated  if called from outside function, maybe due to different threads perform the delete and search at the same time.
-        if self.searchController.isActive {
-            let book = searchResults[indexPath.row]
-            self.searchResults = self.searchResults.filter({$0 !== book})
+    private func deleteAndUpdateCells(for book: Book) {
+        let indexPath: IndexPath
+        guard let index = displayedBooks.index(of: book) else {
+            return
         }
+        searchResults = bookManager.sortBooks(books: searchResults, filter: filterType)
+        books = bookManager.sortBooks(books: bookManager.wishListBooks, filter: filterType)
+        
+        indexPath = IndexPath(row: index, section: 0)
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
-        self.tableView.endUpdates()
-    }
+        self.tableView.endUpdates()    }
     
     private func confirmDeleteBook(indexPath: IndexPath, book: Book, sender: MGSwipeTableCell) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
@@ -166,7 +161,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             bookManager.delete(book: book)
             // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
             sender.leftButtons[0].isUserInteractionEnabled = false
-            self.deleteAndUpdateCells(indexPath: indexPath)
+            self.deleteAndUpdateCells(for: book)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
             let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
@@ -186,7 +181,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             bookManager.markAsReading(book: book)
             // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
             sender.rightButtons[0].isUserInteractionEnabled = false
-            self.deleteAndUpdateCells(indexPath: indexPath)
+            self.deleteAndUpdateCells(for: book)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
             let cell = self.tableView.cellForRow(at: indexPath) as! MGSwipeTableCell
@@ -256,11 +251,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             guard let destination = segue.destination as? BookViewController else {
                 return
             }
-            if searchController.isActive {
-                destination.book = searchResults[(self.tableView.indexPathForSelectedRow?.row)!]
-            } else {
-                destination.book = books[(self.tableView.indexPathForSelectedRow?.row)!]
-            }
+            destination.book = displayedBooks[(self.tableView.indexPathForSelectedRow?.row)!]
             destination.displayMode = .detailsWishList
         default:
             return
