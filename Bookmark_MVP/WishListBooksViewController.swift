@@ -133,15 +133,17 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         }
         
         if direction == MGSwipeDirection.leftToRight {
-            return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell) -> Bool in
-                self.confirmDeleteBook(indexPath: indexPath!, book: book)
+            let delete = MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell) -> Bool in
+                self.confirmDeleteBook(indexPath: indexPath!, book: book, sender: sender)
                 return false
-            })]
+            })
+            return [delete]
         } else {
-            return [MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
-                self.beginReading(indexPath: indexPath!, book: book)
+            let changeStatus = MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
+                self.beginReading(indexPath: indexPath!, book: book, sender: sender)
                 return false
-            })]
+            })
+            return [changeStatus]
         }
     }
     
@@ -157,11 +159,13 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         self.tableView.endUpdates()
     }
     
-    private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
+    private func confirmDeleteBook(indexPath: IndexPath, book: Book, sender: MGSwipeTableCell) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
+            // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
+            sender.leftButtons[0].isUserInteractionEnabled = false
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
@@ -172,8 +176,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         self.present(alert, animated: true, completion: nil)
     }
     
-    /////IN PROGRESS
-    private func beginReading(indexPath: IndexPath, book: Book) {
+    private func beginReading(indexPath: IndexPath, book: Book, sender: MGSwipeTableCell) {
         let alert = UIAlertController(title: "More Info Required", message: "How many pages does your book have?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Done", style: .default, handler: {(action: UIAlertAction) in
@@ -181,6 +184,8 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
                 book.totalPages = convertPageNumber(textField: (alert.textFields?[0])!)
             }
             bookManager.markAsReading(book: book)
+            // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
+            sender.rightButtons[0].isUserInteractionEnabled = false
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in

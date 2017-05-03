@@ -156,16 +156,20 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
         }
         
         if direction == MGSwipeDirection.leftToRight {
-            return [MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell)->Bool in
-                self.confirmDeleteBook(indexPath: indexPath!, book: book)
+            let delete = MGSwipeButton(title: "Delete", backgroundColor: .red, callback: {(sender: MGSwipeTableCell)->Bool in
+                self.confirmDeleteBook(indexPath: indexPath!, book: book, sender: sender)
                 return false
-            })]
+            })
+            return [delete]
         } else {
-            return [MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
+            let changeStatus = MGSwipeButton(title: "Mark as Done", backgroundColor: .green, callback: {(sender: MGSwipeTableCell)->Bool in
                 bookManager.markAsCompleted(book: book)
+                // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
+                sender.rightButtons[0].isUserInteractionEnabled = false
                 self.deleteAndUpdateCells(indexPath: indexPath!)
                 return false
-            })]
+            })
+            return [changeStatus]
         }
     }
     
@@ -227,11 +231,13 @@ class ReadingBooksTableViewController: UITableViewController, MGSwipeTableCellDe
     }
     
     // Present an alert to confirm the deletion of a book and perform tasks accordingly
-    private func confirmDeleteBook(indexPath: IndexPath, book: Book) {
+    private func confirmDeleteBook(indexPath: IndexPath, book: Book, sender: MGSwipeTableCell) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
+            // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
+            sender.leftButtons[0].isUserInteractionEnabled = false
             self.deleteAndUpdateCells(indexPath: indexPath)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
