@@ -13,7 +13,7 @@ import RealmSwift
 
 class Book: Object {
     
-    // Properties of book
+    // Properties of a book
     dynamic var title: String         = ""
     dynamic var totalPages: Int       = 0
     dynamic var currentPage: Int      = 0

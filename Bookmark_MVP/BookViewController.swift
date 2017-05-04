@@ -31,36 +31,36 @@ class BookViewController: UIViewController, UITextFieldDelegate {
     let realm = try! Realm()
     
     // UI elements containing information about a book
-    @IBOutlet weak var bookTitleTextField: UITextField!
-    @IBOutlet weak var authorTextField: UITextField!
-    @IBOutlet weak var totalPageTextField: UITextField!
+    @IBOutlet weak var bookTitleTextField:   UITextField!
+    @IBOutlet weak var authorTextField:      UITextField!
+    @IBOutlet weak var totalPageTextField:   UITextField!
     @IBOutlet weak var currentPageTextField: UITextField!
     
     // Button allowing the user to decide when they want to start and finish editing book information.
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
     // Color picker buttons
-    @IBOutlet weak var redPicker: UIButton!
+    @IBOutlet weak var redPicker:    UIButton!
     @IBOutlet weak var purplePicker: UIButton!
-    @IBOutlet weak var bluePicker: UIButton!
-    @IBOutlet weak var greenPicker: UIButton!
-    @IBOutlet weak var goldPicker: UIButton!
+    @IBOutlet weak var bluePicker:   UIButton!
+    @IBOutlet weak var greenPicker:  UIButton!
+    @IBOutlet weak var goldPicker:   UIButton!
     
     // Rating star buttons and rating stack view
-    @IBOutlet var ratingButtons: [UIButton]!
+    @IBOutlet var ratingButtons:   [UIButton]!
     @IBOutlet weak var ratingView: UIStackView!
-    
-    // Icon color of a book (Default to red)
-    private var selectedColor = "red"
-    // Keeps track of when the user is editing the book
-    private var userIsEditingTheBook = false
-    
+
     // The stack view containing current and total pages view
-    @IBOutlet weak var pageViews: UIStackView!
+    @IBOutlet weak var pageViews:       UIStackView!
     // Stack view containing current page textField and its line break
     @IBOutlet weak var currentPageView: UIStackView!
     // Stack view containing author textField and its line break
-    @IBOutlet weak var authorView: UIStackView!
+    @IBOutlet weak var authorView:      UIStackView!
+    
+    // Icon color of a book (Default to red)
+    private var selectedColor        = "red"
+    // Keeps track of when the user is editing the book
+    private var userIsEditingTheBook = false
     
     var book: Book?
     var displayMode: DisplayMode?
@@ -81,14 +81,14 @@ class BookViewController: UIViewController, UITextFieldDelegate {
             pageViews.isHidden = true
         case .detailsWishList:
             prepareBookDetails()
-            pageViews.isHidden = true
+            pageViews.isHidden  = true
             ratingView.isHidden = true
         }
     }
     
     // Prepares the scene if it is in details/detailsWishList mode
     private func prepareBookDetails() {
-        let book = self.book!
+        let book                = self.book!
         bookTitleTextField.text = book.title
         
         if book.author == "" {                                      // Hide any fields left empty
@@ -108,10 +108,10 @@ class BookViewController: UIViewController, UITextFieldDelegate {
         updateStarRating()
         
         // Disable all textFields if the view is in BookDetails mode
-        bookTitleTextField.isEnabled = false
-        authorTextField.isEnabled = false
+        bookTitleTextField.isEnabled   = false
+        authorTextField.isEnabled      = false
         currentPageTextField.isEnabled = false
-        totalPageTextField.isEnabled = false
+        totalPageTextField.isEnabled   = false
         
         navigationItem.title = book.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editButtonTouched(_:)))
@@ -314,21 +314,21 @@ class BookViewController: UIViewController, UITextFieldDelegate {
                 }
             }
             try! realm.write {
-                book?.title = bookTitleTextField.text!
-                book?.author = authorTextField.text!
-                book?.totalPages = convertPageNumber(textField: totalPageTextField)
+                book?.title       = bookTitleTextField.text!
+                book?.author      = authorTextField.text!
+                book?.totalPages  = convertPageNumber(textField: totalPageTextField)
                 book?.currentPage = convertPageNumber(textField: currentPageTextField)
             }
             currentPageTextField.text = book?.currentPage.description
-            totalPageTextField.text = book?.totalPages.description
-            navigationItem.title = book?.title
+            totalPageTextField.text   = book?.totalPages.description
+            navigationItem.title      = book?.title
         }
         userIsEditingTheBook = !userIsEditingTheBook
         
         // Make sure the all text fields are disabled or enabled depending on the Save button's state
-        bookTitleTextField.isEnabled = userIsEditingTheBook
-        authorTextField.isEnabled = userIsEditingTheBook
-        totalPageTextField.isEnabled = userIsEditingTheBook
+        bookTitleTextField.isEnabled   = userIsEditingTheBook
+        authorTextField.isEnabled      = userIsEditingTheBook
+        totalPageTextField.isEnabled   = userIsEditingTheBook
         currentPageTextField.isEnabled = userIsEditingTheBook
     }
 }

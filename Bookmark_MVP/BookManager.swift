@@ -49,9 +49,7 @@ class BookManager {
         return Array(realm.objects(Book.self).filter({$0.status == "wishList"}))
     }
     
-    
-    
-    // Adds a new book to the list of books that the user is currently reading.
+    // Adds a new book to the appropriate list of books.
     public func addNewBook(book: Book, state: String) {
         book.status = state
         try! realm.write {
@@ -62,7 +60,7 @@ class BookManager {
     // Indicates that the user is no longer reading the selected book.
     public func markAsCompleted(book: Book) {
         try! realm.write {
-            book.status = "completed"
+            book.status      = "completed"
             book.whenCreated = Date()
         }
     }
@@ -70,7 +68,7 @@ class BookManager {
     // Indicates that the user is currently reading the selected book.
     public func markAsReading(book: Book) {
         try! realm.write {
-            book.status = "reading"
+            book.status      = "reading"
             book.whenCreated = Date()
         }
     }
@@ -90,42 +88,42 @@ class BookManager {
         return value <= 1 ? value : 1
     }
     
-    //(Kelli) Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
-    private func makeAlphabetizableTitle(book : Book) -> String{
+    // Finds any book with a leading "the " that we would like to ignore for the purpose of alphabetizing, and ignores it.
+    private func makeAlphabetizableTitle(book : Book) -> String {
         
         var alphebetizable = book.title.lowercased()
         
-        if alphebetizable.characters.count > 4{
-            let index = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
+        if alphebetizable.characters.count > 4 {
+            let index             = alphebetizable.index(alphebetizable.startIndex, offsetBy: 4)
             let firstThreeLetters = alphebetizable.substring(to: index)
-            if firstThreeLetters == "the "{
+            if firstThreeLetters == "the " {
                 alphebetizable = alphebetizable.substring(from: index)
             }
         }
         return alphebetizable
     }
     
-    // Query displayed books from Realm and sort them alphabetically, A to Z
+    // Query the displayed books from Realm and sort them alphabetically, A to Z
     public func sortBooksAlphabetically(books: [Book]) -> [Book]{
         return books.sorted(by: {makeAlphabetizableTitle(book: $0) < makeAlphabetizableTitle(book: $1)})
     }
     
-    // Query displayed books from Realm and sort them by date created, from earliest to most recent
+    // Query the displayed books from Realm and sort them by date created, from earliest to most recent
     public func sortBooksChronologically(books: [Book]) -> [Book]{
         return books.sorted(by: {$0.whenCreated > $1.whenCreated})
     }
     
-    // Query displayed books from Realm and sort them by the progress, from the higest to least
+    // Query the displayed books from Realm and sort them by the progress, from the higest to lowest
     public func sortBooksByDecreasingProgress(books: [Book]) -> [Book]{
         return books.sorted(by: {(bookManager.getProgress(book: $0) > bookManager.getProgress(book: $1))})
     }
     
-    // Query displayed books from Realm and sort them by color's name (A-Z)
+    // Query the displayed books from Realm and sort them by color (Red > Purple > Gold > Green > Blue)
     public func sortBooksByColor(books: [Book]) -> [Book] {
         return books.sorted(by: {$0.color > $1.color})
     }
     
-    // Query displayed books from Realm and sort them by rating, from highest to most lowest
+    // Query the displayed books from Realm and sort them by rating, from highest to lowest
     public func sortBooksByRating(books: [Book]) -> [Book] {
         return books.sorted(by: {$0.rating > $1.rating})
     }
@@ -145,7 +143,7 @@ class BookManager {
         }
     }
     
-    // The method in charge of search for books matched text and scope in the given list of books
+    // Search for books that contain the string entered by the user within the indicated scope
     public func search(searchText: String, books: [Book], scope: String = "All") -> [Book] {
         switch scope {
         case "All":

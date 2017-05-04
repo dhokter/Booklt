@@ -37,10 +37,10 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
                 percentProgressView.text = "\(progressInt)%"
                 coverImageView.image     = iconColor[book.color]
                 if book.totalPages != 0 {
-                    progressBarView.isHidden = false
+                    progressBarView.isHidden     = false
                     percentProgressView.isHidden = false
                 } else {
-                    progressBarView.isHidden = true
+                    progressBarView.isHidden     = true
                     percentProgressView.isHidden = true
                 }
                 
@@ -59,12 +59,11 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
         if let book = self.book {
             try! realm.write {
                 book.currentPage     = convertPageNumber(textField: currentPageView)
-                // Update the time the book is modified to make it become most recent
-                book.whenCreated     = Date()
+                book.whenCreated     = Date()     // Update the time the book is modified to make it become most recent
             }
-            let progress = bookManager.getProgress(book: book)
-            let progressInt = Int(progress * 100)
-            currentPageView.text = String(book.currentPage)
+            let progress             = bookManager.getProgress(book: book)
+            let progressInt          = Int(progress * 100)
+            currentPageView.text     = String(book.currentPage)
             progressBarView.progress = progress
             percentProgressView.text = "\(progressInt)%"
         }
@@ -80,7 +79,8 @@ class ReadingBooksTableViewCell: MGSwipeTableCell, UITextFieldDelegate {
         super.setSelected(selected, animated: animated)
     }
     
-    // Code for adding the done button on the number pad keyboad. Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
+    // Code for adding the done button on the number pad keyboad. 
+    // Source URL: http://stackoverflow.com/questions/28338981/how-to-add-done-button-to-numpad-in-ios-8-using-swift
     private func addDoneButtonOnKeyboard() {
         let doneToolbar: UIToolbar = UIToolbar(frame: CGRect(x: 0, y: 0, width: 320, height: 50))
         doneToolbar.barStyle       = UIBarStyle.default

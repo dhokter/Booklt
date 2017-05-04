@@ -16,12 +16,12 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
     @IBOutlet weak var coverImageView:  UIImageView!
     @IBOutlet var ratingButtons:        [UIButton]!
     
+    // When the value of the book is set, the cell will fill out the UI with provided information
     var book: Book? {
         didSet {
-            // When the value of the book is set, the cell will fill out the UI with provided information
             if let book = self.book {
-                titleLabel.text  = book.title
-                authorLabel.text = book.author
+                titleLabel.text      = book.title
+                authorLabel.text     = book.author
                 coverImageView.image = iconColor[book.color]
                 fillStars()
             }
@@ -38,7 +38,7 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
         super.setSelected(selected, animated: animated)
     }
     
-    // Filling the rating view according to the rating of the displayed book
+    // Fill the rating view according to the rating of the displayed book
     private func fillStars() {
         let rating = self.book?.rating
         if rating != 0 {
@@ -56,6 +56,4 @@ class CompletedBooksTableViewCell: MGSwipeTableCell {
             }
         }
     }
-    
-    
 }

@@ -14,12 +14,13 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
 
     private var filterType: FilterType = .chronological
 
-    // The list of completed book being displayed.
+    // The list of completed books being displayed.
     private var books = [Book]()
     
     // Search controller using the current tableView to display the result
     private let searchController = UISearchController(searchResultsController: nil)
     private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Rating", "Color"])
+    
     // The list of books resutled from the user's search
     private var searchResults = [Book]()
     var displayedBooks: [Book] {
@@ -39,13 +40,11 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
     
     private func setUpSearchBar() {
-        // Set up the search bar
-        searchController.searchResultsUpdater = self
+        searchController.searchResultsUpdater             = self
         searchController.dimsBackgroundDuringPresentation = false
-        // Set to make the view state the same when switching between tab while searching.
-        self.definesPresentationContext = true
-        searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
+        self.definesPresentationContext                   = true        // Set to make the view state the same when switching between tab while searching.
+        searchController.searchBar.delegate               = self
+        searchController.searchBar.scopeButtonTitles      = ["All", "Title", "Author"]
     }
     
     private func setUpSortFilters() {
@@ -54,8 +53,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     }
     
     private func createTableHeaderView() {
-        let headerView = UIView()
-        headerView.bounds = searchController.searchBar.bounds
+        let headerView                 = UIView()
+        headerView.bounds              = searchController.searchBar.bounds
         headerView.bounds.size.height += sortFilters.bounds.size.height
         
         headerView.addSubview(searchController.searchBar)
@@ -68,7 +67,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         tableView.tableHeaderView = headerView
     }
     
-    // Reload the data of table to make it updated with changes in books (if any).
+    // Reload the data of the table to make it updated with changes in books (if any).
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
@@ -79,8 +78,6 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    // MARK: - Table view data source
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -94,7 +91,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CompletedBooksTableViewCell", for: indexPath) as? CompletedBooksTableViewCell else {
             fatalError("The dequeued cell is not an instance of AllBookTableViewCell")
         }
-        cell.book = displayedBooks[indexPath.row]
+        cell.book     = displayedBooks[indexPath.row]
         cell.delegate = self
         
         return cell
@@ -105,20 +102,21 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         self.performSegue(withIdentifier: "CompletedToBookDetailsSegue", sender: self)
     }
     
-    // Prepare for the BookDetailView before perform the segue to it.
+    // Prepare the BookDetailView before perform the segue to it.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "CompletedToBookDetailsSegue"?:
             guard let destination = segue.destination as? BookViewController else {
                 return
             }
-            destination.book = displayedBooks[(tableView.indexPathForSelectedRow?.row)!]
+            destination.book        = displayedBooks[(tableView.indexPathForSelectedRow?.row)!]
             destination.displayMode = .details
         default:
             return
         }
     }
     
+    // Sort the books approproately if the sort type has been changed.
     func sortTypeChanged(_ sender: UISegmentedControl) {
         switch sortFilters.selectedSegmentIndex
         {
@@ -159,8 +157,7 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         } else {
             let changeStatus = MGSwipeButton(title: "Mark as Reading", backgroundColor: .green, callback: {(sender: MGSwipeTableCell) -> Bool in
                 bookManager.markAsReading(book: book)
-                // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
-                sender.rightButtons[0].isUserInteractionEnabled = false
+                sender.rightButtons[0].isUserInteractionEnabled = false  // Disables the button immediately after first touch to prevent double tap -> double callback
                 self.deleteAndUpdateCells(for: book)
                 return false
             })
@@ -168,14 +165,13 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         }
     }
     
-    // TODO: Make this function take into a book as para and check whether that book is in the current list.
     private func deleteAndUpdateCells(for book: Book) {
         let indexPath: IndexPath
         guard let index = displayedBooks.index(of: book) else {
             return
         }
         searchResults = bookManager.sortBooks(books: searchResults, filter: filterType)
-        books = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
+        books         = bookManager.sortBooks(books: bookManager.completedBooks, filter: filterType)
         
         indexPath = IndexPath(row: index, section: 0)
         self.tableView.beginUpdates()
@@ -188,8 +184,8 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
-            // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
-            sender.leftButtons[0].isUserInteractionEnabled = false
+            sender.leftButtons[0].isUserInteractionEnabled = false     // Disables the button immediately after first touch to prevent double tap -> double callback
+
             self.deleteAndUpdateCells(for: book)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
@@ -202,25 +198,25 @@ class CompletedBooksTableViewController: UITableViewController, MGSwipeTableCell
     
     
     
-    // Override to support conditional editing of the table view.
+    // Override to support conditional editing of the table view. Return false if you do not want the specified item to be editable.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
-    // SEARCHBAR CONFIGURATION AND METHODS
+    // Update the books being displayed based on what the user has entered into the search field.
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
         let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         search(searchText: searchBar.text!, scope: scope)
     }
     
-    // Making the search react instantaneously if the user keep the text in the searchbar and switch between different scope
+    // Make the search react instantaneously if the user keeps the text in the searchbar and switches between different scopes
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         let scope = searchBar.scopeButtonTitles![selectedScope]
         search(searchText: searchBar.text!, scope: scope)
     }
     
+    // Find all the books that are consistent with what the user has entered in the search field.
     private func search(searchText: String, scope: String = "All") {
         searchResults = bookManager.search(searchText: searchText, books: books, scope: scope)
         tableView.reloadData()

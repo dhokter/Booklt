@@ -15,7 +15,8 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     let realm = try! Realm()
     
-    private var books = [Book]()
+    // List of books to be displayed on screen, with value passed by the bookManager
+    private var books         = [Book]()
     private var searchResults = [Book]()
     private var displayedBooks: [Book] {
         if searchController.isActive {
@@ -28,8 +29,9 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     
     // Elements of the header view
     private let searchController = UISearchController(searchResultsController: nil)
-    private let sortFilters = UISegmentedControl(items: ["A-Z", "Recent", "Color"])
+    private let sortFilters      = UISegmentedControl(items: ["A-Z", "Recent", "Color"])
     
+    // Set up the header of the table view
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpSearchBar()
@@ -37,23 +39,25 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         createTableHeader()
     }
     
+    // Creates the searchBar for the table header
     private func setUpSearchBar() {
-        searchController.searchResultsUpdater = self
+        searchController.searchResultsUpdater             = self
         searchController.dimsBackgroundDuringPresentation = false
-        
-        self.definesPresentationContext = true
-        searchController.searchBar.delegate = self
-        searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
+        self.definesPresentationContext                   = true    // Set to make the view state the same when switching between tabs while searching.
+        searchController.searchBar.delegate               = self
+        searchController.searchBar.scopeButtonTitles      = ["All", "Title", "Author"]
     }
     
+    // Creates the sorting filters for the table header
     private func setUpSortFilters() {
         sortFilters.selectedSegmentIndex = 1
         sortFilters.addTarget(self, action: #selector(sortTypeChanged(_:)), for: .valueChanged)
     }
     
+    // Combine searchBar and sorting filters to be table headers
     private func createTableHeader() {
-        let headerView = UIView()
-        headerView.bounds = searchController.searchBar.bounds
+        let headerView                 = UIView()
+        headerView.bounds              = searchController.searchBar.bounds
         headerView.bounds.size.height += sortFilters.bounds.size.height
         
         headerView.addSubview(searchController.searchBar)
@@ -78,8 +82,6 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         super.didReceiveMemoryWarning()
     }
     
-    // MARK: - Table view data source
-    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -93,7 +95,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             fatalError("The dequeued cell is not an instance of WishListBookTableViewCell")
         }
         
-        cell.book = displayedBooks[indexPath.row]
+        cell.book     = displayedBooks[indexPath.row]
         cell.delegate = self
         
         return cell
@@ -152,15 +154,16 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         indexPath = IndexPath(row: index, section: 0)
         self.tableView.beginUpdates()
         self.tableView.deleteRows(at: [indexPath], with: .automatic)
-        self.tableView.endUpdates()    }
+        self.tableView.endUpdates()
+    }
     
+    // Present an alert to confirm the deletion of a book and perform tasks accordingly
     private func confirmDeleteBook(indexPath: IndexPath, book: Book, sender: MGSwipeTableCell) {
         let alert = UIAlertController(title: "Please Confirm", message: "Are you sure you want to delete this book?", preferredStyle: .alert)
         
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: {(action: UIAlertAction) in
             bookManager.delete(book: book)
-            // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
-            sender.leftButtons[0].isUserInteractionEnabled = false
+            sender.leftButtons[0].isUserInteractionEnabled = false  // Disables the button immediately after first touch to prevent double tap -> double callback
             self.deleteAndUpdateCells(for: book)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
@@ -179,8 +182,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
                 book.totalPages = convertPageNumber(textField: (alert.textFields?[0])!)
             }
             bookManager.markAsReading(book: book)
-            // IMPORTANT: Disable the button immediately after the first touch to prevent double tap -> double callback -> app crashes
-            sender.rightButtons[0].isUserInteractionEnabled = false
+            sender.rightButtons[0].isUserInteractionEnabled = false     // Disables the button immediately after first touch to prevent double tap -> double callback
             self.deleteAndUpdateCells(for: book)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: {(action: UIAlertAction) in
@@ -189,13 +191,14 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
         }))
         
         alert.addTextField { (totalPages) in
-            totalPages.placeholder = "Total number of pages"
+            totalPages.placeholder  = "Total number of pages"
             totalPages.keyboardType = .numberPad
         }
         
         self.present(alert, animated: true, completion: nil)
     }
     
+    // Activated when user switches between different sort methods
     func sortTypeChanged(_ sender: Any) {
         switch sortFilters.selectedSegmentIndex
         {
@@ -203,7 +206,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             filterType = .alphabetical
         case 1:                             // "Date" is selected
             filterType = .chronological
-        case 2:                             // "Progress ↑" is selected
+        case 2:                             // "Color" is selected
             filterType = .color
         default:
             break
@@ -217,29 +220,31 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
     }
     
     
-    // Override to support conditional editing of the table view.
+    // Override to support conditional editing of the table view. Return false if you do not want the specified item to be editable.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
         return true
     }
     
-    // SEARCHBAR CONFIGURATION
+    // Update the books being displayed based on what the user has entered into the search field.
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        let scope     = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
         search(searchText: searchBar.text!, scope: scope)
     }
     
+    // Make the search react instantaneously if the user keeps the text in the searchbar and switches between different scopes
     func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
         let scope = searchBar.scopeButtonTitles![selectedScope]
         search(searchText: searchBar.text!, scope: scope)
     }
     
+    // Find all the books that are consistent with what the user has entered in the search field.
     func search(searchText: String, scope: String = "All") {
         searchResults = bookManager.search(searchText: searchText, books: books, scope: scope)
         tableView.reloadData()
     }
     
+    // Prepare the data to perform the appropriate segue.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
         case "WishListToAdd"?:
@@ -251,7 +256,7 @@ class WishListBooksTableViewController: UITableViewController, MGSwipeTableCellD
             guard let destination = segue.destination as? BookViewController else {
                 return
             }
-            destination.book = displayedBooks[(self.tableView.indexPathForSelectedRow?.row)!]
+            destination.book        = displayedBooks[(self.tableView.indexPathForSelectedRow?.row)!]
             destination.displayMode = .detailsWishList
         default:
             return
