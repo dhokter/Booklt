@@ -13,6 +13,8 @@
 		092D629B1E624BD5001269D1 /* SwiftyJSON.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 092D62941E624B73001269D1 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		097C94241E94748700866ADB /* WishListBooksTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 097C94231E94748700866ADB /* WishListBooksTableViewCell.swift */; };
 		4C1B2E311E66522D00305AFD /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* BookViewController.swift */; };
+		4C4233341ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4233331ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift */; };
+		4C4233361ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4233351ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift */; };
 		4C62DB6B1E81D8FA00932024 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */; };
 		4C7664CF1EAC1DE7002CA55E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7664CE1EAC1DE7002CA55E /* TutorialViewController.swift */; };
 		4C8D581C1E85B07000A40D0F /* SearchBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D581B1E85B07000A40D0F /* SearchBookTableViewCell.swift */; };
@@ -56,6 +58,8 @@
 		092011A21E8B5C7B00CE4F79 /* AddNewWishListBookViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewWishListBookViewController.swift; sourceTree = "<group>"; };
 		092D62941E624B73001269D1 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		097C94231E94748700866ADB /* WishListBooksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListBooksTableViewCell.swift; sourceTree = "<group>"; };
+		4C4233331ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNewBookTableViewController.swift; sourceTree = "<group>"; };
+		4C4233351ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNewBookTableViewCell.swift; sourceTree = "<group>"; };
 		4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		4C7664CE1EAC1DE7002CA55E /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		4C8D581B1E85B07000A40D0F /* SearchBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBookTableViewCell.swift; sourceTree = "<group>"; };
@@ -147,6 +151,8 @@
 				4C7664CE1EAC1DE7002CA55E /* TutorialViewController.swift */,
 				4CE19B361E5FF0860085B508 /* ReadingBooksTableViewCell.swift */,
 				4CE19B381E5FF2480085B508 /* ReadingBooksTableViewController.swift */,
+				4C4233331ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift */,
+				4C4233351ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift */,
 				4C99EFD21E6F9E8F001D5EB1 /* CompletedBooksTableViewCell.swift */,
 				4C99EFD01E6F9E20001D5EB1 /* CompletedBooksTableViewController.swift */,
 				4CB2209F1E54E84C00AF0647 /* Main.storyboard */,
@@ -204,7 +210,7 @@
 				TargetAttributes = {
 					4CB220971E54E84C00AF0647 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 55US783MLA;
+						DevelopmentTeam = 45DBHK3PL2;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -268,6 +274,8 @@
 				092011A31E8B5C7B00CE4F79 /* AddNewWishListBookViewController.swift in Sources */,
 				4C8D581C1E85B07000A40D0F /* SearchBookTableViewCell.swift in Sources */,
 				097C94241E94748700866ADB /* WishListBooksTableViewCell.swift in Sources */,
+				4C4233361ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift in Sources */,
+				4C4233341ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift in Sources */,
 				4C62DB6B1E81D8FA00932024 /* SearchViewController.swift in Sources */,
 				4CC111921E651F1D00A9B8E4 /* BookManager.swift in Sources */,
 				4C1B2E311E66522D00305AFD /* BookViewController.swift in Sources */,
@@ -402,7 +410,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 55US783MLA;
+				DEVELOPMENT_TEAM = 45DBHK3PL2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -410,7 +418,7 @@
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.BookIt-23456";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.macalester.COMP225.BookIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -420,7 +428,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 55US783MLA;
+				DEVELOPMENT_TEAM = 45DBHK3PL2;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -428,7 +436,7 @@
 				INFOPLIST_FILE = Bookmark_MVP/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "edu.macalester.COMP225.BookIt-23456";
+				PRODUCT_BUNDLE_IDENTIFIER = edu.macalester.COMP225.BookIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

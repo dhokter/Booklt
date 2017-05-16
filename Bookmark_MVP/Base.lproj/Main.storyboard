@@ -751,6 +751,7 @@
                         <segue destination="6Gj-2R-9wV" kind="relationship" relationship="viewControllers" id="XDN-Jp-lte"/>
                         <segue destination="Fyt-af-dpH" kind="relationship" relationship="viewControllers" id="IDt-yK-8qi"/>
                         <segue destination="6rJ-kv-5R2" kind="relationship" relationship="viewControllers" id="uuW-Ux-tjA"/>
+                        <segue destination="1TS-su-bIa" kind="relationship" relationship="viewControllers" id="kog-sg-Xs6"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vFR-cB-7yG" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -795,6 +796,99 @@
             </objects>
             <point key="canvasLocation" x="201" y="2076"/>
         </scene>
+        <!--Search online-->
+        <scene sceneID="XHd-Ky-wtj">
+            <objects>
+                <tableViewController id="qkT-y7-ZOy" customClass="SearchNewBookTableViewController" customModule="BookIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="100" sectionHeaderHeight="28" sectionFooterHeight="28" id="CsQ-M2-9UY">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchNewBookTableViewCell" rowHeight="100" id="rIO-XM-jrX" customClass="SearchNewBookTableViewCell" customModule="BookIt" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="100"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rIO-XM-jrX" id="ak6-DL-aY3">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="99.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="S0b-rJ-f56">
+                                            <rect key="frame" x="5" y="-8" width="70" height="115"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="jig-5P-Vsc"/>
+                                            </constraints>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Book Title" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="r6F-R2-US7">
+                                            <rect key="frame" x="80" y="8" width="267" height="41"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="41" id="VMZ-9U-g8R"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="middleTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="oAm-L2-sPW">
+                                            <rect key="frame" x="80" y="45" width="267" height="41"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="41" id="K3R-CO-yEP"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="oAm-L2-sPW" firstAttribute="top" secondItem="ak6-DL-aY3" secondAttribute="topMargin" constant="37" id="3AX-c8-97L"/>
+                                        <constraint firstItem="oAm-L2-sPW" firstAttribute="leading" secondItem="r6F-R2-US7" secondAttribute="leading" id="6qx-WM-tAn"/>
+                                        <constraint firstItem="S0b-rJ-f56" firstAttribute="centerY" secondItem="ak6-DL-aY3" secondAttribute="centerY" id="90m-xU-0P4"/>
+                                        <constraint firstAttribute="topMargin" secondItem="r6F-R2-US7" secondAttribute="top" id="HbW-zr-jwu"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="r6F-R2-US7" secondAttribute="trailing" constant="20" id="Kel-zu-h8Q"/>
+                                        <constraint firstAttribute="bottom" secondItem="S0b-rJ-f56" secondAttribute="bottom" constant="-7.5" id="TMa-hT-NTe"/>
+                                        <constraint firstItem="oAm-L2-sPW" firstAttribute="trailing" secondItem="r6F-R2-US7" secondAttribute="trailing" id="akC-bu-3p0"/>
+                                        <constraint firstItem="r6F-R2-US7" firstAttribute="leading" secondItem="S0b-rJ-f56" secondAttribute="trailing" constant="5" id="ilb-5D-Qsn"/>
+                                        <constraint firstItem="S0b-rJ-f56" firstAttribute="leading" secondItem="ak6-DL-aY3" secondAttribute="leadingMargin" constant="-3" id="s7B-Ha-dPK"/>
+                                        <constraint firstItem="S0b-rJ-f56" firstAttribute="top" secondItem="ak6-DL-aY3" secondAttribute="top" constant="-8" id="yV1-A7-rOH"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="authorLabel" destination="oAm-L2-sPW" id="p4B-hP-C09"/>
+                                    <outlet property="coverImage" destination="S0b-rJ-f56" id="uZQ-Qg-Lbe"/>
+                                    <outlet property="titleLabel" destination="r6F-R2-US7" id="61f-Ka-Ekl"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="qkT-y7-ZOy" id="pYe-Pd-BUK"/>
+                            <outlet property="delegate" destination="qkT-y7-ZOy" id="QEg-2S-8rM"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Search online" id="Nsq-Oe-rn7">
+                        <barButtonItem key="rightBarButtonItem" title="Manual" id="NV6-gI-f6w"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="brb-8Q-bxT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1140" y="-188"/>
+        </scene>
+        <!--Search-->
+        <scene sceneID="zeR-JB-Fpf">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1TS-su-bIa" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Search" id="FXp-YX-uG3"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="MuO-h4-CH3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="qkT-y7-ZOy" kind="relationship" relationship="rootViewController" id="uF4-vZ-TKr"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mbI-9m-Mdx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="201" y="-188"/>
+        </scene>
     </scenes>
     <resources>
         <image name="colorpicker_blue" width="64" height="64"/>
@@ -804,14 +898,14 @@
         <image name="colorpicker_purple" width="64" height="64"/>
         <image name="colorpicker_red" width="64" height="64"/>
         <image name="completed_tab" width="25" height="25"/>
-        <image name="default" width="181" height="166"/>
+        <image name="default" width="292" height="293"/>
         <image name="reading_tab" width="25" height="25"/>
         <image name="star_open" width="300" height="295"/>
         <image name="tutorial" width="450" height="800"/>
         <image name="wishlist_tab" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="WuL-IZ-NiJ"/>
+        <segue reference="qvX-kd-uJo"/>
         <segue reference="wb9-bB-Fgh"/>
     </inferredMetricsTieBreakers>
 </document>
