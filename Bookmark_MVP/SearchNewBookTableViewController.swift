@@ -78,7 +78,8 @@ class SearchNewBookTableViewController: UITableViewController, UISearchResultsUp
     }
     
     private func search(text: String, scope: String = "All") {
-        searchAPI(text: text, scope: scope)
+        books = []
+        search(text: text, scope: scope)
     }
     
     private func searchAPI(text: String, scope: String = "All") {
@@ -92,8 +93,6 @@ class SearchNewBookTableViewController: UITableViewController, UISearchResultsUp
             } else {
                 let jsonData = JSON(data: data!)["items"].arrayValue
                 if jsonData != [] {
-                    // Reset the list of book to display new list
-                    self.books = []
                     for book in jsonData {
                         let title = book["volumeInfo"]["title"].stringValue
                         let authors = book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue})
@@ -110,7 +109,9 @@ class SearchNewBookTableViewController: UITableViewController, UISearchResultsUp
                     }
                 }
             }
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         })
         
         task.resume()

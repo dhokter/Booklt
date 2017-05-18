@@ -21,7 +21,6 @@ class SearchNewBookTableViewCell: UITableViewCell {
                 authorLabel.text = book.authors.joined(separator: ", ")
                 // TODO: The cover of the book is now based on color, change it to make it become an image for the purpose of using GoogleBookAPI.
                 // This may need to work with NSData to store the image data into Realm.
-//                coverImage.image = iconColor[book.color]
                 coverImage.image = book.cover
             }
         }
