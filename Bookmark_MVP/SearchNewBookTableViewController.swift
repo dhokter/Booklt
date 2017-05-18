@@ -9,10 +9,17 @@
 import UIKit
 import SwiftyJSON
 
+struct BookFromAPI {
+    var title: String
+    var authors: [String]
+    var totalPages: Int
+    var cover: UIImage
+}
+
 class SearchNewBookTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     private let searchController = UISearchController(searchResultsController: nil)
-    private var books = [Book]()
+    private var books = [BookFromAPI]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,11 +92,25 @@ class SearchNewBookTableViewController: UITableViewController, UISearchResultsUp
             } else {
                 let jsonData = JSON(data: data!)["items"].arrayValue
                 if jsonData != [] {
-                    print("---------> GOT INFO BACK")
-                    print(jsonData)
+                    // Reset the list of book to display new list
+                    self.books = []
+                    for book in jsonData {
+                        let title = book["volumeInfo"]["title"].stringValue
+                        let authors = book["volumeInfo"]["authors"].arrayValue.map({$0.stringValue})
+                        let totalPages = book["volumeInfo"]["pageCount"].intValue
+                        
+                        let coverImage: UIImage
+                        if let coverURL = book["volumeInfo"]["imageLinks"]["thumbnail"].string {
+                            let imageData = try? Data(contentsOf: URL(string: coverURL)!)
+                            coverImage = UIImage(data: imageData!)!
+                        } else {
+                            coverImage = #imageLiteral(resourceName: "default")
+                        }
+                        self.books.append(BookFromAPI(title: title, authors: authors, totalPages: totalPages, cover: coverImage))
+                    }
                 }
-                
             }
+            self.tableView.reloadData()
         })
         
         task.resume()

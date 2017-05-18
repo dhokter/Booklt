@@ -14,14 +14,15 @@ class SearchNewBookTableViewCell: UITableViewCell {
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var coverImage: UIImageView!
     
-    var book: Book? {
+    var book: BookFromAPI? {
         didSet {
             if let book = self.book {
                 titleLabel.text = book.title
-                authorLabel.text = book.author
+                authorLabel.text = book.authors.joined(separator: ", ")
                 // TODO: The cover of the book is now based on color, change it to make it become an image for the purpose of using GoogleBookAPI.
                 // This may need to work with NSData to store the image data into Realm.
-                coverImage.image = iconColor[book.color]
+//                coverImage.image = iconColor[book.color]
+                coverImage.image = book.cover
             }
         }
     }

@@ -9,13 +9,6 @@
 import UIKit
 import SwiftyJSON
 
-struct BookFromAPI {
-    var title: String
-    var authors: [String]
-    var totalPages: Int
-    var cover: UIImage
-}
-
 class SearchViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView:       UITableView!
