@@ -7,20 +7,32 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-class SearchNewBookTableViewController: UITableViewController {
+class SearchNewBookTableViewController: UITableViewController, UISearchResultsUpdating, UISearchBarDelegate {
     
     private let searchController = UISearchController(searchResultsController: nil)
     private var books = [Book]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        createSearchBar()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    }
+    
+    private func createSearchBar() {
+        searchController.searchResultsUpdater = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchBar.delegate = self
+        self.definesPresentationContext = true
+        
+        searchController.searchBar.scopeButtonTitles = ["All", "Title", "Author"]
+        self.tableView.tableHeaderView = searchController.searchBar
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,10 +59,61 @@ class SearchNewBookTableViewController: UITableViewController {
         
         // Configure the cell...
         cell.book = books[indexPath.row]
-
+        
         return cell
     }
     
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchBar = searchController.searchBar
+        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
+        
+        search(text: searchBar.text!, scope: scope)
+    }
+    
+    private func search(text: String, scope: String = "All") {
+        searchAPI(text: text, scope: scope)
+    }
+    
+    private func searchAPI(text: String, scope: String = "All") {
+        let urlRequest = URLRequest(url: createSearchURL(text: text, scope: scope))
+        let config = URLSessionConfiguration.default
+        let session = URLSession(configuration: config)
+        
+        let task = session.dataTask(with: urlRequest, completionHandler: {(data, response, error) in
+            if error != nil {
+                return
+            } else {
+                let jsonData = JSON(data: data!)["items"].arrayValue
+                if jsonData != [] {
+                    print("---------> GOT INFO BACK")
+                    print(jsonData)
+                }
+                
+            }
+        })
+        
+        task.resume()
+    }
+    
+    private func createSearchURL(text: String, scope: String = "All") -> URL {
+        var googleSearchURL = "https://www.googleapis.com/books/v1/volumes?q="
+        switch scope {
+        case "Author":
+            googleSearchURL.append("inauthor:\(text)")
+        case "Title":
+            googleSearchURL.append("intitle:\(text)")
+        default:
+            googleSearchURL.append("\(text)")
+        }
+        
+        googleSearchURL = googleSearchURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
+        
+        guard let url = URL(string: googleSearchURL) else {
+            return URL(string: "https://www.googleapis.com/books/v1/volumes?q=")!
+        }
+        
+        return url
+    }
 
     /*
     // Override to support conditional editing of the table view.
