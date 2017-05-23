@@ -15,6 +15,8 @@
 		4C1B2E311E66522D00305AFD /* BookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB2209D1E54E84C00AF0647 /* BookViewController.swift */; };
 		4C4233341ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4233331ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift */; };
 		4C4233361ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4233351ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift */; };
+		4C5158CE1ED444A70083F19E /* Siesta.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5158CD1ED444A70083F19E /* Siesta.framework */; };
+		4C5158D01ED444AA0083F19E /* SiestaUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C5158CF1ED444AA0083F19E /* SiestaUI.framework */; };
 		4C62DB6B1E81D8FA00932024 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */; };
 		4C7664CF1EAC1DE7002CA55E /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7664CE1EAC1DE7002CA55E /* TutorialViewController.swift */; };
 		4C8D581C1E85B07000A40D0F /* SearchBookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C8D581B1E85B07000A40D0F /* SearchBookTableViewCell.swift */; };
@@ -60,6 +62,8 @@
 		097C94231E94748700866ADB /* WishListBooksTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WishListBooksTableViewCell.swift; sourceTree = "<group>"; };
 		4C4233331ECAFAE10060CBD6 /* SearchNewBookTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNewBookTableViewController.swift; sourceTree = "<group>"; };
 		4C4233351ECAFB9A0060CBD6 /* SearchNewBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchNewBookTableViewCell.swift; sourceTree = "<group>"; };
+		4C5158CD1ED444A70083F19E /* Siesta.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Siesta.framework; path = Carthage/Build/iOS/Siesta.framework; sourceTree = "<group>"; };
+		4C5158CF1ED444AA0083F19E /* SiestaUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SiestaUI.framework; path = Carthage/Build/iOS/SiestaUI.framework; sourceTree = "<group>"; };
 		4C62DB6A1E81D8FA00932024 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		4C7664CE1EAC1DE7002CA55E /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		4C8D581B1E85B07000A40D0F /* SearchBookTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchBookTableViewCell.swift; sourceTree = "<group>"; };
@@ -90,6 +94,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				092D62971E624B73001269D1 /* SwiftyJSON.framework in Frameworks */,
+				4C5158CE1ED444A70083F19E /* Siesta.framework in Frameworks */,
+				4C5158D01ED444AA0083F19E /* SiestaUI.framework in Frameworks */,
 				A2DAC8751E675ADB009D3D8F /* Realm.framework in Frameworks */,
 				A2DAC8761E675ADB009D3D8F /* RealmSwift.framework in Frameworks */,
 				4CDFD5F41E99845A0018B745 /* PureLayout.framework in Frameworks */,
@@ -104,6 +110,8 @@
 		092D62911E624B71001269D1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4C5158CF1ED444AA0083F19E /* SiestaUI.framework */,
+				4C5158CD1ED444A70083F19E /* Siesta.framework */,
 				4CDFD5F71E9984900018B745 /* PureLayout.framework.dSYM */,
 				4CC40A461E7C9EAA00B8AED8 /* MGSwipeTableCell.framework */,
 				A2DAC8731E675ADB009D3D8F /* Realm.framework */,
@@ -257,6 +265,8 @@
 				"$(SRCROOT)/Carthage/Build/iOS/RealmSwift.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/MGSwipeTableCell.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/PureLayout.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Siesta.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SiestaUI.framework",
 			);
 			outputPaths = (
 			);

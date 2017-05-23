@@ -1,4 +1,5 @@
 github "SwiftyJSON/SwiftyJSON"
 github "realm/realm-cocoa"
 github "MortimerGoro/MGSwipeTableCell"
+github "bustoutsolutions/siesta" ~> 1.0
 github "PureLayout/PureLayout"

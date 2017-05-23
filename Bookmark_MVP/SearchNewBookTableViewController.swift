@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+//import Siesta
 
 struct BookFromAPI {
     var title: String
@@ -78,7 +79,9 @@ class SearchNewBookTableViewController: UITableViewController, UISearchResultsUp
     }
     
     private func search(text: String, scope: String = "All") {
-        books = []
+        DispatchQueue.main.async {
+            self.books = []
+        }
         search(text: text, scope: scope)
     }
     
