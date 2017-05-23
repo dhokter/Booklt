@@ -79,10 +79,8 @@ class SearchNewBookTableViewController: UITableViewController, UISearchResultsUp
     }
     
     private func search(text: String, scope: String = "All") {
-        DispatchQueue.main.async {
-            self.books = []
-        }
-        search(text: text, scope: scope)
+        books = []
+        searchAPI(text: text, scope: scope)
     }
     
     private func searchAPI(text: String, scope: String = "All") {
